@@ -19,7 +19,7 @@ MAG_sim_taxa_sig3_other0_vs_sig_nodes <- ggplot(MAG_sim_taxa.based_summary, aes(
   theme_bw() +
   ylim(0, 0.5) +
   xlim(0, 70) +
-  ggtitle("Taxa-based, cut-off #1") +
+  ggtitle("Random taxa, cut-off #1") +
   xlab("Number of significant nodes") +
   ylab("Proportion of sig. KOs") +
   theme(plot.title = element_text(hjust = 0.5)) +
@@ -32,7 +32,7 @@ MAG_sim_taxa_sig3_other1_vs_sig_nodes <- ggplot(MAG_sim_taxa.based_summary, aes(
     theme_bw() +
     ylim(0, 0.5) +
     xlim(0, 70) +
-    ggtitle("Taxa-based, cut-off #2") +
+    ggtitle("Random taxa, cut-off #2") +
     xlab("Number of significant nodes") +
     ylab("Proportion of sig. KOs") +
   theme(plot.title = element_text(hjust = 0.5)) +
@@ -45,7 +45,7 @@ MAG_sim_taxa_sig2_other0_vs_sig_nodes <- ggplot(MAG_sim_taxa.based_summary, aes(
     theme_bw() +
     ylim(0, 0.5) +
     xlim(0, 70) +
-    ggtitle("Taxa-based, cut-off #3") +
+    ggtitle("Random taxa, cut-off #3") +
     xlab("Number of significant nodes") +
     ylab("Proportion of sig. KOs") +
     theme(plot.title = element_text(hjust = 0.5)) +
@@ -59,7 +59,7 @@ MAG_sim_func_sig3_other0_vs_sig_nodes <- ggplot(MAG_sim_func.based_summary, aes(
   theme_bw() +
   ylim(0, 0.5) +
   xlim(0, 70) +
-  ggtitle("Gene-based, cut-off #1") +
+  ggtitle("Focal gene, cut-off #1") +
   xlab("Number of significant nodes") +
   ylab("Proportion of sig. KOs") +
   theme(plot.title = element_text(hjust = 0.5)) +
@@ -72,7 +72,7 @@ MAG_sim_func_sig3_other1_vs_sig_nodes <- ggplot(MAG_sim_func.based_summary, aes(
   theme_bw() +
   ylim(0, 0.5) +
   xlim(0, 70) +
-  ggtitle("Gene-based, cut-off #2") +
+  ggtitle("Focal gene, cut-off #2") +
   xlab("Number of significant nodes") +
   ylab("Proportion of sig. KOs") +
   theme(plot.title = element_text(hjust = 0.5)) +
@@ -85,7 +85,7 @@ MAG_sim_func_sig2_other0_vs_sig_nodes <- ggplot(MAG_sim_func.based_summary, aes(
   theme_bw() +
   ylim(0, 0.5) +
   xlim(0, 70) +
-  ggtitle("Gene-based, cut-off #3") +
+  ggtitle("Focal gene, cut-off #3") +
   xlab("Number of significant nodes") +
   ylab("Proportion of sig. KOs") +
   theme(plot.title = element_text(hjust = 0.5)) +

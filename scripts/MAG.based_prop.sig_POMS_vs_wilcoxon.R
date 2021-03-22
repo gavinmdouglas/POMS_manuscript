@@ -19,7 +19,7 @@ MAG_sim_taxa_sig3_other0_vs_wilcoxon <- ggplot(MAG_sim_taxa.based_summary, aes(x
   ylim(0, 0.80) +
   xlab("POMS proportion sig. KOs") +
   ylab("Wilcoxon test proportion sig. KOs") +
-  ggtitle("Taxa-based, cut-off #1") +
+  ggtitle("Random taxa, cut-off #1") +
   theme(plot.title = element_text(hjust = 0.5))
 
 MAG_sim_taxa_sig3_other0_vs_wilcoxon_marginal <- ggMarginal(MAG_sim_taxa_sig3_other0_vs_wilcoxon, type = "histogram", size=10)
@@ -32,7 +32,7 @@ MAG_sim_taxa_sig3_other1_vs_wilcoxon <- ggplot(MAG_sim_taxa.based_summary, aes(x
   ylim(0, 0.80) +
   xlab("POMS proportion sig. KOs") +
   ylab("Wilcoxon test proportion sig. KOs") +
-  ggtitle("Taxa-based, cut-off #2") +
+  ggtitle("Random taxa, cut-off #2") +
   theme(plot.title = element_text(hjust = 0.5))
 
 MAG_sim_taxa_sig3_other1_vs_wilcoxon_marginal <- ggMarginal(MAG_sim_taxa_sig3_other1_vs_wilcoxon, type = "histogram", size=10)
@@ -45,7 +45,7 @@ MAG_sim_taxa_sig2_other0_vs_wilcoxon <- ggplot(MAG_sim_taxa.based_summary, aes(x
   ylim(0, 0.80) +
   xlab("POMS proportion sig. KOs") +
   ylab("Wilcoxon test proportion sig. KOs") +
-  ggtitle("Taxa-based, cut-off #3") +
+  ggtitle("Random taxa, cut-off #3") +
   theme(plot.title = element_text(hjust = 0.5))
 
 MAG_sim_taxa_sig2_other0_vs_wilcoxon_marginal <- ggMarginal(MAG_sim_taxa_sig2_other0_vs_wilcoxon, type = "histogram", size=10)
@@ -58,7 +58,7 @@ MAG_sim_func_sig3_other0_vs_wilcoxon <- ggplot(MAG_sim_func.based_summary, aes(x
   ylim(0, 0.80) +
   xlab("POMS proportion sig. KOs") +
   ylab("Wilcoxon test proportion sig. KOs") +
-  ggtitle("Gene-based, cut-off #1") +
+  ggtitle("Focal gene, cut-off #1") +
   theme(plot.title = element_text(hjust = 0.5))
 
 MAG_sim_func_sig3_other0_vs_wilcoxon_marginal <- ggMarginal(MAG_sim_func_sig3_other0_vs_wilcoxon, type = "histogram", size=10)
@@ -71,7 +71,7 @@ MAG_sim_func_sig3_other1_vs_wilcoxon <- ggplot(MAG_sim_func.based_summary, aes(x
   ylim(0, 0.80) +
   xlab("POMS proportion sig. KOs") +
   ylab("Wilcoxon test proportion sig. KOs") +
-  ggtitle("Gene-based, cut-off #2") +
+  ggtitle("Focal gene, cut-off #2") +
   theme(plot.title = element_text(hjust = 0.5))
 
 MAG_sim_func_sig3_other1_vs_wilcoxon_marginal <- ggMarginal(MAG_sim_func_sig3_other1_vs_wilcoxon, type = "histogram", size=10)
@@ -84,7 +84,7 @@ MAG_sim_func_sig2_other0_vs_wilcoxon <- ggplot(MAG_sim_func.based_summary, aes(x
   ylim(0, 0.80) +
   xlab("POMS proportion sig. KOs") +
   ylab("Wilcoxon test proportion sig. KOs") +
-  ggtitle("Gene-based, cut-off #3") +
+  ggtitle("Focal gene, cut-off #3") +
   theme(plot.title = element_text(hjust = 0.5))
 
 MAG_sim_func_sig2_other0_vs_wilcoxon_marginal <- ggMarginal(MAG_sim_func_sig2_other0_vs_wilcoxon, type = "histogram", size=10)

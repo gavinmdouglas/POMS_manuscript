@@ -40,8 +40,7 @@ ERP002061_almeida_out <- two_group_balance_tree_pipeline(abun=ERP002061_almeida_
                                                          phylogeny=almeida_tree,
                                                          group1_samples = ERP002061_group1_samples,
                                                          group2_samples = ERP002061_group2_samples,
-                                                         ncores=50,
-                                                         skip_node_dist=TRUE)
+                                                         ncores=50)
 
 
 # CRC
