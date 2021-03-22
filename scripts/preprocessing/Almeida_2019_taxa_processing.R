@@ -12,5 +12,5 @@ almeida_taxa_hgr <- almeida_taxa_hgr[, -which(colnames(almeida_taxa_hgr) == "Gen
 
 almeida_taxa <- rbind(almeida_taxa_hgr, almeida_taxa_umgs)
 
-saveRDS(object = almeida_taxa, file = "~/github_repos/POMS_manuscript/data/intermediates/MAG.based_simulations/taxa_table.rds")
+saveRDS(object = almeida_taxa, file = "~/github_repos/POMS_manuscript/data/key_inputs/Almeida2019_dataset/taxonomy/taxa_table.rds")
 
