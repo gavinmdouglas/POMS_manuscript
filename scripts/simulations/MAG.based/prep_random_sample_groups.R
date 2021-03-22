@@ -34,7 +34,7 @@ almeida_healthy_random_groups$group2 <- list()
 for(rep in 1:1000) {
   samples <- sample(rownames(almeida_sample_info))
   almeida_healthy_random_groups$group1[[rep]] <- samples[1:352]
-  almeida_healthy_random_groups$group2[[rep]] <- samples[354:705]
+  almeida_healthy_random_groups$group2[[rep]] <- samples[353:704]
 }
 
 saveRDS(object = almeida_healthy_random_groups, file = "~/github_repos/POMS_manuscript/data/intermediates/MAG.based_simulations/almeida_healthy_random_groups.rds")
