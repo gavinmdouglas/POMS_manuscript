@@ -37,4 +37,4 @@ for(rep in 1:1000) {
   almeida_healthy_random_groups$group2[[rep]] <- samples[354:705]
 }
 
-saveRDS(object = almeida_healthy_random_groups, file = "almeida_healthy_random_groups.rds")
+saveRDS(object = almeida_healthy_random_groups, file = "~/github_repos/POMS_manuscript/data/intermediates/MAG.based_simulations/almeida_healthy_random_groups.rds")
