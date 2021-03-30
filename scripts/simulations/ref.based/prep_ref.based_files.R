@@ -30,8 +30,8 @@ low_qual_tips <- ref_tree$tip.label[which(!ref_tree$tip.label %in% rownames(ref_
 
 ref_tree <- drop.tip(phy = ref_tree, tip = low_qual_tips, trim.internal = TRUE)
 
-# Randomly keep 3000 tips.
-random_tips_to_drop <- sample(ref_tree$tip.label, size = length(ref_tree$tip.label) - 3000)
+# Randomly keep 500 tips.
+random_tips_to_drop <- sample(ref_tree$tip.label, size = length(ref_tree$tip.label) - 500)
 ref_tree <- drop.tip(phy = ref_tree, tip = random_tips_to_drop, trim.internal = TRUE)
 
 ref_tree <- multi2di(ref_tree)
@@ -62,57 +62,59 @@ saveRDS(object = ref_genomes_random_groups,
 # Simulate tables with contrasting parameters.
 BEZI_ensure_nonzero <- function(n_set, mu_set, nu_set, sigma_set, scale_factor=1e6, min_taxa_per_sample=1) {
   BEZI_sim <- c()
-  while(length(which(BEZI_sim > 0)) < min_taxa_per_sample) {
-    BEZI_sim <- round(rBEZI(n = n_set, mu=mu_set, nu=nu_set, sigma=sigma_set) * scale_factor)
+  while (length(which(BEZI_sim > 0)) < min_taxa_per_sample) {
+    BEZI_sim <- round(rBEZI(n = n_set, mu = mu_set, nu = nu_set, sigma = sigma_set) * scale_factor)
   }
   
   return(BEZI_sim)
 }
 
 
-BEZI_table_mu0.1_nu_0.5_sigma1 <- BEZI_table
-BEZI_table_mu0.1_nu_0.9_sigma1 <- BEZI_table
-BEZI_table_mu0.1_nu_0.99_sigma1 <- BEZI_table
-BEZI_table_mu0.01_nu_0.99_sigma1 <- BEZI_table
+BEZI_table_mu0.1_nu0.50_sigma1 <- BEZI_table
+BEZI_table_mu0.1_nu0.65_sigma1 <- BEZI_table
+BEZI_table_mu0.1_nu0.80_sigma1 <- BEZI_table
+BEZI_table_mu0.1_nu0.95_sigma1 <- BEZI_table
 
 
-for(i in 1:1000) {
-  BEZI_table_mu0.1_nu_0.5_sigma1[, i] <- BEZI_ensure_nonzero(n_set = num_tips, mu_set = 0.1, nu_set = 0.5, sigma_set = 1, min_taxa_per_sample=5)
-  BEZI_table_mu0.1_nu_0.9_sigma1[, i] <- BEZI_ensure_nonzero(n_set = num_tips, mu_set = 0.1, nu_set = 0.9, sigma_set = 1, min_taxa_per_sample=5)
-  BEZI_table_mu0.1_nu_0.99_sigma1[, i] <- BEZI_ensure_nonzero(n_set = num_tips, mu_set = 0.1, nu_set = 0.99, sigma_set = 1, min_taxa_per_sample=5)
-  BEZI_table_mu0.01_nu_0.99_sigma1[, i] <- BEZI_ensure_nonzero(n_set = num_tips, mu_set = 0.01, nu_set = 0.99, sigma_set = 1, min_taxa_per_sample=5)
+for (i in 1:1000) {
+  BEZI_table_mu0.1_nu0.50_sigma1[, i] <- BEZI_ensure_nonzero(n_set = num_tips, mu_set = 0.1, nu_set = 0.50, sigma_set = 1, min_taxa_per_sample = 5)
+  BEZI_table_mu0.1_nu0.65_sigma1[, i] <- BEZI_ensure_nonzero(n_set = num_tips, mu_set = 0.1, nu_set = 0.65, sigma_set = 1, min_taxa_per_sample = 5)
+  BEZI_table_mu0.1_nu0.80_sigma1[, i] <- BEZI_ensure_nonzero(n_set = num_tips, mu_set = 0.1, nu_set = 0.80, sigma_set = 1, min_taxa_per_sample = 5)
+  BEZI_table_mu0.1_nu0.95_sigma1[, i] <- BEZI_ensure_nonzero(n_set = num_tips, mu_set = 0.1, nu_set = 0.95, sigma_set = 1, min_taxa_per_sample = 5)
 }
 
-BEZI_table_mu0.1_nu_0.99_sigma1 <- BEZI_table_mu0.1_nu_0.99_sigma1[-which(rowSums(BEZI_table_mu0.1_nu_0.99_sigma1) == 0), ]
-BEZI_table_mu0.01_nu_0.99_sigma1 <- BEZI_table_mu0.01_nu_0.99_sigma1[-which(rowSums(BEZI_table_mu0.01_nu_0.99_sigma1) == 0), ]
-
+# Check if any rowSums are 0
+which(rowSums(BEZI_table_mu0.1_nu0.50_sigma1) == 0)
+which(rowSums(BEZI_table_mu0.1_nu0.65_sigma1) == 0)
+which(rowSums(BEZI_table_mu0.1_nu0.80_sigma1) == 0)
+which(rowSums(BEZI_table_mu0.1_nu0.95_sigma1) == 0)
 
 # Basic plots contrasting simulations
-par(mfrow=c(2, 2))
-hist(colSums(BEZI_table_mu0.1_nu_0.5_sigma1 > 0))
-hist(colSums(BEZI_table_mu0.1_nu_0.9_sigma1 > 0))
-hist(colSums(BEZI_table_mu0.1_nu_0.99_sigma1 > 0))
-hist(colSums(BEZI_table_mu0.01_nu_0.99_sigma1 > 0))
+par(mfrow = c(2, 2))
+hist(colSums(BEZI_table_mu0.1_nu0.50_sigma1 > 0))
+hist(colSums(BEZI_table_mu0.1_nu0.65_sigma1 > 0))
+hist(colSums(BEZI_table_mu0.1_nu0.80_sigma1 > 0))
+hist(colSums(BEZI_table_mu0.1_nu0.95_sigma1 > 0))
 
-par(mfrow=c(2, 2))
-hist(rowSums(BEZI_table_mu0.1_nu_0.5_sigma1 > 0))
-hist(rowSums(BEZI_table_mu0.1_nu_0.9_sigma1 > 0))
-hist(rowSums(BEZI_table_mu0.1_nu_0.99_sigma1 > 0))
-hist(rowSums(BEZI_table_mu0.01_nu_0.99_sigma1 > 0))
+par(mfrow = c(2, 2))
+hist(rowSums(BEZI_table_mu0.1_nu0.50_sigma1 > 0))
+hist(rowSums(BEZI_table_mu0.1_nu0.65_sigma1 > 0))
+hist(rowSums(BEZI_table_mu0.1_nu0.80_sigma1 > 0))
+hist(rowSums(BEZI_table_mu0.1_nu0.95_sigma1 > 0))
 
-write.table(x = BEZI_table_mu0.1_nu_0.5_sigma1,
-            file="/home/gavin/github_repos/POMS_manuscript/data/intermediates/ref.based_simulations/relabun_tables/BEZI_genome_abun_mu0.1_nu_0.5_sigma1.tsv.gz",
-            col.names = NA, row.names=TRUE, quote=FALSE, sep="\t")
+write.table(x = BEZI_table_mu0.1_nu0.50_sigma1,
+            file = "/home/gavin/github_repos/POMS_manuscript/data/intermediates/ref.based_simulations/relabun_tables/BEZI_table_mu0.1_nu0.50_sigma1.tsv.gz",
+            col.names = NA, row.names = TRUE, quote = FALSE, sep = "\t")
 
-write.table(x = BEZI_table_mu0.1_nu_0.9_sigma1,
-            file="/home/gavin/github_repos/POMS_manuscript/data/intermediates/ref.based_simulations/relabun_tables/BEZI_genome_abun_mu0.1_nu_0.9_sigma1.tsv.gz",
-            col.names = NA, row.names=TRUE, quote=FALSE, sep="\t")
+write.table(x = BEZI_table_mu0.1_nu0.65_sigma1,
+            file = "/home/gavin/github_repos/POMS_manuscript/data/intermediates/ref.based_simulations/relabun_tables/BEZI_table_mu0.1_nu0.65_sigma1.tsv.gz",
+            col.names = NA, row.names = TRUE, quote = FALSE, sep = "\t")
 
-write.table(x = BEZI_table_mu0.1_nu_0.99_sigma1,
-            file="/home/gavin/github_repos/POMS_manuscript/data/intermediates/ref.based_simulations/relabun_tables/BEZI_genome_abun_mu0.1_nu_0.99_sigma1.tsv.gz",
-            col.names = NA, row.names=TRUE, quote=FALSE, sep="\t")
+write.table(x = BEZI_table_mu0.1_nu0.80_sigma1,
+            file = "/home/gavin/github_repos/POMS_manuscript/data/intermediates/ref.based_simulations/relabun_tables/BEZI_table_mu0.1_nu0.80_sigma1.tsv.gz",
+            col.names = NA, row.names = TRUE, quote = FALSE, sep = "\t")
 
-write.table(x = BEZI_table_mu0.01_nu_0.99_sigma1,
-            file="/home/gavin/github_repos/POMS_manuscript/data/intermediates/ref.based_simulations/relabun_tables/BEZI_genome_abun_mu0.01_nu_0.99_sigma1.tsv.gz",
-            col.names = NA, row.names=TRUE, quote=FALSE, sep="\t")
+write.table(x = BEZI_table_mu0.1_nu0.95_sigma1,
+            file = "/home/gavin/github_repos/POMS_manuscript/data/intermediates/ref.based_simulations/relabun_tables/BEZI_table_mu0.1_nu0.95_sigma1.tsv.gz",
+            col.names = NA, row.names = TRUE, quote = FALSE, sep = "\t")
 

@@ -12,16 +12,16 @@ random_groups <- readRDS("ref.based_random_groups.rds")
 
 BEZI_tables <- list()
 
-BEZI_tables[["mu0.1_nu_0.5"]] <- read.table(file = "relabun_tables/BEZI_genome_abun_mu0.1_nu_0.5_sigma1.tsv.gz",
+BEZI_tables[["nu0.50"]] <- read.table(file = "relabun_tables/BEZI_table_mu0.1_nu0.50_sigma1.tsv.gz",
                                             header = TRUE, sep = "\t", check.names = FALSE, row.names = 1, quote = "", comment.char = "")
 
-BEZI_tables[["mu0.1_nu_0.9"]] <- read.table(file = "relabun_tables/BEZI_genome_abun_mu0.1_nu_0.9_sigma1.tsv.gz",
+BEZI_tables[["nu0.65"]] <- read.table(file = "relabun_tables/BEZI_table_mu0.1_nu0.65_sigma1.tsv.gz",
                                             header = TRUE, sep = "\t", check.names = FALSE, row.names = 1, quote = "", comment.char = "")
 
-BEZI_tables[["mu0.1_nu_0.99"]] <- read.table(file = "relabun_tables/BEZI_genome_abun_mu0.1_nu_0.99_sigma1.tsv.gz",
+BEZI_tables[["nu0.80"]] <- read.table(file = "relabun_tables/BEZI_table_mu0.1_nu0.80_sigma1.tsv.gz",
                                              header = TRUE, sep = "\t", check.names = FALSE, row.names = 1, quote = "", comment.char = "")
 
-BEZI_tables[["mu0.01_nu_0.99"]] <- read.table(file = "relabun_tables/BEZI_genome_abun_mu0.01_nu_0.99_sigma1.tsv.gz",
+BEZI_tables[["nu0.95"]] <- read.table(file = "relabun_tables/BEZI_table_mu0.1_nu0.95_sigma1.tsv.gz",
                                              header = TRUE, sep = "\t", check.names = FALSE, row.names = 1, quote = "", comment.char = "")
 
 in_func <- read.table(file = "/home/gavin/github_repos/picrust_repos/picrust2/picrust2/default_files/prokaryotic/ko.txt.gz",
@@ -53,12 +53,13 @@ for (cutoff in names(BEZI_tables)) {
 }
 
 
-strictest_cutoff <- "mu0.01_nu_0.99"
-set.seed(141515)
-in_func_no_rare <- filter_rare_table_cols(in_tab = cutoff_func[[strictest_cutoff]], min_nonzero_count = 5, min_nonzero_prop = 0.001, verbose = TRUE)
-random_funcs <- sample(colnames(in_func_no_rare), size = 1000)
-write.table(x = random_funcs, file = "1000_random_KOs.txt", col.names = FALSE, row.names = FALSE, quote = FALSE)
+# strictest_cutoff <- "nu0.95"
+# set.seed(141515)
+# in_func_no_rare <- filter_rare_table_cols(in_tab = cutoff_func[[strictest_cutoff]], min_nonzero_count = 5, min_nonzero_prop = 0.001, verbose = TRUE)
+# random_funcs <- sample(colnames(in_func_no_rare), size = 1000)
+# write.table(x = random_funcs, file = "1000_random_KOs.txt", col.names = FALSE, row.names = FALSE, quote = FALSE)
 
+random_funcs <- read.table(file = "1000_random_KOs.txt", stringsAsFactors = FALSE)$V1
 
 taxa_sim_info <- list()
 func_sim_info <- list()

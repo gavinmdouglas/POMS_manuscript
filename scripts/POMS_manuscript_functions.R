@@ -237,7 +237,7 @@ calc_func_abun <- function(in_abun, in_func, ncores=1) {
 }
 
 
-deseq2_default_two_groups <- function(table, group1, group2, alpha.set=0.05, dataset_name="unknown", divide_sum=1) {
+deseq2_default_two_groups <- function(table, group1, group2, alpha.set=0.05, divide_sum=1) {
   
   group1_subset <- group1[which(group1 %in% colnames(table))]
   group2_subset <- group2[which(group2 %in% colnames(table))]
@@ -300,5 +300,42 @@ limma_voom_two_group_TMM <- function(table, group1, group2) {
   voom_out_fit_eBayes <- eBayes(voom_out_fit)
   
   return(topTable(voom_out_fit_eBayes, coef = 2, n = nrow(dge_norm), sort.by="none"))
+  
+}
+
+
+run_alt.tools <- function(func_abun_table, group1_samples, group2_samples, USCGs) {
+  
+  func_abun_table_ceil <- ceiling(func_abun_table)
+  
+  DA_out <- list()
+  
+  DA_out[["aldex2"]] <- run_2group_ALDEx2(in_table = func_abun_table_ceil,
+                                          group1_samples = group1_samples,
+                                          group2_samples = group2_samples)
+  
+  DA_out[["deseq2"]] <- deseq2_default_two_groups(table = func_abun_table_ceil,
+                                                  group1 = group1_samples,
+                                                  group2 = group2_samples)
+  
+  DA_out[["limma.voom"]] <- limma_voom_two_group_TMM(table = func_abun_table,
+                                                     group1 = group1_samples,
+                                                     group2 = group2_samples)
+  
+  
+  DA_out[["wilcoxon.relab"]] <- wilcoxon_2group_pvalues(intable = func_abun_table,
+                                                        group1_samples = group1_samples,
+                                                        group2_samples = group2_samples,
+                                                        convert_relab = TRUE)
+  
+  dataset_uscg_set <- USCGs[which(USCGs %in% rownames(func_abun_table))]
+  func_abun_table_musicc <- data.frame(sweep(func_abun_table, 2, colMedians(as.matrix(func_abun_table[dataset_uscg_set, ])), `/`))
+  
+  DA_out[["wilcoxon.musicc"]] <- wilcoxon_2group_pvalues(intable = func_abun_table_musicc,
+                                                         group1_samples = group1_samples,
+                                                         group2_samples = group2_samples,
+                                                         convert_relab = FALSE)
+  
+  return(DA_out)
   
 }
