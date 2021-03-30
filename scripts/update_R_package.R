@@ -4,6 +4,6 @@
 library(devtools)
 library(roxygen2)
 
-setwd("/home/gavin/github_repos/POMS/")
+setwd("~/github_repos/POMS/")
 devtools::document()
-devtools::load_all(path = "/home/gavin/github_repos/POMS/")
+devtools::load_all(path = "~/github_repos/POMS/")
