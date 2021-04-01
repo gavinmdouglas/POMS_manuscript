@@ -52,6 +52,9 @@ for (cutoff in names(BEZI_tables)) {
   
 }
 
+saveRDS(object = cutoff_tree, "ref.based_prepped_trees.rds")
+saveRDS(object = cutoff_func, "ref.based_prepped_func_tables.rds")
+
 
 # strictest_cutoff <- "nu0.95"
 # set.seed(141515)
@@ -68,12 +71,12 @@ for (cutoff in names(BEZI_tables)) {
   
   taxa_sim_info[[cutoff]] <- mclapply(1:1000,
   
-                                                            function(rep) {
+                                                            function(rep_i) {
   
-                                                              group1_samples <- random_groups$group1[[rep]]
-                                                              group2_samples <- random_groups$group2[[rep]]
+                                                              group1_samples <- random_groups$group1[[rep_i]]
+                                                              group2_samples <- random_groups$group2[[rep_i]]
   
-                                                              func <- random_funcs[rep]
+                                                              func <- random_funcs[rep_i]
   
                                                               orig_contributors <- rownames(cutoff_func[[cutoff]])[which(cutoff_func[[cutoff]][, func] > 0)]
   
@@ -88,25 +91,31 @@ for (cutoff in names(BEZI_tables)) {
                                                               if (length(missing_group2) > 0) { group2_samples <- group2_samples[-missing_group2] }
   
                                                               tmp_abun[ran_contributors, group1_samples] <- (tmp_abun[ran_contributors, group1_samples] + 1) * 1.5
-  
-                                                              return(list(taxa_perturb_abun = tmp_abun,
-                                                                          orig_contributors = orig_contributors,
-                                                                          ran_contributors = ran_contributors,
-                                                                          func = func,
-                                                                          group1 = group1_samples,
-                                                                          group2 = group2_samples,
-                                                                          selected_group = "group1"))
-                                                            }, mc.cores = 30)
+                                                              
+                                                              sim_info <- list(taxa_perturb_abun = tmp_abun,
+                                                                               orig_contributors = orig_contributors,
+                                                                               ran_contributors = ran_contributors,
+                                                                               func = func,
+                                                                               group1 = group1_samples,
+                                                                               group2 = group2_samples,
+                                                                               selected_group = "group1")
+                                                              
+                                                              sim_info_outfile <- paste("taxa_sim_info_sel1.5/taxa_sim_info_cutoff_", cutoff, "_rep", rep_i, ".rds", sep = "")
+                                                              
+                                                              saveRDS(object = sim_info, file = sim_info_outfile)
+                                                              
+                                                              return("Success")
+                                                            }, mc.cores = 1)
 
 
     func_sim_info[[cutoff]] <- mclapply(1:1000,
                                  
-                                                   function(rep) {
+                                                   function(rep_i) {
                                                      
-                                                     group1_samples <- random_groups$group1[[rep]]
-                                                     group2_samples <- random_groups$group2[[rep]]
+                                                     group1_samples <- random_groups$group1[[rep_i]]
+                                                     group2_samples <- random_groups$group2[[rep_i]]
                                                      
-                                                     func <- random_funcs[rep]
+                                                     func <- random_funcs[rep_i]
                                                      
                                                      orig_contributors <- rownames(cutoff_func[[cutoff]])[which(cutoff_func[[cutoff]][, func] > 0)]
                                                      
@@ -120,15 +129,18 @@ for (cutoff in names(BEZI_tables)) {
                                                      
                                                      tmp_abun[orig_contributors, group1_samples] <- (tmp_abun[orig_contributors, group1_samples] + 1) * 1.5
                                                      
-                                                     return(list(taxa_perturb_abun = tmp_abun,
-                                                                 orig_contributors = orig_contributors,
-                                                                 func = func,
-                                                                 group1 = group1_samples,
-                                                                 group2 = group2_samples,
-                                                                 selected_group = "group1"))
-                                                   }, mc.cores = 30)
+                                                     sim_info <- list(taxa_perturb_abun = tmp_abun,
+                                                                      orig_contributors = orig_contributors,
+                                                                      func = func,
+                                                                      group1 = group1_samples,
+                                                                      group2 = group2_samples,
+                                                                      selected_group = "group1")
+                                                     
+                                                     sim_info_outfile <- paste("func_sim_info_sel1.5/func_sim_info_cutoff_", cutoff, "_rep", rep_i, ".rds", sep = "")
+                                                     
+                                                     saveRDS(object = sim_info, file = sim_info_outfile)
+                                                     
+                                                     return("Success")
+                                                   }, mc.cores = 1)
 
 }
-
-saveRDS(object = taxa_sim_info, file = "taxa_sim_info.rds")
-saveRDS(object = func_sim_info, file = "func_sim_info.rds")
