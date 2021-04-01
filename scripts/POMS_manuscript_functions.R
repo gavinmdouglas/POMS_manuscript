@@ -76,142 +76,6 @@ threeWayVennWrapper <- function(set1, set2, set3,
   
 }
 
-
-
-
-POMS_jaccard_wrapper <- function(POMS_output, func_table, num_sig_nodes, num_other_nodes, num_rep) {
-  
-  POMS_focal_func_set <- c()
-  POMS_mean_jaccard <- c()
-  
-  for(rep_index in c(1:num_rep)) {
-    
-    focal_func <- POMS_output[[rep_index]]$func
-    
-    focal_pos_mags <- which(func_table[, focal_func] > 0)
-    
-    pos_indices <- which(POMS_output[[rep_index]]$output$df$num_sig_nodes_pos_enrich >= num_sig_nodes & POMS_output[[rep_index]]$output$df$num_sig_nodes_neg_enrich <= num_other_nodes)
-    neg_indices <- which(POMS_output[[rep_index]]$output$df$num_sig_nodes_neg_enrich >= num_sig_nodes & POMS_output[[rep_index]]$output$df$num_sig_nodes_pos_enrich <= num_other_nodes)
-    
-    pos_sig_func <- POMS_output[[rep_index]]$output$df[pos_indices, "func"]
-    neg_sig_func <- POMS_output[[rep_index]]$output$df[neg_indices, "func"]
-    
-    if(focal_func %in% pos_sig_func) {
-      POMS_focal_func_set <- c(POMS_focal_func_set, "pos")
-    } else if(focal_func %in% neg_sig_func) {
-      POMS_focal_func_set <- c(POMS_focal_func_set, "neg")
-    } else {
-      POMS_focal_func_set <- c(POMS_focal_func_set, "non_sig")
-    }
-    
-    all_sig_func <- c(pos_sig_func, neg_sig_func)
-    
-    sig_func_jaccards <- c()
-    for(sig_func in all_sig_func) {
-      
-      if(sig_func == focal_func) { next }
-      
-      sig_func_pos_mags <- which(func_table[, sig_func] > 0)
-      num_intersecting_mags <- length(which(focal_pos_mags %in% sig_func_pos_mags))
-      num_focal_only_mags <- length(which(! focal_pos_mags %in% sig_func_pos_mags))
-      num_sig_only_mags <- length(which(! sig_func_pos_mags %in% focal_pos_mags))
-      
-      sig_func_jaccard <- num_intersecting_mags / (num_intersecting_mags + num_focal_only_mags + num_sig_only_mags)
-      sig_func_jaccards <- c(sig_func_jaccards, sig_func_jaccard)
-    }
-    
-    if(length(sig_func_jaccards) > 0) {
-      POMS_mean_jaccard <- c(POMS_mean_jaccard, mean(sig_func_jaccards))
-    } else {
-      POMS_mean_jaccard <- c(POMS_mean_jaccard, NA)
-    }
-  }
-  
-  return(POMS_mean_jaccard)
-}
-
-
-wilcoxon_jaccard_wrapper <- function(POMS_output, wilcoxon_output, func_table, p_cutoff, num_rep) {
-  
-  wilcoxon_mean_jaccard <- c()
-  
-  for(rep_index in c(1:num_rep)) {
-    
-    f <- POMS_output[[rep_index]]$func
-    
-    f_pos_mags <- which(func_table[, f] > 0)
-    
-    wilcoxon_func <- colnames(func_table)[which(wilcoxon_output[[rep_index]] < p_cutoff)]
-    
-    wilcoxon_sig_func_jaccards <- c()
-    
-    for(wilcoxon_sig_func in wilcoxon_func) {
-      if(wilcoxon_sig_func == f) { next }
-      
-      wilcoxon_sig_func_pos_mags <- which(func_table[, wilcoxon_sig_func] > 0)
-      
-      num_wilcoxon_intersecting_mags <- length(which(f_pos_mags %in% wilcoxon_sig_func_pos_mags))
-      num_wilcoxon_f_only_mags <- length(which(! f_pos_mags %in% wilcoxon_sig_func_pos_mags))
-      num_wilcoxon_sig_only_mags <- length(which(! wilcoxon_sig_func_pos_mags %in% f_pos_mags))
-      
-      wilcoxon_sig_func_jaccard <- num_wilcoxon_intersecting_mags / (num_wilcoxon_intersecting_mags + num_wilcoxon_f_only_mags + num_wilcoxon_sig_only_mags)
-      wilcoxon_sig_func_jaccards <- c(wilcoxon_sig_func_jaccards, wilcoxon_sig_func_jaccard)
-    }
-    
-    if(length(wilcoxon_sig_func_jaccards) > 0) {
-      wilcoxon_mean_jaccard <- c(wilcoxon_mean_jaccard, mean(wilcoxon_sig_func_jaccards))
-    } else {
-      wilcoxon_mean_jaccard <- c(wilcoxon_mean_jaccard, NA)
-    }
-  }
-  
-  return(wilcoxon_mean_jaccard)
-}
-
-POMS_wilcoxon_rank_wrapper <- function(POMS_output, wilcoxon_output, func_table, num_rep) {
-  
-  func_ids <- c()
-  all_num_pos_mags <- c()
-  POMS_rel_ranks <- c()
-  wilcoxon_rel_ranks <- c()
-  
-  for(rep in c(1:num_rep)) {
-    
-    f <- POMS_output[[rep]]$func
-    
-    func_ids <- c(func_ids, f)
-    
-    f_i <- which(colnames(func_table) == f)
-    
-    num_pos_mags <- length(which(func_table[, f] > 0))
-    all_num_pos_mags <- c(all_num_pos_mags, num_pos_mags)
-    
-    wilcoxon_rank <- rank(wilcoxon_output[[rep]])[f_i]
-    wilcoxon_rel_ranks <- c(wilcoxon_rel_ranks, wilcoxon_rank / length(wilcoxon_output[[rep]]))
-    
-    pos_num_sig_node_diff <- abs(POMS_output[[rep]]$output$df$num_sig_nodes_pos_enrich - POMS_output[[rep]]$output$df$num_sig_nodes_neg_enrich)
-    names(pos_num_sig_node_diff) <- rownames(POMS_output[[rep]]$output$df)
-    
-    if(f %in% names(pos_num_sig_node_diff)) {
-      f_POMS_i <- which(names(pos_num_sig_node_diff) == f)
-      POMS_focal_rank <- rank(-pos_num_sig_node_diff)[f_POMS_i]
-      POMS_rel_ranks <- c(POMS_rel_ranks, POMS_focal_rank / length(pos_num_sig_node_diff))
-    } else {
-      POMS_rel_ranks <- c(POMS_rel_ranks, NA)
-    }
-  }
-  
-  ranking_df <- data.frame(replicate=1:num_rep,
-                           func=func_ids,
-                           wilcoxon_rel_ranks=wilcoxon_rel_ranks,
-                           POMS_rel_ranks=POMS_rel_ranks,
-                           all_num_pos_mags=all_num_pos_mags)
-  
-  return(ranking_df)
-  
-}
-
-
 calc_func_abun <- function(in_abun, in_func, ncores=1) {
   
   out_df <- data.frame(matrix(NA, nrow=ncol(in_func), ncol=ncol(in_abun)))
@@ -303,39 +167,246 @@ limma_voom_two_group_TMM <- function(table, group1, group2) {
   
 }
 
-
-run_alt.tools <- function(func_abun_table, group1_samples, group2_samples, USCGs) {
+run_alt.tools <- function(func_abun_table, group1_samples, group2_samples, USCGs=NULL,
+                          tools_to_run=c("aldex2", "deseq2", "limma.voom", "wilcoxon.relab", "wilcoxon.musicc")) {
   
-  func_abun_table_ceil <- ceiling(func_abun_table)
+  if (length(which(!tools_to_run %in% c("aldex2", "deseq2", "limma.voom", "wilcoxon.relab", "wilcoxon.musicc"))) > 0) {
+    stop("At least one tool specified is not in the expected set.")
+  }
+  
+  if (length(tools_to_run) == 0) {
+    stop("At least one tool to run needs to be given.")
+  }
+  
+  if (("wilcoxon.musicc" %in% tools_to_run) && (is.null(USCGs))) {
+    stop("Must set USCGs argument to run wilcoxon.musicc")
+  }
+  
+  if (("aldex2" %in% tools_to_run) || ("deseq2" %in% tools_to_run)) {
+    func_abun_table_ceil <- ceiling(func_abun_table)
+  }
   
   DA_out <- list()
   
-  DA_out[["aldex2"]] <- run_2group_ALDEx2(in_table = func_abun_table_ceil,
-                                          group1_samples = group1_samples,
-                                          group2_samples = group2_samples)
+  if ("aldex2" %in% tools_to_run) {
+    DA_out[["aldex2"]] <- run_2group_ALDEx2(in_table = func_abun_table_ceil,
+                                            group1_samples = group1_samples,
+                                            group2_samples = group2_samples)
+    
+    DA_out[["aldex2"]]$BH_corr_p <- DA_out[["aldex2"]]$wi.eBH
+  }
   
-  DA_out[["deseq2"]] <- deseq2_default_two_groups(table = func_abun_table_ceil,
-                                                  group1 = group1_samples,
-                                                  group2 = group2_samples)
+  if ("deseq2" %in% tools_to_run) {
+    DA_out[["deseq2"]] <- deseq2_default_two_groups(table = func_abun_table_ceil,
+                                                    group1 = group1_samples,
+                                                    group2 = group2_samples)
+    
+    DA_out[["deseq2"]]$BH_corr_p <- p.adjust(DA_out[["deseq2"]]$pvalue, "BH")
+  }
   
-  DA_out[["limma.voom"]] <- limma_voom_two_group_TMM(table = func_abun_table,
-                                                     group1 = group1_samples,
-                                                     group2 = group2_samples)
+  if ("limma.voom" %in% tools_to_run) {
+    DA_out[["limma.voom"]] <- limma_voom_two_group_TMM(table = func_abun_table,
+                                                       group1 = group1_samples,
+                                                       group2 = group2_samples)
+    
+    DA_out[["limma.voom"]]$BH_corr_p <- p.adjust(DA_out[["limma.voom"]]$P.Value, "BH")
+  }
   
+  if ("wilcoxon.relab" %in% tools_to_run) {
+    DA_out[["wilcoxon.relab"]] <- wilcoxon_2group_pvalues(intable = func_abun_table,
+                                                          group1_samples = group1_samples,
+                                                          group2_samples = group2_samples,
+                                                          convert_relab = TRUE)
+    
+    DA_out[["wilcoxon.relab"]]$BH_corr_p <- p.adjust(DA_out[["wilcoxon.relab"]]$wilcox_p, "BH")
+  }
   
-  DA_out[["wilcoxon.relab"]] <- wilcoxon_2group_pvalues(intable = func_abun_table,
-                                                        group1_samples = group1_samples,
-                                                        group2_samples = group2_samples,
-                                                        convert_relab = TRUE)
-  
-  dataset_uscg_set <- USCGs[which(USCGs %in% rownames(func_abun_table))]
-  func_abun_table_musicc <- data.frame(sweep(func_abun_table, 2, colMedians(as.matrix(func_abun_table[dataset_uscg_set, ])), `/`))
-  
-  DA_out[["wilcoxon.musicc"]] <- wilcoxon_2group_pvalues(intable = func_abun_table_musicc,
-                                                         group1_samples = group1_samples,
-                                                         group2_samples = group2_samples,
-                                                         convert_relab = FALSE)
+  if ("wilcoxon.musicc" %in% tools_to_run) {
+    
+    dataset_uscg_set <- USCGs[which(USCGs %in% rownames(func_abun_table))]
+    func_abun_table_musicc <- data.frame(sweep(func_abun_table, 2, colMedians(as.matrix(func_abun_table[dataset_uscg_set, ])), `/`))
+    
+    DA_out[["wilcoxon.musicc"]] <- wilcoxon_2group_pvalues(intable = func_abun_table_musicc,
+                                                           group1_samples = group1_samples,
+                                                           group2_samples = group2_samples,
+                                                           convert_relab = FALSE)
+    
+    DA_out[["wilcoxon.musicc"]]$BH_corr_p <- p.adjust(DA_out[["wilcoxon.musicc"]]$wilcox_p, "BH")
+  }
   
   return(DA_out)
   
 }
+
+
+sim_jaccard_wrapper <- function(focal_func, sig_funcs, func_table) {
+  
+  focal_pos_mags <- which(func_table[, focal_func] > 0)
+  
+  sig_func_jaccards <- c()
+  
+  for (sig_func in sig_funcs) {
+    
+    if (sig_func == focal_func) { next }
+    
+    sig_func_pos_mags <- which(func_table[, sig_func] > 0)
+    num_intersecting_mags <- length(which(focal_pos_mags %in% sig_func_pos_mags))
+    num_focal_only_mags <- length(which(!focal_pos_mags %in% sig_func_pos_mags))
+    num_sig_only_mags <- length(which(!sig_func_pos_mags %in% focal_pos_mags))
+    
+    sig_func_jaccard <- num_intersecting_mags / (num_intersecting_mags + num_focal_only_mags + num_sig_only_mags)
+    sig_func_jaccards <- c(sig_func_jaccards, sig_func_jaccard)
+  }
+  
+  if (length(sig_func_jaccards) > 0) {
+    return(mean(sig_func_jaccards))
+  } else {
+    return(NA)
+  }
+}
+
+
+simulation_summaries <- function(POMS_sims,func_table, alt_tool_sims=NULL, focal_func_present = TRUE,
+                                 skip_alt_tools=FALSE, num_cores=1, sig_cutoffs=c(0.25, 0.05, 0.001)) {
+  
+  num_tested_functions <- ncol(func_table)
+  
+  if (length(alt_tool_sims) != length(POMS_sims)) {
+    stop("Different number of sim reps between POMS and alt tools lists.") 
+  }
+  
+  if ( (!skip_alt_tools) && (is.null(alt_tool_sims)) ) {
+    stop("Option skip_alt_tools is FALSE by no alt_tool_sums object specified.") 
+  }
+  
+  sim_summaries <- data.frame(matrix(NA, ncol = 0, nrow = length(POMS_sims)))
+  
+  if (focal_func_present) {
+    sim_summaries[, "focal_func"] <- sapply(POMS_sims, function(x) { return(x$func) })
+    sim_summaries[, "num_focal_pos_mags"] <- sapply(POMS_sims, function(x) { return(length(which(func_table[, x$func] > 0)))})
+  }
+  
+  sim_summaries[, "POMS_num_sig_nodes"] <- sapply(POMS_sims, function(x) { return(length(x$output$sig_nodes)) })
+  
+  for (sig_cutoff in sig_cutoffs) {
+    
+    if (focal_func_present) {
+      POMS_raw_summary <- as.data.frame(do.call(rbind, mclapply(POMS_sims, POMS_sim_rep_summary, sig_cutoff = sig_cutoff, func_table = func_table, mc.cores = num_cores)))
+      colnames(POMS_raw_summary) <- paste(colnames(POMS_raw_summary), as.character(sig_cutoff), sep = "_")
+      sim_summaries <- cbind(sim_summaries, POMS_raw_summary)
+    } else {
+      POMS_col <- paste("POMS_sig", as.character(sig_cutoff), sep = "_")
+      sim_summaries[, POMS_col] <- sapply(POMS_sims, function(x) { return(length(which(x$output$df$multinomial_corr < sig_cutoff)) / num_tested_functions) })
+    }
+    
+    if (!skip_alt_tools) {
+      
+      if ("aldex2" %in% names(alt_tool_sims[[1]])) { stop("Need to add code aldex2") }
+      if ("deseq2" %in% names(alt_tool_sims[[1]])) { stop("Need to add code deseq2") }
+      if ("limma.voom" %in% names(alt_tool_sims[[1]])) { stop("Need to add code limma.voom") }
+      
+      
+      if ("wilcoxon.relab.out" %in% names(alt_tool_sims[[1]])) {
+        
+        if (focal_func_present) {
+          wilcoxon.relab_raw <- as.data.frame(do.call(rbind, mclapply(1:length(alt_tool_sims), 
+                                                                      function(i) {
+                                                                        
+                                                                        return(Wilcoxon_sim_rep_summary(alt.tool_sim_rep = alt_tool_sims[[i]]$wilcoxon.relab.out,
+                                                                                                        focal_func = sim_summaries[i, "focal_func"],
+                                                                                                        func_table = func_table,
+                                                                                                        sig_cutoff = sig_cutoff,
+                                                                                                        tool_name = "wilcoxon.relab"))
+                                                                        
+                                                                      }, mc.cores = num_cores)))
+          
+          colnames(wilcoxon.relab_raw) <- paste(colnames(wilcoxon.relab_raw), as.character(sig_cutoff), sep = "_")
+          sim_summaries <- cbind(sim_summaries, wilcoxon.relab_raw)
+          
+        } else {
+          wilcoxon.relab_col <- paste("wilcoxon.relab", as.character(sig_cutoff), sep = "_")
+          sim_summaries[, wilcoxon.relab_col] <- sapply(alt_tool_sims, function(x) { return(length(which(p.adjust(x$wilcoxon.relab.out$wilcox_p, "BH") < sig_cutoff)) / num_tested_functions) })
+        }
+      }
+      
+      if ("wilcoxon.musicc.out" %in% names(alt_tool_sims[[1]])) {
+        
+        if (focal_func_present) {
+          wilcoxon.musicc_raw <- as.data.frame(do.call(rbind, mclapply(1:length(alt_tool_sims), 
+                                                                       function(i) {
+                                                                         
+                                                                         return(Wilcoxon_sim_rep_summary(alt.tool_sim_rep = alt_tool_sims[[i]]$wilcoxon.musicc.out,
+                                                                                                         focal_func = sim_summaries[i, "focal_func"],
+                                                                                                         func_table = func_table,
+                                                                                                         sig_cutoff = sig_cutoff,
+                                                                                                         tool_name = "wilcoxon.musicc"))
+                                                                         
+                                                                       }, mc.cores = num_cores)))
+          
+          colnames(wilcoxon.musicc_raw) <- paste(colnames(wilcoxon.musicc_raw), as.character(sig_cutoff), sep = "_")
+          sim_summaries <- cbind(sim_summaries, wilcoxon.musicc_raw)
+        } else {
+          wilcoxon.musicc_col <- paste("wilcoxon.musicc", as.character(sig_cutoff), sep = "_")
+          sim_summaries[, wilcoxon.musicc_col] <- sapply(alt_tool_sims, function(x) { return(length(which(p.adjust(x$wilcoxon.musicc.out$wilcox_p, "BH") < sig_cutoff)) / num_tested_functions) })
+        }
+      }
+      
+    }
+    
+  }
+  
+  return(sim_summaries)
+  
+}
+
+POMS_sim_rep_summary <- function(POMS_sim_rep, sig_cutoff, func_table) {
+  
+  focal_func <- POMS_sim_rep$func
+  sig_funcs <- rownames(POMS_sim_rep$output$df)[which(POMS_sim_rep$output$df$multinomial_corr < sig_cutoff)]
+  sig_funcs_P <- POMS_sim_rep$output$df[sig_funcs, "multinomial_corr"]
+  
+  prop_sig <- length(sig_funcs) / ncol(func_table)
+  
+  if (focal_func %in% sig_funcs) {
+    focal_rank <- rank(sig_funcs_P)[which(sig_funcs == focal_func)]
+  } else {
+    focal_rank <- NA  
+  }
+  
+  focal_rel_rank <- focal_rank / length(sig_funcs)
+  focal_jaccard <- sim_jaccard_wrapper(focal_func = focal_func, sig_funcs = sig_funcs, func_table = func_table)
+  
+  stats <- c(prop_sig, focal_rank, focal_rel_rank, focal_jaccard)
+  names(stats) <- c("POMS_sig", "POMS_rank", "POMS_rel_rank", "POMS_jaccard")
+  
+  return(stats)
+  
+}
+
+
+Wilcoxon_sim_rep_summary <- function(alt.tool_sim_rep, focal_func, func_table, sig_cutoff, tool_name) {
+  
+  corr_P <- p.adjust(alt.tool_sim_rep$wilcox_p, "BH")
+  
+  sig_funcs <- rownames(alt.tool_sim_rep)[which(corr_P < sig_cutoff)]
+  sig_funcs_P <- corr_P[which(corr_P < sig_cutoff)]
+  
+  prop_sig <- length(sig_funcs) / ncol(func_table)
+  
+  if (focal_func %in% sig_funcs) {
+    focal_rank <- rank(sig_funcs_P)[which(sig_funcs == focal_func)]
+  } else {
+    focal_rank <- NA  
+  }
+  
+  focal_rel_rank <- focal_rank / length(sig_funcs)
+  focal_jaccard <- sim_jaccard_wrapper(focal_func = focal_func, sig_funcs = sig_funcs, func_table = func_table)
+  
+  stats <- c(prop_sig, focal_rank, focal_rel_rank, focal_jaccard)
+  names(stats) <- c("sig", "rank", "rel_rank", "jaccard")
+  names(stats) <- paste(tool_name, names(stats), sep = "_")
+  
+  return(stats)
+  
+}
+
