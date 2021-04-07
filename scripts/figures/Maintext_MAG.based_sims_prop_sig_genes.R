@@ -1,15 +1,14 @@
-rm(list=ls(all.names=TRUE))
+rm(list = ls(all.names = TRUE))
 
 library(cowplot)
 library(ggExtra)
 library(ggplot2)
 library(ggpubr)
 
-setwd("/home/gavin/github_repos/POMS_manuscript/data/")
+setwd("~/github_repos/POMS_manuscript/data/intermediates/MAG.based_simulations/")
 
-# Read in RDS objects that were previously generated.
-MAG_sim_taxa.based_summary <- readRDS(file = "MAG_sim_summaries/MAG_sim_taxa.based_summary.rds")
-MAG_sim_func.based_summary <- readRDS(file = "MAG_sim_summaries/MAG_sim_func.based_summary.rds")
+taxa_rand_summary_POMS_wilcoxon.musicc <- readRDS(file = "simulation_summaries/taxa_rand_summary_POMS_wilcoxon.musicc.rds")
+func_rand_summary_POMS_wilcoxon.musicc <- readRDS(file = "simulation_summaries/func_rand_summary_POMS_wilcoxon.musicc.rds")
 
 # Plot scatterplot of prop sig KOs from POMS vs wilcoxon test
 MAG_sim_taxa_sig3_other0_vs_wilcoxon <- ggplot(MAG_sim_taxa.based_summary, aes(x=POMS_total_sig_ko_either3_other0, y=wilcoxon_sig_ko_0.0001)) +
@@ -120,8 +119,8 @@ sd(MAG_sim_func.based_summary$POMS_total_sig_ko_either3_other0)
 
 # Percent increase:
 (( mean(MAG_sim_func.based_summary$POMS_total_sig_ko_either3_other0) - 
-   mean(MAG_sim_taxa.based_summary$POMS_total_sig_ko_either3_other0) ) / 
-  mean(MAG_sim_taxa.based_summary$POMS_total_sig_ko_either3_other0)) * 100
+     mean(MAG_sim_taxa.based_summary$POMS_total_sig_ko_either3_other0) ) / 
+    mean(MAG_sim_taxa.based_summary$POMS_total_sig_ko_either3_other0)) * 100
 
 
 
