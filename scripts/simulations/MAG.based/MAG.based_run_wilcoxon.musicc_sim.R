@@ -19,7 +19,7 @@ ptm <- proc.time()
 func_sim_alt.tools <- mclapply(X = 1:1000, FUN = function(rep_i) {
 
   prepped_func_sim_info <- readRDS(paste("MAG.based_prepped_func_sim_info_sel1.5/func_sim_info_rep", as.character(rep_i), ".rds", sep = ""))
-  
+
   prepped_func_abun <- readRDS(paste("func_abun_tables_func_sim_sel1.5/func_abun_tab_rep", as.character(rep_i), ".rds", sep = ""))
 
   wilcoxon.musicc_out <- run_alt.tools(func_abun_table = prepped_func_abun,
@@ -27,9 +27,10 @@ func_sim_alt.tools <- mclapply(X = 1:1000, FUN = function(rep_i) {
                                        group2_samples = prepped_func_sim_info$group2,
                                        USCGs = musicc_uscgs,
                                        tools_to_run = "wilcoxon.musicc")
+
+  wilcoxon.musicc_out$func <- prepped_func_sim_info$func
   
-  return(list(func = prepped_func_sim_info$func,
-              wilcoxon.musicc = wilcoxon.musicc_out))
+  return(wilcoxon.musicc_out)
 }
 , mc.cores = 30)
 
@@ -54,8 +55,9 @@ taxa_sim_alt.tools <- mclapply(X = 1:1000, FUN = function(rep_i) {
                                        USCGs = musicc_uscgs,
                                        tools_to_run = "wilcoxon.musicc")
   
-  return(list(func = prepped_func_sim_info$func,
-              wilcoxon.musicc = wilcoxon.musicc_out))
+  wilcoxon.musicc_out$func <- prepped_taxa_sim_info$func
+  
+  return(wilcoxon.musicc_out)
 }
 , mc.cores = 30)
 

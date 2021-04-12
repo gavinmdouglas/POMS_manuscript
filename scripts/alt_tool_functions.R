@@ -66,13 +66,13 @@ calc_func_abun <- function(in_abun, in_func, ncores=1) {
 }
 
 
-deseq2_default_two_groups <- function(table, group1, group2, alpha.set=0.05, divide_sum=1) {
+deseq2_default_two_groups <- function(intable, group1, group2, alpha.set=0.05, divide_sum=1) {
   
-  group1_subset <- group1[which(group1 %in% colnames(table))]
-  group2_subset <- group2[which(group2 %in% colnames(table))]
+  group1_subset <- group1[which(group1 %in% colnames(intable))]
+  group2_subset <- group2[which(group2 %in% colnames(intable))]
   
   # Create metadata df.
-  metadata_tab <- data.frame(matrix(NA, nrow=(length(group1_subset) + length(group2_subset)), ncol=1))
+  metadata_tab <- data.frame(matrix(NA, nrow = (length(group1_subset) + length(group2_subset)), ncol = 1))
   rownames(metadata_tab) <- c(group1_subset, group2_subset)
   colnames(metadata_tab) <- c("group")
   metadata_tab[group1_subset, "group"] <- "group1"
@@ -80,7 +80,7 @@ deseq2_default_two_groups <- function(table, group1, group2, alpha.set=0.05, div
   metadata_tab$group <- as.factor(metadata_tab$group)
   
   # Input count df needs to have columns in same order as metadata rows.
-  table_subset <- floor(table[, rownames(metadata_tab)] / divide_sum)
+  table_subset <- floor(intable[, rownames(metadata_tab)] / divide_sum)
   
   dds <- DESeqDataSetFromMatrix(countData = table_subset,
                                 colData = metadata_tab,
@@ -162,7 +162,7 @@ run_alt.tools <- function(func_abun_table, group1_samples, group2_samples, USCGs
   }
   
   if ("deseq2" %in% tools_to_run) {
-    DA_out[["deseq2"]] <- deseq2_default_two_groups(table = func_abun_table_ceil,
+    DA_out[["deseq2"]] <- deseq2_default_two_groups(intable = func_abun_table_ceil,
                                                     group1 = group1_samples,
                                                     group2 = group2_samples)
     

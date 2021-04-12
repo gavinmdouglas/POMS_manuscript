@@ -96,56 +96,29 @@ simulation_summaries <- function(POMS_sims,func_table, alt_tool_sims=NULL, focal
       sim_summaries[, POMS_col] <- sapply(POMS_sims, function(x) { return(length(which(x$output$df$multinomial_corr < sig_cutoff)) / num_tested_functions) })
     }
     
-    if (!skip_alt_tools) {
+    for (alt_tool in names(alt_tool_sims[[1]])) {
+
+      if (alt_tool == "func") { next }
       
-      if ("aldex2" %in% names(alt_tool_sims[[1]])) { stop("Need to add code aldex2") }
-      if ("deseq2" %in% names(alt_tool_sims[[1]])) { stop("Need to add code deseq2") }
-      if ("limma.voom" %in% names(alt_tool_sims[[1]])) { stop("Need to add code limma.voom") }
-      
-      
-      if ("wilcoxon.relab.out" %in% names(alt_tool_sims[[1]])) {
+      if (focal_func_present) {
         
-        if (focal_func_present) {
-          wilcoxon.relab_raw <- as.data.frame(do.call(rbind, mclapply(1:length(alt_tool_sims), 
-                                                                      function(i) {
-                                                                        
-                                                                        return(Wilcoxon_sim_rep_summary(alt.tool_sim_rep = alt_tool_sims[[i]]$wilcoxon.relab.out,
-                                                                                                        focal_func = sim_summaries[i, "focal_func"],
-                                                                                                        func_table = func_table,
-                                                                                                        sig_cutoff = sig_cutoff,
-                                                                                                        tool_name = "wilcoxon.relab"))
-                                                                        
-                                                                      }, mc.cores = num_cores)))
-          
-          colnames(wilcoxon.relab_raw) <- paste(colnames(wilcoxon.relab_raw), as.character(sig_cutoff), sep = "_")
-          sim_summaries <- cbind(sim_summaries, wilcoxon.relab_raw)
-          
-        } else {
-          wilcoxon.relab_col <- paste("wilcoxon.relab", as.character(sig_cutoff), sep = "_")
-          sim_summaries[, wilcoxon.relab_col] <- sapply(alt_tool_sims, function(x) { return(length(which(p.adjust(x$wilcoxon.relab.out$wilcox_p, "BH") < sig_cutoff)) / num_tested_functions) })
-        }
-      }
-      
-      if ("wilcoxon.musicc.out" %in% names(alt_tool_sims[[1]])) {
+        rep_summary_raw <- as.data.frame(do.call(rbind, mclapply(1:length(alt_tool_sims), 
+                                                         function(i) {
+                                                           
+                                                           return(alt_sim_rep_summary(alt.tool_sim_rep = alt_tool_sims[[i]][[alt_tool]],
+                                                                                      focal_func = sim_summaries[i, "focal_func"],
+                                                                                      func_table = func_table,
+                                                                                      sig_cutoff = sig_cutoff,
+                                                                                      tool_name = alt_tool))
+                                                           
+                                                         }, mc.cores = num_cores)))
         
-        if (focal_func_present) {
-          wilcoxon.musicc_raw <- as.data.frame(do.call(rbind, mclapply(1:length(alt_tool_sims), 
-                                                                       function(i) {
-                                                                         
-                                                                         return(Wilcoxon_sim_rep_summary(alt.tool_sim_rep = alt_tool_sims[[i]]$wilcoxon.musicc.out,
-                                                                                                         focal_func = sim_summaries[i, "focal_func"],
-                                                                                                         func_table = func_table,
-                                                                                                         sig_cutoff = sig_cutoff,
-                                                                                                         tool_name = "wilcoxon.musicc"))
-                                                                         
-                                                                       }, mc.cores = num_cores)))
-          
-          colnames(wilcoxon.musicc_raw) <- paste(colnames(wilcoxon.musicc_raw), as.character(sig_cutoff), sep = "_")
-          sim_summaries <- cbind(sim_summaries, wilcoxon.musicc_raw)
-        } else {
-          wilcoxon.musicc_col <- paste("wilcoxon.musicc", as.character(sig_cutoff), sep = "_")
-          sim_summaries[, wilcoxon.musicc_col] <- sapply(alt_tool_sims, function(x) { return(length(which(p.adjust(x$wilcoxon.musicc.out$wilcox_p, "BH") < sig_cutoff)) / num_tested_functions) })
-        }
+        colnames(rep_summary_raw) <- paste(colnames(rep_summary_raw), as.character(sig_cutoff), sep = "_")
+        sim_summaries <- cbind(sim_summaries, rep_summary_raw)
+        
+      } else {
+        alt_tool_col <- paste(alt_tool, as.character(sig_cutoff), sep = "_")
+        sim_summaries[, alt_tool_col] <- sapply(alt_tool_sims, function(x) { return(length(which(x[[alt_tool]]$BH_corr_p < sig_cutoff)) / num_tested_functions) })
       }
       
     }
@@ -155,6 +128,7 @@ simulation_summaries <- function(POMS_sims,func_table, alt_tool_sims=NULL, focal
   return(sim_summaries)
   
 }
+
 
 POMS_sim_rep_summary <- function(POMS_sim_rep, sig_cutoff, func_table) {
   
@@ -181,9 +155,9 @@ POMS_sim_rep_summary <- function(POMS_sim_rep, sig_cutoff, func_table) {
 }
 
 
-Wilcoxon_sim_rep_summary <- function(alt.tool_sim_rep, focal_func, func_table, sig_cutoff, tool_name) {
+alt_sim_rep_summary <- function(alt.tool_sim_rep, focal_func, func_table, sig_cutoff, tool_name) {
   
-  corr_P <- p.adjust(alt.tool_sim_rep$wilcox_p, "BH")
+  corr_P <- alt.tool_sim_rep$BH_corr_p
   
   sig_funcs <- rownames(alt.tool_sim_rep)[which(corr_P < sig_cutoff)]
   sig_funcs_P <- corr_P[which(corr_P < sig_cutoff)]
