@@ -1,0 +1,28 @@
+num_nodes_enriched	num_sig_nodes_group1_enrich	num_sig_nodes_group2_enrich	num_nonsig_nodes_enrich	multinomial_p	multinomial_corr	description	func	dataset
+20	11	0	9	0.000836718339147275	0.218605851522868	pyrB, PYR2; aspartate carbamoyltransferase catalytic subunit [EC:2.1.3.2]	K00609	Obesity 1
+25	14	2	9	0.000935333234815738	0.218605851522868	thiE; thiamine-phosphate pyrophosphorylase [EC:2.5.1.3]	K00788	Obesity 1
+31	17	1	13	7.15291865489752e-05	0.119365601886091	thiD; hydroxymethylpyrimidine/phosphomethylpyrimidine kinase [EC:2.7.1.49 2.7.4.7]	K00941	Obesity 1
+13	9	2	2	0.000823581668574477	0.218605851522868	pepX; X-Pro dipeptidyl-peptidase [EC:3.4.14.11]	K01281	Obesity 1
+21	13	1	7	0.000346471058142757	0.157287901984243	purE; 5-(carboxyamino)imidazole ribonucleotide mutase [EC:5.4.99.18]	K01588	Obesity 1
+27	14	1	12	0.000935443077615961	0.218605851522868	cynT, can; carbonic anhydrase [EC:4.2.1.1]	K01673	Obesity 1
+23	13	0	10	0.000149349144303458	0.141290521320163	purC; phosphoribosylaminoimidazole-succinocarboxamide synthase [EC:6.3.2.6]	K01923	Obesity 1
+20	13	1	6	0.000186030969480135	0.141290521320163	purM; phosphoribosylformylglycinamidine cyclo-ligase [EC:6.3.3.1]	K01933	Obesity 1
+16	10	0	6	0.000778587276606721	0.218605851522868	purD; phosphoribosylamine---glycine ligase [EC:6.3.4.13]	K01945	Obesity 1
+21	13	1	7	0.000346471058142757	0.157287901984243	PFAS, purL; phosphoribosylformylglycinamidine synthase [EC:6.3.5.3]	K01952	Obesity 1
+27	13	0	14	0.00036241452070102	0.157287901984243	hisF; imidazole glycerol-phosphate synthase subunit HisF [EC:4.3.2.10]	K02500	Obesity 1
+32	15	0	17	7.85816997275124e-05	0.119365601886091	K09861; uncharacterized protein	K09861	Obesity 1
+33	16	1	16	0.000453630236503458	0.172266082312188	coaBC, dfp; phosphopantothenoylcysteine decarboxylase / phosphopantothenate---cysteine ligase [EC:4.1.1.36 6.3.2.5]	K13038	Obesity 1
+24	11	0	13	0.00121227030406934	0.244101957523319	nadB; L-aspartate oxidase [EC:1.4.3.16]	K00278	Obesity 2
+12	10	0	2	9.76150113128033e-05	0.0902288087901345	cydA; cytochrome bd ubiquinol oxidase subunit I [EC:7.1.1.7]	K00425	Obesity 2
+13	10	1	2	0.000509701315673723	0.235566958060539	cydB; cytochrome bd ubiquinol oxidase subunit II [EC:7.1.1.7]	K00426	Obesity 2
+18	11	0	7	0.000869922295958259	0.244101957523319	psd, PISD; phosphatidylserine decarboxylase [EC:4.1.1.65]	K01613	Obesity 2
+13	9	0	4	0.00123239358288008	0.244101957523319	menB; naphthoate synthase [EC:4.1.3.36]	K01661	Obesity 2
+13	11	0	2	1.77717697763313e-05	0.0492811175897666	ABC-2.TX; HlyD family secretion protein	K01993	Obesity 2
+12	10	0	2	9.76150113128033e-05	0.0902288087901345	ispB; octaprenyl-diphosphate synthase [EC:2.5.1.90]	K02523	Obesity 2
+15	9	5	1	0.000637104907573313	0.244101957523319	tatA; sec-independent protein translocase protein TatA	K03116	Obesity 2
+12	9	0	3	0.000923020083383746	0.244101957523319	tonB; periplasmic protein TonB	K03832	Obesity 2
+13	9	0	4	0.00123239358288008	0.244101957523319	sppA; protease IV [EC:3.4.21.-]	K04773	Obesity 2
+10	0	8	2	0.000932533896517917	0.244101957523319	spoVAD; stage V sporulation protein AD	K06406	Obesity 2
+13	9	0	4	0.00123239358288008	0.244101957523319	pepO; putative endopeptidase [EC:3.4.24.-]	K07386	Obesity 2
+14	0	10	4	0.000472877740269521	0.235566958060539	K09779; uncharacterized protein	K09779	Obesity 2
+13	10	0	3	0.00037261449505182	0.235566958060539	bcrC; undecaprenyl-diphosphatase [EC:3.6.1.27]	K19302	Obesity 2
