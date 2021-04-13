@@ -1,0 +1,154 @@
+num_nodes_enriched	num_sig_nodes_group1_enrich	num_sig_nodes_group2_enrich	num_nonsig_nodes_enrich	multinomial_p	multinomial_corr	description	func	dataset
+30	13	1	16	0.00343351948954751	0.164786236275176	hisD; histidinol dehydrogenase [EC:1.1.1.23]	K00013	Obesity 1
+22	11	1	10	0.00714996759608915	0.239166416089182	HIBADH, mmsB; 3-hydroxyisobutyrate dehydrogenase [EC:1.1.1.31]	K00020	Obesity 1
+23	13	2	8	0.00185744585015606	0.138070141528267	argC; N-acetyl-gamma-glutamyl-phosphate reductase [EC:1.2.1.38]	K00145	Obesity 1
+29	12	1	16	0.00524473488420781	0.200498722144858	E1.17.4.1A, nrdA, nrdE; ribonucleoside-diphosphate reductase alpha chain [EC:1.17.4.1]	K00525	Obesity 1
+19	10	1	8	0.00854176984187114	0.24416525399746	E1.17.4.1B, nrdB, nrdF; ribonucleoside-diphosphate reductase beta chain [EC:1.17.4.1]	K00526	Obesity 1
+20	11	1	8	0.00306854606416978	0.164228585354367	purH; phosphoribosylaminoimidazolecarboxamide formyltransferase / IMP cyclohydrolase [EC:2.1.2.3 3.5.4.10]	K00602	Obesity 1
+20	11	0	9	0.000836718339147275	0.10430190315418	pyrB, PYR2; aspartate carbamoyltransferase catalytic subunit [EC:2.1.3.2]	K00609	Obesity 1
+26	0	10	16	0.00260448657799098	0.164228585354367	E2.4.1.20; cellobiose phosphorylase [EC:2.4.1.20]	K00702	Obesity 1
+21	12	1	8	0.00135601126136876	0.120956204514093	pyrE; orotate phosphoribosyltransferase [EC:2.4.2.10]	K00762	Obesity 1
+25	13	2	10	0.00394107590493695	0.164786236275176	purF, PPAT; amidophosphoribosyltransferase [EC:2.4.2.14]	K00764	Obesity 1
+25	14	2	9	0.000935333234815738	0.10430190315418	thiE; thiamine-phosphate pyrophosphorylase [EC:2.5.1.3]	K00788	Obesity 1
+33	16	3	14	0.0027676663284585	0.164228585354367	ribH, RIB4; 6,7-dimethyl-8-ribityllumazine synthase [EC:2.5.1.78]	K00794	Obesity 1
+26	12	1	13	0.00619940818535602	0.21688472574196	hisC; histidinol-phosphate aminotransferase [EC:2.6.1.9]	K00817	Obesity 1
+32	12	1	19	0.00505051813779252	0.198752743187247	ppk; polyphosphate kinase [EC:2.7.4.1]	K00937	Obesity 1
+23	10	0	13	0.00302368299965232	0.164228585354367	ndk, NME; nucleoside-diphosphate kinase [EC:2.7.4.6]	K00940	Obesity 1
+31	17	1	13	7.15291865489752e-05	0.0525711571177058	thiD; hydroxymethylpyrimidine/phosphomethylpyrimidine kinase [EC:2.7.1.49 2.7.4.7]	K00941	Obesity 1
+26	11	0	15	0.00129075057840173	0.120956204514093	E3.1.11.2, xthA; exodeoxyribonuclease III [EC:3.1.11.2]	K01142	Obesity 1
+22	12	1	9	0.00205534664159461	0.144739674023873	URA4, pyrC; dihydroorotase [EC:3.5.2.3]	K01465	Obesity 1
+15	8	0	7	0.0081955518606878	0.24416525399746	lysA; diaminopimelate decarboxylase [EC:4.1.1.20]	K01586	Obesity 1
+21	13	1	7	0.000346471058142757	0.0692729469568521	purE; 5-(carboxyamino)imidazole ribonucleotide mutase [EC:5.4.99.18]	K01588	Obesity 1
+18	10	0	8	0.00171861112956582	0.136555122564904	pyrF; orotidine-5'-phosphate decarboxylase [EC:4.1.1.23]	K01591	Obesity 1
+27	14	1	12	0.000935443077615961	0.10430190315418	cynT, can; carbonic anhydrase [EC:4.2.1.1]	K01673	Obesity 1
+33	14	2	17	0.00822664594077059	0.24416525399746	ilvD; dihydroxy-acid dehydratase [EC:4.2.1.9]	K01687	Obesity 1
+29	13	1	15	0.00374413366595241	0.164786236275176	hisA; phosphoribosylformimino-5-aminoimidazole carboxamide ribotide isomerase [EC:5.3.1.16]	K01814	Obesity 1
+13	1	8	4	0.0085768063810767	0.24416525399746	GARS, glyS1; glycyl-tRNA synthetase [EC:6.1.1.14]	K01880	Obesity 1
+23	13	0	10	0.000149349144303458	0.0622273592911052	purC; phosphoribosylaminoimidazole-succinocarboxamide synthase [EC:6.3.2.6]	K01923	Obesity 1
+20	13	1	6	0.000186030969480135	0.0622273592911052	purM; phosphoribosylformylglycinamidine cyclo-ligase [EC:6.3.3.1]	K01933	Obesity 1
+23	12	2	9	0.00632175209561766	0.21688472574196	argG, ASS1; argininosuccinate synthase [EC:6.3.4.5]	K01940	Obesity 1
+16	10	0	6	0.000778587276606721	0.10430190315418	purD; phosphoribosylamine---glycine ligase [EC:6.3.4.13]	K01945	Obesity 1
+21	13	1	7	0.000346471058142757	0.0692729469568521	PFAS, purL; phosphoribosylformylglycinamidine synthase [EC:6.3.5.3]	K01952	Obesity 1
+24	13	3	8	0.00392807746322808	0.164786236275176	carA, CPA1; carbamoyl-phosphate synthase small subunit [EC:6.3.5.5]	K01956	Obesity 1
+24	13	2	9	0.00260676362544048	0.164228585354367	dinB; DNA polymerase IV [EC:2.7.7.7]	K02346	Obesity 1
+32	15	3	14	0.00590933225613289	0.213694231316373	fabK; enoyl-[acyl-carrier protein] reductase II [EC:1.3.1.9]	K02371	Obesity 1
+27	13	0	14	0.00036241452070102	0.0692729469568521	hisF; imidazole glycerol-phosphate synthase subunit HisF [EC:4.3.2.10]	K02500	Obesity 1
+28	13	1	14	0.00326935893330068	0.164786236275176	hisH; imidazole glycerol-phosphate synthase subunit HisH [EC:4.3.2.10]	K02501	Obesity 1
+13	8	1	4	0.0085768063810767	0.24416525399746	ispB; octaprenyl-diphosphate synthase [EC:2.5.1.90]	K02523	Obesity 1
+8	3	5	0	0.00173500529417293	0.136555122564904	RP-S21, MRPS21, rpsU; small subunit ribosomal protein S21	K02970	Obesity 1
+20	11	1	8	0.00306854606416978	0.164228585354367	rpoN; RNA polymerase sigma-54 factor	K03092	Obesity 1
+31	12	1	18	0.00549947128661288	0.204397016152445	thiC; phosphomethylpyrimidine synthase [EC:4.1.99.17]	K03147	Obesity 1
+34	15	2	17	0.00374406418631285	0.164786236275176	thiH; 2-iminoacetate synthase [EC:4.1.99.19]	K03150	Obesity 1
+25	12	1	12	0.00474549212293738	0.19240813516637	lctP; lactate permease	K03303	Obesity 1
+25	14	3	8	0.0013476027076572	0.120956204514093	moaA, CNX2; GTP 3',8-cyclase [EC:4.1.99.22]	K03639	Obesity 1
+31	11	1	19	0.00847396349144672	0.24416525399746	recQ; ATP-dependent DNA helicase RecQ [EC:3.6.4.12]	K03654	Obesity 1
+31	1	11	19	0.00847396349144672	0.24416525399746	queH; epoxyqueuosine reductase [EC:1.17.99.6]	K09765	Obesity 1
+32	15	0	17	7.85816997275124e-05	0.0525711571177058	K09861; uncharacterized protein	K09861	Obesity 1
+32	16	4	12	0.00350795016267941	0.164786236275176	ribD; diaminohydroxyphosphoribosylaminopyrimidine deaminase / 5-amino-6-(5-phosphoribosylamino)uracil reductase [EC:3.5.4.26 1.1.1.193]	K11752	Obesity 1
+33	16	1	16	0.000453630236503458	0.0758696570552034	coaBC, dfp; phosphopantothenoylcysteine decarboxylase / phosphopantothenate---cysteine ligase [EC:4.1.1.36 6.3.2.5]	K13038	Obesity 1
+15	9	1	5	0.0146089619848163	0.242715632447663	mdh; malate dehydrogenase [EC:1.1.1.37]	K00024	Obesity 2
+15	8	0	7	0.00859366456541297	0.195001457922244	sdhB, frdB; succinate dehydrogenase / fumarate reductase, iron-sulfur subunit [EC:1.3.5.1 1.3.5.4]	K00240	Obesity 2
+13	8	1	4	0.0196689757660431	0.245440409056157	gltB; glutamate synthase (NADPH) large chain [EC:1.4.1.13]	K00265	Obesity 2
+24	11	0	13	0.00121227030406934	0.114348518868659	nadB; L-aspartate oxidase [EC:1.4.3.16]	K00278	Obesity 2
+12	10	0	2	9.76150113128033e-05	0.0422672998984438	cydA; cytochrome bd ubiquinol oxidase subunit I [EC:7.1.1.7]	K00425	Obesity 2
+13	10	1	2	0.000509701315673723	0.110350334843361	cydB; cytochrome bd ubiquinol oxidase subunit II [EC:7.1.1.7]	K00426	Obesity 2
+23	10	1	12	0.0201205478674897	0.246571619621407	E1.17.4.1A, nrdA, nrdE; ribonucleoside-diphosphate reductase alpha chain [EC:1.17.4.1]	K00525	Obesity 2
+24	12	2	10	0.0172140126102258	0.242715632447663	fabD, MCAT, MCT1; [acyl-carrier-protein] S-malonyltransferase [EC:2.3.1.39]	K00645	Obesity 2
+23	13	1	9	0.00220719816960516	0.154786683547963	fabH; 3-oxoacyl-[acyl-carrier-protein] synthase III [EC:2.3.1.180]	K00648	Obesity 2
+11	7	0	4	0.00833547677285449	0.195001457922244	bioF; 8-amino-7-oxononanoate synthase [EC:2.3.1.47]	K00652	Obesity 2
+18	8	0	10	0.00920988483324059	0.195001457922244	speG, SAT; diamine N-acetyltransferase [EC:2.3.1.57]	K00657	Obesity 2
+28	14	4	10	0.0196748841178207	0.245440409056157	trpD; anthranilate phosphoribosyltransferase [EC:2.4.2.18]	K00766	Obesity 2
+26	11	1	14	0.010059521544854	0.195001457922244	nadC, QPRT; nicotinate-nucleotide pyrophosphorylase (carboxylating) [EC:2.4.2.19]	K00767	Obesity 2
+25	13	1	11	0.00324736635496018	0.154786683547963	thiE; thiamine-phosphate pyrophosphorylase [EC:2.5.1.3]	K00788	Obesity 2
+27	13	1	13	0.00328648788806196	0.154786683547963	ribH, RIB4; 6,7-dimethyl-8-ribityllumazine synthase [EC:2.5.1.78]	K00794	Obesity 2
+22	10	1	11	0.0198262063737743	0.245440409056157	aroK, aroL; shikimate kinase [EC:2.7.1.71]	K00891	Obesity 2
+26	14	2	10	0.00391386948537539	0.156171563215558	thiD; hydroxymethylpyrimidine/phosphomethylpyrimidine kinase [EC:2.7.1.49 2.7.4.7]	K00941	Obesity 2
+20	2	11	7	0.0181242620072543	0.242715632447663	tmk, DTYMK; dTMP kinase [EC:2.7.4.9]	K00943	Obesity 2
+15	8	0	7	0.00859366456541297	0.195001457922244	folK; 2-amino-4-hydroxy-6-hydroxymethyldihydropteridine diphosphokinase [EC:2.7.6.3]	K00950	Obesity 2
+19	0	8	11	0.00964357461898685	0.195001457922244	glgC; glucose-1-phosphate adenylyltransferase [EC:2.7.7.27]	K00975	Obesity 2
+9	6	0	3	0.017377738830073	0.242715632447663	ENDOG; endonuclease G, mitochondrial	K01173	Obesity 2
+13	8	0	5	0.00715292243271769	0.195001457922244	BLMH, pepC; bleomycin hydrolase [EC:3.4.22.40]	K01372	Obesity 2
+30	14	3	13	0.0198392940345623	0.245440409056157	GCH1, folE; GTP cyclohydrolase IA [EC:3.5.4.16]	K01495	Obesity 2
+23	12	1	10	0.00569645301696725	0.195001457922244	panD; aspartate 1-decarboxylase [EC:4.1.1.11]	K01579	Obesity 2
+17	9	0	8	0.0050722888313756	0.188254376913054	speA; arginine decarboxylase [EC:4.1.1.19]	K01585	Obesity 2
+18	11	0	7	0.000869922295958259	0.114348518868659	psd, PISD; phosphatidylserine decarboxylase [EC:4.1.1.65]	K01613	Obesity 2
+21	10	0	11	0.002835057553556	0.154786683547963	folB; 7,8-dihydroneopterin aldolase/epimerase/oxygenase [EC:4.1.2.25 5.1.99.8 1.13.11.81]	K01633	Obesity 2
+13	9	0	4	0.00123239358288008	0.114348518868659	menB; naphthoate synthase [EC:4.1.3.36]	K01661	Obesity 2
+26	13	2	11	0.0116879617802362	0.213840314824321	ilvD; dihydroxy-acid dehydratase [EC:4.2.1.9]	K01687	Obesity 2
+11	7	0	4	0.00833547677285449	0.195001457922244	hemD, UROS; uroporphyrinogen-III synthase [EC:4.2.1.75]	K01719	Obesity 2
+24	12	2	10	0.0172140126102258	0.242715632447663	panC; pantoate--beta-alanine ligase [EC:6.3.2.1]	K01918	Obesity 2
+15	8	0	7	0.00859366456541297	0.195001457922244	purD; phosphoribosylamine---glycine ligase [EC:6.3.4.13]	K01945	Obesity 2
+20	11	2	7	0.0181242620072543	0.242715632447663	PFAS, purL; phosphoribosylformylglycinamidine synthase [EC:6.3.5.3]	K01952	Obesity 2
+22	12	2	8	0.0121760605941539	0.214453539917243	carB, CPA2; carbamoyl-phosphate synthase large subunit [EC:6.3.5.5]	K01955	Obesity 2
+12	8	0	4	0.00321996683647409	0.154786683547963	wza, gfcE; polysaccharide biosynthesis/export protein	K01991	Obesity 2
+13	11	0	2	1.77717697763313e-05	0.0230855289394543	ABC-2.TX; HlyD family secretion protein	K01993	Obesity 2
+12	7	0	5	0.0157828979608747	0.242715632447663	TC.FEV.OM; iron complex outermembrane recepter protein	K02014	Obesity 2
+23	2	12	9	0.0122167528513287	0.214453539917243	ABC.MS.P; multiple sugar transport system permease protein	K02025	Obesity 2
+9	6	0	3	0.017377738830073	0.242715632447663	mlaF, linL, mkl; phospholipid/cholesterol/gamma-HCH transport system ATP-binding protein	K02065	Obesity 2
+9	6	0	3	0.017377738830073	0.242715632447663	mlaE, linK; phospholipid/cholesterol/gamma-HCH transport system permease protein	K02066	Obesity 2
+10	7	0	3	0.00682760487982831	0.195001457922244	mlaD, linM; phospholipid/cholesterol/gamma-HCH transport system substrate-binding protein	K02067	Obesity 2
+13	8	0	5	0.00715292243271769	0.195001457922244	fucP; MFS transporter, FHS family, L-fucose permease	K02429	Obesity 2
+11	7	0	4	0.00833547677285449	0.195001457922244	lpxL, htrB; Kdo2-lipid IVA lauroyltransferase/acyltransferase [EC:2.3.1.241 2.3.1.-]	K02517	Obesity 2
+12	10	0	2	9.76150113128033e-05	0.0422672998984438	ispB; octaprenyl-diphosphate synthase [EC:2.5.1.90]	K02523	Obesity 2
+14	9	1	4	0.00556036639975217	0.195001457922244	menA; 1,4-dihydroxy-2-naphthoate polyprenyltransferase [EC:2.5.1.74]	K02548	Obesity 2
+16	7	0	9	0.0165421942831358	0.242715632447663	menD; 2-succinyl-5-enolpyruvyl-6-hydroxy-3-cyclohexene-1-carboxylate synthase [EC:2.2.1.9]	K02551	Obesity 2
+5	1	4	0	0.0138064964313272	0.232917387847974	RP-L16, MRPL16, rplP; large subunit ribosomal protein L16	K02878	Obesity 2
+20	12	1	7	0.00179225792282217	0.154786683547963	rpoN; RNA polymerase sigma-54 factor	K03092	Obesity 2
+15	9	5	1	0.000637104907573313	0.114348518868659	tatA; sec-independent protein translocase protein TatA	K03116	Obesity 2
+12	7	0	5	0.0157828979608747	0.242715632447663	TC.POT; proton-dependent oligopeptide transporter, POT family	K03305	Obesity 2
+11	8	0	3	0.00269565391665035	0.154786683547963	TC.MATE, SLC47A, norM, mdtK, dinF; multidrug resistance protein, MATE family	K03327	Obesity 2
+12	7	0	5	0.0157828979608747	0.242715632447663	TC.KEF; monovalent cation:H+ antiporter-2, CPA2 family	K03455	Obesity 2
+24	10	0	14	0.00209291933467315	0.154786683547963	nadA; quinolinate synthase [EC:2.5.1.72]	K03517	Obesity 2
+12	8	0	4	0.00321996683647409	0.154786683547963	exbB; biopolymer transport protein ExbB	K03561	Obesity 2
+21	10	1	10	0.0193633235175827	0.245440409056157	BCP, PRXQ, DOT5; thioredoxin-dependent peroxiredoxin [EC:1.11.1.24]	K03564	Obesity 2
+9	6	0	3	0.017377738830073	0.242715632447663	acrA, mexA, adeI, smeD, mtrC, cmeA; membrane fusion protein, multidrug efflux system	K03585	Obesity 2
+6	5	0	1	0.0108342645606942	0.203966806729592	ftsI; cell division protein FtsI (penicillin-binding protein 3) [EC:3.4.16.4]	K03587	Obesity 2
+24	11	1	12	0.00922368761884862	0.195001457922244	recQ; ATP-dependent DNA helicase RecQ [EC:3.6.4.12]	K03654	Obesity 2
+12	7	0	5	0.0157828979608747	0.242715632447663	asnC; Lrp/AsnC family transcriptional regulator, regulator for asnA, asnC and gidA	K03718	Obesity 2
+9	0	7	2	0.00408763136976825	0.156171563215558	polC; DNA polymerase III subunit alpha, Gram-positive type [EC:2.7.7.7]	K03763	Obesity 2
+12	9	0	3	0.000923020083383746	0.114348518868659	tonB; periplasmic protein TonB	K03832	Obesity 2
+20	0	7	13	0.0115257859428233	0.213840314824321	E3.1.3.15B; histidinol-phosphatase (PHP family) [EC:3.1.3.15]	K04486	Obesity 2
+13	1	8	4	0.0196689757660431	0.245440409056157	iscS, NFS1; cysteine desulfurase [EC:2.8.1.7]	K04487	Obesity 2
+11	7	0	4	0.00833547677285449	0.195001457922244	hslR; ribosome-associated heat shock protein Hsp15	K04762	Obesity 2
+13	9	0	4	0.00123239358288008	0.114348518868659	sppA; protease IV [EC:3.4.21.-]	K04773	Obesity 2
+14	9	0	5	0.00271948814844334	0.154786683547963	hlpA, ompH; outer membrane protein	K06142	Obesity 2
+19	10	1	8	0.0179798607814714	0.242715632447663	crcB, FEX; fluoride exporter	K06199	Obesity 2
+24	1	11	12	0.00922368761884862	0.195001457922244	mgtE; magnesium transporter	K06213	Obesity 2
+15	1	10	4	0.00242514171471794	0.154786683547963	spmB; spore maturation protein B	K06374	Obesity 2
+13	1	8	4	0.0196689757660431	0.245440409056157	spoIIAA; stage II sporulation protein AA (anti-sigma F factor antagonist)	K06378	Obesity 2
+12	0	7	5	0.0157828979608747	0.242715632447663	spoIIAB; stage II sporulation protein AB (anti-sigma F factor) [EC:2.7.11.1]	K06379	Obesity 2
+9	0	6	3	0.017377738830073	0.242715632447663	spoIIIAC; stage III sporulation protein AC	K06392	Obesity 2
+10	0	7	3	0.00682760487982831	0.195001457922244	spoIVA; stage IV sporulation protein A	K06398	Obesity 2
+8	0	6	2	0.00956001868789802	0.195001457922244	spoIVB; stage IV sporulation protein B [EC:3.4.21.116]	K06399	Obesity 2
+10	0	8	2	0.000932533896517917	0.114348518868659	spoVAD; stage V sporulation protein AD	K06406	Obesity 2
+11	0	7	4	0.00833547677285449	0.195001457922244	trmK; tRNA (adenine22-N1)-methyltransferase [EC:2.1.1.217]	K06967	Obesity 2
+21	11	1	9	0.0102079285132506	0.195001457922244	K07027; glycosyltransferase 2 family protein	K07027	Obesity 2
+18	10	1	7	0.0120898762342069	0.214453539917243	acm; lysozyme	K07273	Obesity 2
+13	9	0	4	0.00123239358288008	0.114348518868659	pepO; putative endopeptidase [EC:3.4.24.-]	K07386	Obesity 2
+16	9	0	7	0.0038936710672431	0.156171563215558	vsr; DNA mismatch endonuclease, patch repair protein [EC:3.1.-.-]	K07458	Obesity 2
+11	0	7	4	0.00833547677285449	0.195001457922244	ylxR; uncharacterized protein	K07742	Obesity 2
+11	7	0	4	0.00833547677285449	0.195001457922244	ampG; MFS transporter, PAT family, beta-lactamase induction signal transducer AmpG	K08218	Obesity 2
+13	7	0	6	0.0125688504727453	0.217692490187949	purT; phosphoribosylglycinamide formyltransferase 2 [EC:2.1.2.2]	K08289	Obesity 2
+9	7	0	2	0.00408763136976825	0.156171563215558	mltD, dniR; membrane-bound lytic murein transglycosylase D [EC:4.2.2.-]	K08307	Obesity 2
+20	10	0	10	0.00245642254765162	0.154786683547963	yhhQ; queuosine precursor transporter	K09125	Obesity 2
+20	11	2	7	0.0181242620072543	0.242715632447663	fabF, OXSM, CEM1; 3-oxoacyl-[acyl-carrier-protein] synthase II [EC:2.3.1.179]	K09458	Obesity 2
+8	0	6	2	0.00956001868789802	0.195001457922244	whiA; cell division protein WhiA	K09762	Obesity 2
+26	1	11	14	0.010059521544854	0.195001457922244	queH; epoxyqueuosine reductase [EC:1.17.99.6]	K09765	Obesity 2
+14	0	10	4	0.000472877740269521	0.110350334843361	K09779; uncharacterized protein	K09779	Obesity 2
+16	7	0	9	0.0165421942831358	0.242715632447663	K09797; uncharacterized protein	K09797	Obesity 2
+8	6	0	2	0.00956001868789802	0.195001457922244	lolC_E; lipoprotein-releasing system permease protein	K09808	Obesity 2
+10	7	0	3	0.00682760487982831	0.195001457922244	lolD; lipoprotein-releasing system ATP-binding protein [EC:7.6.2.-]	K09810	Obesity 2
+29	13	2	14	0.0135227831335174	0.231132832768936	K09861; uncharacterized protein	K09861	Obesity 2
+21	1	10	10	0.0193633235175827	0.245440409056157	msmE; raffinose/stachyose/melibiose transport system substrate-binding protein	K10117	Obesity 2
+20	1	11	8	0.00799458128972722	0.195001457922244	ohyA, sph; oleate hydratase [EC:4.2.1.53]	K10254	Obesity 2
+30	15	3	12	0.00933759037191995	0.195001457922244	hlyIII; hemolysin III	K11068	Obesity 2
+24	11	1	12	0.00922368761884862	0.195001457922244	ribD; diaminohydroxyphosphoribosylaminopyrimidine deaminase / 5-amino-6-(5-phosphoribosylamino)uracil reductase [EC:3.5.4.26 1.1.1.193]	K11752	Obesity 2
+19	10	1	8	0.0179798607814714	0.242715632447663	aguB; N-carbamoylputrescine amidase [EC:3.5.1.53]	K12251	Obesity 2
+13	8	0	5	0.00715292243271769	0.195001457922244	thrA; bifunctional aspartokinase / homoserine dehydrogenase 1 [EC:2.7.2.4 1.1.1.3]	K12524	Obesity 2
+28	15	2	11	0.00282002678287073	0.154786683547963	coaBC, dfp; phosphopantothenoylcysteine decarboxylase / phosphopantothenate---cysteine ligase [EC:4.1.1.36 6.3.2.5]	K13038	Obesity 2
+26	11	1	14	0.010059521544854	0.195001457922244	ribBA; 3,4-dihydroxy 2-butanone 4-phosphate synthase / GTP cyclohydrolase II [EC:4.1.99.12 3.5.4.25]	K14652	Obesity 2
+9	0	7	2	0.00408763136976825	0.156171563215558	dacA; diadenylate cyclase [EC:2.7.7.85]	K18672	Obesity 2
+23	9	0	14	0.00333643351758503	0.154786683547963	queG; epoxyqueuosine reductase [EC:1.17.99.6]	K18979	Obesity 2
+25	2	13	10	0.00855133416429062	0.195001457922244	algI; alginate O-acetyltransferase complex protein AlgI	K19294	Obesity 2
+13	10	0	3	0.00037261449505182	0.110350334843361	bcrC; undecaprenyl-diphosphatase [EC:3.6.1.27]	K19302	Obesity 2
+21	1	12	8	0.00353975729736489	0.156171563215558	ampS, pepS, ampT; aminopeptidase [EC:3.4.11.-]	K19689	Obesity 2
