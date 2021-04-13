@@ -1,0 +1,9 @@
+num_nodes_enriched	num_sig_nodes_group1_enrich	num_sig_nodes_group2_enrich	num_nonsig_nodes_enrich	multinomial_p	multinomial_corr	description	func	variable	func_type
+15	8	0	7	0.00209709284203053	0.0985633635754347	Limonene and pinene degradation	ko00903	Mean_Salinity	pathway
+6	0	5	1	0.00335710551266998	0.248425807937579	Denitrification, nitrate => nitrogen	M00529	Mean_Salinity	module
+11	7	0	4	0.00132240508634668	0.195715952779309	Isoleucine biosynthesis, pyruvate => 2-oxobutanoate	M00535	Mean_Salinity	module
+11	9	0	2	9.08436075017012e-05	0.0816684031440294	K07137; uncharacterized protein	K07137	PO4	ko
+9	8	0	1	5.47151332848973e-05	0.0816684031440294	FN3KRP; protein-ribulosamine 3-kinase [EC:2.7.1.172]	K15523	PO4	ko
+9	6	0	3	0.00862653826870957	0.202723649314675	Carotenoid biosynthesis	ko00906	PO4	pathway
+13	8	0	5	0.00221804733593075	0.104248224788745	Biofilm formation - Vibrio cholerae	ko05111	PO4	pathway
+12	8	0	4	0.00141830048548418	0.209908471851659	Tyrosine degradation, tyrosine => homogentisate	M00044	PO4	module
