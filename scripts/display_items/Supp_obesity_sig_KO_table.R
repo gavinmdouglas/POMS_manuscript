@@ -34,7 +34,7 @@ combined_obesity_sig_df_fdr0.15 <- combined_obesity_sig_df[which(combined_obesit
 nrow(combined_obesity_sig_df) - nrow(combined_obesity_sig_df_fdr0.15)
 
 write.table(x = combined_obesity_sig_df,
-            file = "/home/gavin/github_repos/POMS_manuscript/display_items/Supp_obesity_sig_node_KOs_RAW.tsv",
+            file = "/home/gavin/github_repos/POMS_manuscript/display_items/Supp_obesity_sig_KOs_RAW.tsv",
             sep = "\t",
             quote = FALSE,
             col.names = TRUE,
