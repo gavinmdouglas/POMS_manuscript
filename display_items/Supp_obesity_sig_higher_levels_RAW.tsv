@@ -1,0 +1,33 @@
+num_nodes_enriched	num_sig_nodes_group1_enrich	num_sig_nodes_group2_enrich	num_nonsig_nodes_enrich	multinomial_p	multinomial_corr	description	func	dataset	func_type
+18	10	1	7	0.00582215420589923	0.168842471971078	beta-Lactam resistance	ko01501	Obesity 1	Pathway
+13	7	0	6	0.0125688504727453	0.163395056145689	Lipopolysaccharide biosynthesis	ko00540	Obesity 2	Pathway
+15	8	0	7	0.00859366456541297	0.163395056145689	beta-Lactam resistance	ko01501	Obesity 2	Pathway
+21	11	1	9	0.00494122673503611	0.176603496876669	Proline biosynthesis, glutamate => proline	M00015	Obesity 1	Module
+16	8	1	7	0.0339463279954465	0.224695711209544	Methionine biosynthesis, aspartate => homoserine => methionine	M00017	Obesity 1	Module
+22	10	2	10	0.0418949003219953	0.224695711209544	Threonine biosynthesis, aspartate => homoserine => threonine	M00018	Obesity 1	Module
+28	12	3	13	0.0437061480583159	0.224695711209544	Valine/isoleucine biosynthesis, pyruvate => valine / 2-oxobutanoate => isoleucine	M00019	Obesity 1	Module
+21	10	3	8	0.0453167820926812	0.224695711209544	Urea cycle	M00029	Obesity 1	Module
+17	9	0	8	0.00350072032908701	0.176603496876669	Inosine monophosphate biosynthesis, PRPP + glutamine => IMP	M00048	Obesity 1	Module
+23	11	2	10	0.0227816912852756	0.205299500467987	Fatty acid biosynthesis, initiation	M00082	Obesity 1	Module
+20	10	1	9	0.0115873700159973	0.196985290271955	Menaquinone biosynthesis, chorismate (+ polyprenyl-PP) => menaquinol	M00116	Obesity 1	Module
+28	13	5	10	0.0222806768618661	0.205299500467987	Pantothenate biosynthesis, valine/L-aspartate => pantothenate	M00119	Obesity 1	Module
+27	12	1	14	0.00593625199585441	0.176603496876669	Biotin biosynthesis, pimeloyl-ACP/CoA => biotin	M00123	Obesity 1	Module
+9	5	0	4	0.0378630095598597	0.224695711209544	Tetrahydrofolate biosynthesis, GTP => THF	M00126	Obesity 1	Module
+23	11	4	8	0.0265789548899979	0.210859708793983	Polyamine biosynthesis, arginine => ornithine => putrescine	M00134	Obesity 1	Module
+23	10	2	11	0.0433694168398195	0.224695711209544	GABA biosynthesis, eukaryotes, putrescine => GABA	M00135	Obesity 1	Module
+17	8	1	8	0.051026180832402	0.242884620762233	Cytochrome bd ubiquinol oxidase	M00153	Obesity 1	Module
+12	6	0	6	0.0372341497036606	0.224695711209544	C10-C20 isoprenoid biosynthesis, bacteria	M00364	Obesity 1	Module
+23	11	1	11	0.00926892522069397	0.195253083780693	Lysine biosynthesis, acetyl-DAP pathway, aspartate => lysine	M00525	Obesity 1	Module
+24	12	2	10	0.00984469329986686	0.195253083780693	Lysine biosynthesis, DAP dehydrogenase pathway, aspartate => lysine	M00526	Obesity 1	Module
+34	13	3	18	0.0448654203221531	0.224695711209544	Isoleucine biosynthesis, pyruvate => 2-oxobutanoate	M00535	Obesity 1	Module
+17	0	7	10	0.0207040787638255	0.205299500467987	Trans-cinnamate degradation, trans-cinnamate => acetyl-CoA	M00545	Obesity 1	Module
+24	10	1	13	0.0197844604197068	0.205299500467987	dTDP-L-rhamnose biosynthesis	M00793	Obesity 1	Module
+24	12	3	9	0.0156449593279289	0.205299500467987	Arginine biosynthesis, ornithine => arginine	M00844	Obesity 1	Module
+24	11	2	11	0.0220094544140228	0.205299500467987	Arginine biosynthesis, glutamate => acetylcitrulline => arginine	M00845	Obesity 1	Module
+13	7	1	5	0.0357773983489173	0.224695711209544	KDO2-lipid A biosynthesis, Raetz pathway, non-LpxL-LpxM type	M00866	Obesity 1	Module
+27	14	5	8	0.00367858368362225	0.176603496876669	Molybdenum cofactor biosynthesis, GTP => molybdenum cofactor	M00880	Obesity 1	Module
+26	12	5	9	0.0241528824079984	0.205299500467987	Thiamine salvage pathway, HMP/HET => TMP	M00899	Obesity 1	Module
+20	12	1	7	0.00179225792282217	0.0974209906488053	Fatty acid biosynthesis, initiation	M00082	Obesity 2	Module
+14	9	0	5	0.00271948814844334	0.0974209906488053	Menaquinone biosynthesis, chorismate (+ polyprenyl-PP) => menaquinol	M00116	Obesity 2	Module
+25	13	1	11	0.00324736635496018	0.0974209906488053	Biotin biosynthesis, pimeloyl-ACP/CoA => biotin	M00123	Obesity 2	Module
+12	10	0	2	9.76150113128033e-05	0.0117138013575364	Cytochrome bd ubiquinol oxidase	M00153	Obesity 2	Module
