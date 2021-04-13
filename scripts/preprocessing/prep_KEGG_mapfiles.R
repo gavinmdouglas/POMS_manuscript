@@ -38,16 +38,16 @@ for (pathway in unique_KEGG_path) {
 path_raw_descrip <- path_raw_descrip[-which(!path_raw_descrip$V1 %in% KO_to_path$X1), ]
 
 KO_to_module_raw <- read.table("2021_04_12_KEGG_ko_module_links.tsv.gz", header = FALSE, sep = "\t", stringsAsFactors = FALSE, quote = "", comment.char = "")
-KO_to_module_raw$V2 <- gsub("^ko:", "", KO_to_module_raw$V2)
-KO_to_module_raw$V1 <- gsub("^md:", "", KO_to_module_raw$V1)
+KO_to_module_raw$V1 <- gsub("^ko:", "", KO_to_module_raw$V1)
+KO_to_module_raw$V2 <- gsub("^md:", "", KO_to_module_raw$V2)
 
-unique_KEGG_module <- unique(KO_to_module_raw$V1)
+unique_KEGG_module <- unique(KO_to_module_raw$V2)
 
 KO_to_module <- data.frame(matrix(NA, nrow = length(unique_KEGG_module), ncol = 2))
 rownames(KO_to_module) <- unique_KEGG_module
 
 for (module in unique_KEGG_module) {
-  contributing_KOs <- unique(KO_to_module_raw[which(KO_to_module_raw$V1 ==  module), "V2"])
+  contributing_KOs <- unique(KO_to_module_raw[which(KO_to_module_raw$V2 ==  module), "V1"])
   contributing_KOs <- paste(contributing_KOs, collapse = ",")
   KO_to_module[module, ] <- c(module, contributing_KOs)
 }
@@ -57,9 +57,9 @@ module_raw_descrip <- module_raw_descrip[-which(!module_raw_descrip$V1 %in% KO_t
 
 
 # Write out all files
-write.table(KO_raw_descrip, file = "../prepped/2021_04_12_KEGG_ko_descrip.tsv.gz", col.names = FALSE, row.names = FALSE, quote = FALSE, sep = "\t")
-write.table(path_raw_descrip, file = "../prepped/2021_04_12_KEGG_pathway_descrip.tsv.gz", col.names = FALSE, row.names = FALSE, quote = FALSE, sep = "\t")
-write.table(module_raw_descrip, file = "../prepped/2021_04_12_KEGG_module_descrip.tsv.gz", col.names = FALSE, row.names = FALSE, quote = FALSE, sep = "\t")
+write.table(KO_raw_descrip, file = "../prepped/2021_04_12_KEGG_ko_descrip.tsv", col.names = FALSE, row.names = FALSE, quote = FALSE, sep = "\t")
+write.table(path_raw_descrip, file = "../prepped/2021_04_12_KEGG_pathway_descrip.tsv", col.names = FALSE, row.names = FALSE, quote = FALSE, sep = "\t")
+write.table(module_raw_descrip, file = "../prepped/2021_04_12_KEGG_module_descrip.tsv", col.names = FALSE, row.names = FALSE, quote = FALSE, sep = "\t")
 
-write.table(KO_to_path, file = "../prepped/2021_04_12_KEGG_ko_pathway_links.tsv.gz", col.names = FALSE, row.names = FALSE, quote = FALSE, sep = "\t")
-write.table(KO_to_module, file = "../prepped/2021_04_12_KEGG_ko_module_links.tsv.gz", col.names = FALSE, row.names = FALSE, quote = FALSE, sep = "\t")
+write.table(KO_to_path, file = "../prepped/2021_04_12_KEGG_ko_pathway_links.tsv", col.names = FALSE, row.names = FALSE, quote = FALSE, sep = "\t")
+write.table(KO_to_module, file = "../prepped/2021_04_12_KEGG_ko_module_links.tsv", col.names = FALSE, row.names = FALSE, quote = FALSE, sep = "\t")
