@@ -33,7 +33,6 @@ TARA_sample_info <- read.table("Table_S1_sample_info.txt",
                                header = TRUE, sep = "\t", stringsAsFactors = FALSE, quote = "", comment.char = "", row.names = 1)
 
 # Generate function abundance tables.
-
 TARA_func_abun <- list()
 
 TARA_func_abun[["ko"]] <- calc_func_abun(in_abun = TARA_abun, in_func = TARA_ko, ncores = 40)

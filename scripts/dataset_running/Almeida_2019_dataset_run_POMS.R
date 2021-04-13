@@ -43,74 +43,100 @@ ERP002061_almeida_ko <- almeida_ko[rownames(ERP002061_almeida_abun), ]
 ERP002061_almeida_pathways <- almeida_pathways[rownames(ERP002061_almeida_abun), ]
 ERP002061_almeida_modules <- almeida_modules[rownames(ERP002061_almeida_abun), ]
 
-ERP002061_almeida_ko_subset <- ERP002061_almeida_ko[, -which(colSums(ERP002061_almeida_ko) > 0.85 * nrow(ERP002061_almeida_ko))]
+ERP002061_POMS_out <- list()
 
-ERP002061_kos_POMS <- POMS_pipeline(abun = ERP002061_almeida_abun,
-                                    func = ERP002061_almeida_ko,
-                                    phylogeny = almeida_tree,
-                                    group1_samples = ERP002061_group1_samples,
-                                    group2_samples = ERP002061_group2_samples,
-                                    ncores = 10,
-                                    balance_p_cutoff = 0.05,
-                                    balance_correction = "none",
-                                    function_p_cutoff = 0.05,
-                                    function_correction = "none",
-                                    min_num_tips = 10,
-                                    min_func_instances = 0.15 * nrow(ERP002061_almeida_ko),
-                                    min_func_prop = 0.001,
-                                    run_multinomial_test = TRUE,
-                                    multinomial_correction = "BH",
-                                    detailed_output = TRUE,
-                                    verbose = TRUE,
-                                    func_descrip_infile = "/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/KO_descrip.tsv.gz")
+if (length(which(colSums(ERP002061_almeida_ko > 0) > 0.85 * nrow(ERP002061_almeida_ko))) > 0) {
+  ERP002061_almeida_ko_subset <- ERP002061_almeida_ko[, -which(colSums(ERP002061_almeida_ko > 0) > 0.85 * nrow(ERP002061_almeida_ko))]
+} else {
+  ERP002061_almeida_ko_subset <- ERP002061_almeida_ko 
+}
+
+if (length(which(colSums(ERP002061_almeida_ko > 0) < 0.15 * nrow(ERP002061_almeida_ko))) > 0) {
+  ERP002061_almeida_ko_subset <- ERP002061_almeida_ko[, -which(colSums(ERP002061_almeida_ko > 0) < 0.15 * nrow(ERP002061_almeida_ko))]
+}
+
+ERP002061_POMS_out[["ko"]] <- POMS_pipeline(abun = ERP002061_almeida_abun,
+                                            func = ERP002061_almeida_ko,
+                                            phylogeny = almeida_tree,
+                                            group1_samples = ERP002061_group1_samples,
+                                            group2_samples = ERP002061_group2_samples,
+                                            ncores = 10,
+                                            balance_p_cutoff = 0.05,
+                                            balance_correction = "none",
+                                            function_p_cutoff = 0.05,
+                                            function_correction = "none",
+                                            min_num_tips = 10,
+                                            min_func_instances = 0.15 * nrow(ERP002061_almeida_ko),
+                                            min_func_prop = 0.001,
+                                            run_multinomial_test = TRUE,
+                                            multinomial_correction = "BH",
+                                            detailed_output = TRUE,
+                                            verbose = TRUE,
+                                            func_descrip_infile = "/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/2021_04_12_KEGG_ko_descrip.tsv.gz")
 
 
-if (length(which(colSums(ERP002061_almeida_pathways) > 0.85 * nrow(ERP002061_almeida_pathways))) > 0) {
-  ERP002061_almeida_pathways_subset <- ERP002061_almeida_pathways[, -which(colSums(ERP002061_almeida_pathways) > 0.85 * nrow(ERP002061_almeida_pathways))]
+if (length(which(colSums(ERP002061_almeida_pathways > 0) > 0.85 * nrow(ERP002061_almeida_pathways))) > 0) {
+  ERP002061_almeida_pathways_subset <- ERP002061_almeida_pathways[, -which(colSums(ERP002061_almeida_pathways > 0) > 0.85 * nrow(ERP002061_almeida_pathways))]
 } else {
   ERP002061_almeida_pathways_subset <- ERP002061_almeida_pathways 
 }
 
-ERP002061_pathways_POMS <- POMS_pipeline(abun = ERP002061_almeida_abun,
-                                         func = ERP002061_almeida_pathways_subset,
-                                         phylogeny = almeida_tree,
-                                         group1_samples = ERP002061_group1_samples,
-                                         group2_samples = ERP002061_group2_samples,
-                                         ncores = 10,
-                                         balance_p_cutoff = 0.05,
-                                         balance_correction = "none",
-                                         function_p_cutoff = 0.05,
-                                         function_correction = "none",
-                                         min_num_tips = 10,
-                                         min_func_instances = 100,
-                                         min_func_prop = 0.001,
-                                         run_multinomial_test = TRUE,
-                                         multinomial_correction = "BH",
-                                         detailed_output = TRUE,
-                                         verbose = TRUE,
-                                         func_descrip_infile = "/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/KEGG_path_descrip.tsv.gz")
+if (length(which(colSums(ERP002061_almeida_pathways > 0) < 0.15 * nrow(ERP002061_almeida_pathways))) > 0) {
+  ERP002061_almeida_pathways_subset <- ERP002061_almeida_pathways[, -which(colSums(ERP002061_almeida_pathways > 0) < 0.15 * nrow(ERP002061_almeida_pathways))]
+}
+
+ERP002061_POMS_out[["pathways"]] <- POMS_pipeline(abun = ERP002061_almeida_abun,
+                                                 func = ERP002061_almeida_pathways_subset,
+                                                 phylogeny = almeida_tree,
+                                                 group1_samples = ERP002061_group1_samples,
+                                                 group2_samples = ERP002061_group2_samples,
+                                                 ncores = 10,
+                                                 balance_p_cutoff = 0.05,
+                                                 balance_correction = "none",
+                                                 function_p_cutoff = 0.05,
+                                                 function_correction = "none",
+                                                 min_num_tips = 10,
+                                                 min_func_instances = 1,
+                                                 min_func_prop = 0.001,
+                                                 run_multinomial_test = TRUE,
+                                                 multinomial_correction = "BH",
+                                                 detailed_output = TRUE,
+                                                 verbose = TRUE,
+                                                 func_descrip_infile = "/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/2021_04_12_KEGG_pathway_descrip.tsv.gz")
 
 
 ERP002061_almeida_modules_subset <- ERP002061_almeida_modules[, -which(colSums(ERP002061_almeida_modules) > 0.85 * nrow(ERP002061_almeida_modules))]
 
-ERP002061_modules_POMS <- POMS_pipeline(abun = ERP002061_almeida_abun,
-                                        func = ERP002061_almeida_modules_subset,
-                                        phylogeny = almeida_tree,
-                                        group1_samples = ERP002061_group1_samples,
-                                        group2_samples = ERP002061_group2_samples,
-                                        ncores = 10,
-                                        balance_p_cutoff = 0.05,
-                                        balance_correction = "none",
-                                        function_p_cutoff = 0.05,
-                                        function_correction = "none",
-                                        min_num_tips = 10,
-                                        min_func_instances = 100,
-                                        min_func_prop = 0.001,
-                                        run_multinomial_test = TRUE,
-                                        multinomial_correction = "BH",
-                                        detailed_output = TRUE,
-                                        verbose = TRUE,
-                                        func_descrip_infile = "/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/KEGG_module_descrip.tsv.gz")
+if (length(which(colSums(ERP002061_almeida_modules > 0) > 0.85 * nrow(ERP002061_almeida_modules))) > 0) {
+  ERP002061_almeida_modules_subset <- ERP002061_almeida_modules[, -which(colSums(ERP002061_almeida_modules > 0) > 0.85 * nrow(ERP002061_almeida_modules))]
+} else {
+  ERP002061_almeida_modules_subset <- ERP002061_almeida_modules 
+}
+
+if (length(which(colSums(ERP002061_almeida_modules > 0) < 0.15 * nrow(ERP002061_almeida_modules))) > 0) {
+  ERP002061_almeida_modules_subset <- ERP002061_almeida_modules[, -which(colSums(ERP002061_almeida_modules > 0) < 0.15 * nrow(ERP002061_almeida_modules))]
+}
+
+ERP002061_POMS_out[["modules"]] <- POMS_pipeline(abun = ERP002061_almeida_abun,
+                                                func = ERP002061_almeida_modules_subset,
+                                                phylogeny = almeida_tree,
+                                                group1_samples = ERP002061_group1_samples,
+                                                group2_samples = ERP002061_group2_samples,
+                                                ncores = 10,
+                                                balance_p_cutoff = 0.05,
+                                                balance_correction = "none",
+                                                function_p_cutoff = 0.05,
+                                                function_correction = "none",
+                                                min_num_tips = 10,
+                                                min_func_instances = 100,
+                                                min_func_prop = 0.001,
+                                                run_multinomial_test = TRUE,
+                                                multinomial_correction = "BH",
+                                                detailed_output = TRUE,
+                                                verbose = TRUE,
+                                                func_descrip_infile = "/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/2021_04_12_KEGG_module_descrip.tsv.gz")
+
+
 # CRC
 ERP012177_almeida_sample_info <- almeida_sample_info[which(almeida_sample_info$Study == "ERP012177"), ]
 
@@ -125,79 +151,100 @@ ERP012177_almeida_ko <- almeida_ko[rownames(ERP012177_almeida_abun), ]
 ERP012177_almeida_pathways <- almeida_pathways[rownames(ERP012177_almeida_abun), ]
 ERP012177_almeida_modules <- almeida_modules[rownames(ERP012177_almeida_abun), ]
 
-ERP012177_almeida_ko_subset <- ERP012177_almeida_ko[, -which(colSums(ERP012177_almeida_ko) > 0.85 * nrow(ERP012177_almeida_ko))]
+ERP012177_POMS_out <- list()
 
-ERP012177_kos_POMS <- POMS_pipeline(abun = ERP012177_almeida_abun,
-                                    func = ERP012177_almeida_ko,
-                                    phylogeny = almeida_tree,
-                                    group1_samples = ERP012177_group1_samples,
-                                    group2_samples = ERP012177_group2_samples,
-                                    ncores = 10,
-                                    balance_p_cutoff = 0.05,
-                                    balance_correction = "none",
-                                    function_p_cutoff = 0.05,
-                                    function_correction = "none",
-                                    min_num_tips = 10,
-                                    min_func_instances = 0.15 * nrow(ERP012177_almeida_ko),
-                                    min_func_prop = 0.001,
-                                    run_multinomial_test = TRUE,
-                                    multinomial_correction = "BH",
-                                    detailed_output = TRUE,
-                                    verbose = TRUE,
-                                    func_descrip_infile = "/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/KO_descrip.tsv.gz")
+if (length(which(colSums(ERP012177_almeida_ko > 0) > 0.85 * nrow(ERP012177_almeida_ko))) > 0) {
+  ERP012177_almeida_ko_subset <- ERP012177_almeida_ko[, -which(colSums(ERP012177_almeida_ko > 0) > 0.85 * nrow(ERP012177_almeida_ko))]
+} else {
+  ERP012177_almeida_ko_subset <- ERP012177_almeida_ko 
+}
+
+if (length(which(colSums(ERP012177_almeida_ko > 0) < 0.15 * nrow(ERP012177_almeida_ko))) > 0) {
+  ERP012177_almeida_ko_subset <- ERP012177_almeida_ko[, -which(colSums(ERP012177_almeida_ko > 0) < 0.15 * nrow(ERP012177_almeida_ko))]
+}
+
+ERP012177_POMS_out[["ko"]] <- POMS_pipeline(abun = ERP012177_almeida_abun,
+                                            func = ERP012177_almeida_ko,
+                                            phylogeny = almeida_tree,
+                                            group1_samples = ERP012177_group1_samples,
+                                            group2_samples = ERP012177_group2_samples,
+                                            ncores = 10,
+                                            balance_p_cutoff = 0.05,
+                                            balance_correction = "none",
+                                            function_p_cutoff = 0.05,
+                                            function_correction = "none",
+                                            min_num_tips = 10,
+                                            min_func_instances = 0.15 * nrow(ERP012177_almeida_ko),
+                                            min_func_prop = 0.001,
+                                            run_multinomial_test = TRUE,
+                                            multinomial_correction = "BH",
+                                            detailed_output = TRUE,
+                                            verbose = TRUE,
+                                            func_descrip_infile = "/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/2021_04_12_KEGG_ko_descrip.tsv.gz")
 
 
-if (length(which(colSums(ERP012177_almeida_pathways) > 0.85 * nrow(ERP012177_almeida_pathways))) > 0) {
-  ERP012177_almeida_pathways_subset <- ERP012177_almeida_pathways[, -which(colSums(ERP012177_almeida_pathways) > 0.85 * nrow(ERP012177_almeida_pathways))]
+if (length(which(colSums(ERP012177_almeida_pathways > 0) > 0.85 * nrow(ERP012177_almeida_pathways))) > 0) {
+  ERP012177_almeida_pathways_subset <- ERP012177_almeida_pathways[, -which(colSums(ERP012177_almeida_pathways > 0) > 0.85 * nrow(ERP012177_almeida_pathways))]
 } else {
   ERP012177_almeida_pathways_subset <- ERP012177_almeida_pathways 
 }
 
-ERP012177_pathways_POMS <- POMS_pipeline(abun = ERP012177_almeida_abun,
-                                         func = ERP012177_almeida_pathways_subset,
-                                         phylogeny = almeida_tree,
-                                         group1_samples = ERP012177_group1_samples,
-                                         group2_samples = ERP012177_group2_samples,
-                                         ncores = 10,
-                                         balance_p_cutoff = 0.05,
-                                         balance_correction = "none",
-                                         function_p_cutoff = 0.05,
-                                         function_correction = "none",
-                                         min_num_tips = 10,
-                                         min_func_instances = 100,
-                                         min_func_prop = 0.001,
-                                         run_multinomial_test = TRUE,
-                                         multinomial_correction = "BH",
-                                         detailed_output = TRUE,
-                                         verbose = TRUE,
-                                         func_descrip_infile = "/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/KEGG_path_descrip.tsv.gz")
+if (length(which(colSums(ERP012177_almeida_pathways > 0) < 0.15 * nrow(ERP012177_almeida_pathways))) > 0) {
+  ERP012177_almeida_pathways_subset <- ERP012177_almeida_pathways[, -which(colSums(ERP012177_almeida_pathways > 0) < 0.15 * nrow(ERP012177_almeida_pathways))]
+}
+
+ERP012177_POMS_out[["pathways"]] <- POMS_pipeline(abun = ERP012177_almeida_abun,
+                                                  func = ERP012177_almeida_pathways_subset,
+                                                  phylogeny = almeida_tree,
+                                                  group1_samples = ERP012177_group1_samples,
+                                                  group2_samples = ERP012177_group2_samples,
+                                                  ncores = 10,
+                                                  balance_p_cutoff = 0.05,
+                                                  balance_correction = "none",
+                                                  function_p_cutoff = 0.05,
+                                                  function_correction = "none",
+                                                  min_num_tips = 10,
+                                                  min_func_instances = 1,
+                                                  min_func_prop = 0.001,
+                                                  run_multinomial_test = TRUE,
+                                                  multinomial_correction = "BH",
+                                                  detailed_output = TRUE,
+                                                  verbose = TRUE,
+                                                  func_descrip_infile = "/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/2021_04_12_KEGG_pathway_descrip.tsv.gz")
 
 
 ERP012177_almeida_modules_subset <- ERP012177_almeida_modules[, -which(colSums(ERP012177_almeida_modules) > 0.85 * nrow(ERP012177_almeida_modules))]
 
-ERP012177_modules_POMS <- POMS_pipeline(abun = ERP012177_almeida_abun,
-                                        func = ERP012177_almeida_modules_subset,
-                                        phylogeny = almeida_tree,
-                                        group1_samples = ERP012177_group1_samples,
-                                        group2_samples = ERP012177_group2_samples,
-                                        ncores = 10,
-                                        balance_p_cutoff = 0.05,
-                                        balance_correction = "none",
-                                        function_p_cutoff = 0.05,
-                                        function_correction = "none",
-                                        min_num_tips = 10,
-                                        min_func_instances = 100,
-                                        min_func_prop = 0.001,
-                                        run_multinomial_test = TRUE,
-                                        multinomial_correction = "BH",
-                                        detailed_output = TRUE,
-                                        verbose = TRUE,
-                                        func_descrip_infile = "/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/KEGG_module_descrip.tsv.gz")
+if (length(which(colSums(ERP012177_almeida_modules > 0) > 0.85 * nrow(ERP012177_almeida_modules))) > 0) {
+  ERP012177_almeida_modules_subset <- ERP012177_almeida_modules[, -which(colSums(ERP012177_almeida_modules > 0) > 0.85 * nrow(ERP012177_almeida_modules))]
+} else {
+  ERP012177_almeida_modules_subset <- ERP012177_almeida_modules 
+}
 
+if (length(which(colSums(ERP012177_almeida_modules > 0) < 0.15 * nrow(ERP012177_almeida_modules))) > 0) {
+  ERP012177_almeida_modules_subset <- ERP012177_almeida_modules[, -which(colSums(ERP012177_almeida_modules > 0) < 0.15 * nrow(ERP012177_almeida_modules))]
+}
+
+ERP012177_POMS_out[["modules"]] <- POMS_pipeline(abun = ERP012177_almeida_abun,
+                                                 func = ERP012177_almeida_modules_subset,
+                                                 phylogeny = almeida_tree,
+                                                 group1_samples = ERP012177_group1_samples,
+                                                 group2_samples = ERP012177_group2_samples,
+                                                 ncores = 10,
+                                                 balance_p_cutoff = 0.05,
+                                                 balance_correction = "none",
+                                                 function_p_cutoff = 0.05,
+                                                 function_correction = "none",
+                                                 min_num_tips = 10,
+                                                 min_func_instances = 100,
+                                                 min_func_prop = 0.001,
+                                                 run_multinomial_test = TRUE,
+                                                 multinomial_correction = "BH",
+                                                 detailed_output = TRUE,
+                                                 verbose = TRUE,
+                                                 func_descrip_infile = "/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/2021_04_12_KEGG_module_descrip.tsv.gz")
 
 # Obesity number 2 - ERP003612
-ERP003612_almeida_sample_info <- almeida_sample_info[which(almeida_sample_info$Study == "ERP003612"), ]
-
 ERP003612_almeida_sample_info <- almeida_sample_info[which(almeida_sample_info$Study == "ERP003612"), ]
 
 
@@ -211,77 +258,105 @@ ERP003612_almeida_ko <- almeida_ko[rownames(ERP003612_almeida_abun), ]
 ERP003612_almeida_pathways <- almeida_pathways[rownames(ERP003612_almeida_abun), ]
 ERP003612_almeida_modules <- almeida_modules[rownames(ERP003612_almeida_abun), ]
 
-ERP003612_almeida_ko_subset <- ERP003612_almeida_ko[, -which(colSums(ERP003612_almeida_ko) > 0.85 * nrow(ERP003612_almeida_ko))]
+ERP003612_POMS_out <- list()
 
-ERP003612_kos_POMS <- POMS_pipeline(abun = ERP003612_almeida_abun,
-                                    func = ERP003612_almeida_ko,
-                                    phylogeny = almeida_tree,
-                                    group1_samples = ERP003612_group1_samples,
-                                    group2_samples = ERP003612_group2_samples,
-                                    ncores = 10,
-                                    balance_p_cutoff = 0.05,
-                                    balance_correction = "none",
-                                    function_p_cutoff = 0.05,
-                                    function_correction = "none",
-                                    min_num_tips = 10,
-                                    min_func_instances = 0.15 * nrow(ERP003612_almeida_ko),
-                                    min_func_prop = 0.001,
-                                    run_multinomial_test = TRUE,
-                                    multinomial_correction = "BH",
-                                    detailed_output = TRUE,
-                                    verbose = TRUE,
-                                    func_descrip_infile = "/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/KO_descrip.tsv.gz")
+if (length(which(colSums(ERP003612_almeida_ko > 0) > 0.85 * nrow(ERP003612_almeida_ko))) > 0) {
+  ERP003612_almeida_ko_subset <- ERP003612_almeida_ko[, -which(colSums(ERP003612_almeida_ko > 0) > 0.85 * nrow(ERP003612_almeida_ko))]
+} else {
+  ERP003612_almeida_ko_subset <- ERP003612_almeida_ko 
+}
+
+if (length(which(colSums(ERP003612_almeida_ko > 0) < 0.15 * nrow(ERP003612_almeida_ko))) > 0) {
+  ERP003612_almeida_ko_subset <- ERP003612_almeida_ko[, -which(colSums(ERP003612_almeida_ko > 0) < 0.15 * nrow(ERP003612_almeida_ko))]
+}
+
+ERP003612_POMS_out[["ko"]] <- POMS_pipeline(abun = ERP003612_almeida_abun,
+                                            func = ERP003612_almeida_ko,
+                                            phylogeny = almeida_tree,
+                                            group1_samples = ERP003612_group1_samples,
+                                            group2_samples = ERP003612_group2_samples,
+                                            ncores = 10,
+                                            balance_p_cutoff = 0.05,
+                                            balance_correction = "none",
+                                            function_p_cutoff = 0.05,
+                                            function_correction = "none",
+                                            min_num_tips = 10,
+                                            min_func_instances = 0.15 * nrow(ERP003612_almeida_ko),
+                                            min_func_prop = 0.001,
+                                            run_multinomial_test = TRUE,
+                                            multinomial_correction = "BH",
+                                            detailed_output = TRUE,
+                                            verbose = TRUE,
+                                            func_descrip_infile = "/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/2021_04_12_KEGG_ko_descrip.tsv.gz")
 
 
-if (length(which(colSums(ERP003612_almeida_pathways) > 0.85 * nrow(ERP003612_almeida_pathways))) > 0) {
-  ERP003612_almeida_pathways_subset <- ERP003612_almeida_pathways[, -which(colSums(ERP003612_almeida_pathways) > 0.85 * nrow(ERP003612_almeida_pathways))]
+if (length(which(colSums(ERP003612_almeida_pathways > 0) > 0.85 * nrow(ERP003612_almeida_pathways))) > 0) {
+  ERP003612_almeida_pathways_subset <- ERP003612_almeida_pathways[, -which(colSums(ERP003612_almeida_pathways > 0) > 0.85 * nrow(ERP003612_almeida_pathways))]
 } else {
   ERP003612_almeida_pathways_subset <- ERP003612_almeida_pathways 
 }
 
-ERP003612_pathways_POMS <- POMS_pipeline(abun = ERP003612_almeida_abun,
-                                         func = ERP003612_almeida_pathways_subset,
-                                         phylogeny = almeida_tree,
-                                         group1_samples = ERP003612_group1_samples,
-                                         group2_samples = ERP003612_group2_samples,
-                                         ncores = 10,
-                                         balance_p_cutoff = 0.05,
-                                         balance_correction = "none",
-                                         function_p_cutoff = 0.05,
-                                         function_correction = "none",
-                                         min_num_tips = 10,
-                                         min_func_instances = 100,
-                                         min_func_prop = 0.001,
-                                         run_multinomial_test = TRUE,
-                                         multinomial_correction = "BH",
-                                         detailed_output = TRUE,
-                                         verbose = TRUE,
-                                         func_descrip_infile = "/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/KEGG_path_descrip.tsv.gz")
+if (length(which(colSums(ERP003612_almeida_pathways > 0) < 0.15 * nrow(ERP003612_almeida_pathways))) > 0) {
+  ERP003612_almeida_pathways_subset <- ERP003612_almeida_pathways[, -which(colSums(ERP003612_almeida_pathways > 0) < 0.15 * nrow(ERP003612_almeida_pathways))]
+}
+
+ERP003612_POMS_out[["pathways"]] <- POMS_pipeline(abun = ERP003612_almeida_abun,
+                                                  func = ERP003612_almeida_pathways_subset,
+                                                  phylogeny = almeida_tree,
+                                                  group1_samples = ERP003612_group1_samples,
+                                                  group2_samples = ERP003612_group2_samples,
+                                                  ncores = 10,
+                                                  balance_p_cutoff = 0.05,
+                                                  balance_correction = "none",
+                                                  function_p_cutoff = 0.05,
+                                                  function_correction = "none",
+                                                  min_num_tips = 10,
+                                                  min_func_instances = 1,
+                                                  min_func_prop = 0.001,
+                                                  run_multinomial_test = TRUE,
+                                                  multinomial_correction = "BH",
+                                                  detailed_output = TRUE,
+                                                  verbose = TRUE,
+                                                  func_descrip_infile = "/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/2021_04_12_KEGG_pathway_descrip.tsv.gz")
 
 
 ERP003612_almeida_modules_subset <- ERP003612_almeida_modules[, -which(colSums(ERP003612_almeida_modules) > 0.85 * nrow(ERP003612_almeida_modules))]
 
-ERP003612_modules_POMS <- POMS_pipeline(abun = ERP003612_almeida_abun,
-                                        func = ERP003612_almeida_modules_subset,
-                                        phylogeny = almeida_tree,
-                                        group1_samples = ERP003612_group1_samples,
-                                        group2_samples = ERP003612_group2_samples,
-                                        ncores = 10,
-                                        balance_p_cutoff = 0.05,
-                                        balance_correction = "none",
-                                        function_p_cutoff = 0.05,
-                                        function_correction = "none",
-                                        min_num_tips = 10,
-                                        min_func_instances = 100,
-                                        min_func_prop = 0.001,
-                                        run_multinomial_test = TRUE,
-                                        multinomial_correction = "BH",
-                                        detailed_output = TRUE,
-                                        verbose = TRUE,
-                                        func_descrip_infile = "/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/KEGG_module_descrip.tsv.gz")
+if (length(which(colSums(ERP003612_almeida_modules > 0) > 0.85 * nrow(ERP003612_almeida_modules))) > 0) {
+  ERP003612_almeida_modules_subset <- ERP003612_almeida_modules[, -which(colSums(ERP003612_almeida_modules > 0) > 0.85 * nrow(ERP003612_almeida_modules))]
+} else {
+  ERP003612_almeida_modules_subset <- ERP003612_almeida_modules 
+}
+
+if (length(which(colSums(ERP003612_almeida_modules > 0) < 0.15 * nrow(ERP003612_almeida_modules))) > 0) {
+  ERP003612_almeida_modules_subset <- ERP003612_almeida_modules[, -which(colSums(ERP003612_almeida_modules > 0) < 0.15 * nrow(ERP003612_almeida_modules))]
+}
+
+ERP003612_POMS_out[["modules"]] <- POMS_pipeline(abun = ERP003612_almeida_abun,
+                                                 func = ERP003612_almeida_modules_subset,
+                                                 phylogeny = almeida_tree,
+                                                 group1_samples = ERP003612_group1_samples,
+                                                 group2_samples = ERP003612_group2_samples,
+                                                 ncores = 10,
+                                                 balance_p_cutoff = 0.05,
+                                                 balance_correction = "none",
+                                                 function_p_cutoff = 0.05,
+                                                 function_correction = "none",
+                                                 min_num_tips = 10,
+                                                 min_func_instances = 100,
+                                                 min_func_prop = 0.001,
+                                                 run_multinomial_test = TRUE,
+                                                 multinomial_correction = "BH",
+                                                 detailed_output = TRUE,
+                                                 verbose = TRUE,
+                                                 func_descrip_infile = "/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/2021_04_12_KEGG_module_descrip.tsv.gz")
 
 
+for (func_type in c("ko", "pathways", "modules")) {
+  print(func_type)
+  print(ERP012177_POMS_out[[func_type]]$df[which(ERP012177_POMS_out[[func_type]]$df$multinomial_corr < 0.25), ])
+}
 
-saveRDS(object = ERP002061_almeida_out, file = "/home/gavin/github_repos/POMS_manuscript/data/results/Almeida_2019_POMS_output/ERP002061_POMS_out.rds")
-saveRDS(object = ERP012177_almeida_out, file = "/home/gavin/github_repos/POMS_manuscript/data/results/Almeida_2019_POMS_output/ERP012177_POMS_out.rds")
-saveRDS(object = ERP003612_almeida_out, file = "/home/gavin/github_repos/POMS_manuscript/data/results/Almeida_2019_POMS_output/ERP003612_POMS_out.rds")
+saveRDS(object = ERP002061_POMS_out, file = "/home/gavin/github_repos/POMS_manuscript/data/results/Almeida_2019_POMS_output/ERP002061_POMS_out.rds")
+saveRDS(object = ERP012177_POMS_out, file = "/home/gavin/github_repos/POMS_manuscript/data/results/Almeida_2019_POMS_output/ERP012177_POMS_out.rds")
+saveRDS(object = ERP003612_POMS_out, file = "/home/gavin/github_repos/POMS_manuscript/data/results/Almeida_2019_POMS_output/ERP003612_POMS_out.rds")

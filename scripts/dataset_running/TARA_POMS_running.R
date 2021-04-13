@@ -71,12 +71,12 @@ for (sample_var in var2compare) {
   
   TARA_pathways_subset <- TARA_pathways[rownames(TARA_abun_subset), ]
   
-  if (length(which(colSums(TARA_pathways_subset) > 0.85 * nrow(TARA_pathways_subset))) > 0) {
-    TARA_pathways_subset <- TARA_pathways_subset[, -which(colSums(TARA_pathways_subset) > 0.85 * nrow(TARA_pathways_subset))]
+  if (length(which(colSums(TARA_pathways_subset > 0) > 0.85 * nrow(TARA_pathways_subset))) > 0) {
+    TARA_pathways_subset <- TARA_pathways_subset[, -which(colSums(TARA_pathways_subset > 0) > 0.85 * nrow(TARA_pathways_subset))]
   }
-
-  if (length(which(colSums(TARA_pathways_subset) < 0.15 * nrow(TARA_pathways_subset))) > 0) {
-    TARA_pathways_subset <- TARA_pathways_subset[, -which(colSums(TARA_pathways_subset) < 0.15 * nrow(TARA_pathways_subset))]
+  
+  if (length(which(colSums(TARA_pathways_subset > 0) < 0.15 * nrow(TARA_pathways_subset))) > 0) {
+    TARA_pathways_subset <- TARA_pathways_subset[, -which(colSums(TARA_pathways_subset > 0) < 0.15 * nrow(TARA_pathways_subset))]
   }
   
   TARA_POMS_out[[sample_var]][["pathway"]] <- POMS_pipeline_continuous(abun = TARA_abun,
@@ -103,12 +103,12 @@ for (sample_var in var2compare) {
                         
   TARA_modules_subset <- TARA_modules[rownames(TARA_abun_subset), ]
   
-  if (length(which(colSums(TARA_modules_subset) > 0.85 * nrow(TARA_modules_subset))) > 0) {
-    TARA_modules_subset <- TARA_modules_subset[, -which(colSums(TARA_modules_subset) > 0.85 * nrow(TARA_modules_subset))]
+  if (length(which(colSums(TARA_modules_subset > 0) > 0.85 * nrow(TARA_modules_subset))) > 0) {
+    TARA_modules_subset <- TARA_modules_subset[, -which(colSums(TARA_modules_subset > 0) > 0.85 * nrow(TARA_modules_subset))]
   }
   
-  if (length(which(colSums(TARA_modules_subset) < 0.15 * nrow(TARA_modules_subset))) > 0) {
-    TARA_modules_subset <- TARA_modules_subset[, -which(colSums(TARA_modules_subset) < 0.15 * nrow(TARA_modules_subset))]
+  if (length(which(colSums(TARA_modules_subset > 0) < 0.15 * nrow(TARA_modules_subset))) > 0) {
+    TARA_modules_subset <- TARA_modules_subset[, -which(colSums(TARA_modules_subset > 0) < 0.15 * nrow(TARA_modules_subset))]
   }
   
   TARA_POMS_out[[sample_var]][["module"]] <- POMS_pipeline_continuous(abun = TARA_abun,
@@ -136,12 +136,12 @@ for (sample_var in var2compare) {
   
   TARA_ko_subset <- TARA_ko[rownames(TARA_abun_subset), ]
   
-  if (length(which(colSums(TARA_ko_subset) > 0.85 * nrow(TARA_ko_subset))) > 0) {
-    TARA_ko_subset <- TARA_ko_subset[, -which(colSums(TARA_ko_subset) > 0.85 * nrow(TARA_ko_subset))]
+  if (length(which(colSums(TARA_ko_subset > 0) > 0.85 * nrow(TARA_ko_subset))) > 0) {
+    TARA_ko_subset <- TARA_ko_subset[, -which(colSums(TARA_ko_subset > 0) > 0.85 * nrow(TARA_ko_subset))]
   }
   
-  if (length(which(colSums(TARA_ko_subset) < 0.15 * nrow(TARA_ko_subset))) > 0) {
-    TARA_ko_subset <- TARA_ko_subset[, -which(colSums(TARA_ko_subset) < 0.15 * nrow(TARA_ko_subset))]
+  if (length(which(colSums(TARA_ko_subset > 0) < 0.15 * nrow(TARA_ko_subset))) > 0) {
+    TARA_ko_subset <- TARA_ko_subset[, -which(colSums(TARA_ko_subset > 0) < 0.15 * nrow(TARA_ko_subset))]
   }
   
   TARA_POMS_out[[sample_var]][["ko"]] <- POMS_pipeline_continuous(abun = TARA_abun,
@@ -171,8 +171,9 @@ for (sample_var in var2compare) {
 
 
 for (sample_var in names(TARA_POMS_out)) {
+
   print(sample_var)
-  
+
   for (func_type in names(TARA_POMS_out[[sample_var]])) {
    
     print(func_type)
