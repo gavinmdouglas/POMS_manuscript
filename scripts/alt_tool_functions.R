@@ -202,3 +202,26 @@ run_alt.tools <- function(func_abun_table, group1_samples, group2_samples, USCGs
   return(DA_out)
   
 }
+
+spearman_cor_df_vs_vector <- function(in_df, in_vec, p_corr = 'BH') {
+  
+  if (any(!names(in_vec) %in% colnames(in_df))) { stop("Stopping - some sample names not found in dataframe.")}
+  
+  spearman_cor_df <- data.frame(matrix(NA, nrow = nrow(in_df), ncol = 2))
+  colnames(spearman_cor_df) <- c("rho", "p")
+  rownames(spearman_cor_df) <- rownames(in_df)
+  
+  for (df_var in rownames(in_df)) {
+    cor_out <- cor.test(as.numeric(in_df[df_var, names(in_vec)]),
+                        in_vec,
+                        method = "spearman",
+                        exact = FALSE)
+    
+    spearman_cor_df[df_var, ] <- c(cor_out$estimate, cor_out$p.value)
+    
+  }
+  
+  spearman_cor_df$p_corr <- p.adjust(spearman_cor_df$p, p_corr)
+  
+  return(spearman_cor_df)
+}
