@@ -41,7 +41,9 @@ for (pathway in unique_pathways) {
     stop("Pathway not in any of the three superkingdoms")
   }
   
-  if ("Bacteria" %in%  contributing_superkingdom | "Archaea" %in%  contributing_superkingdom) {
+  num_prokaryotes <- length(which(contributing_superkingdom %in% c("Bacteria", "Archaea")))
+  
+  if ((num_prokaryotes / length(contributing_superkingdom)) > 0.1) {
     pathways_to_keep <- c(pathways_to_keep, pathway)
   } else {
     pathways_to_rm <- c(pathways_to_rm, pathway)
@@ -69,7 +71,9 @@ for (module in unique_modules) {
     stop("Module not in any of the three superkingdoms")
   }
   
-  if ("Bacteria" %in%  contributing_superkingdom | "Archaea" %in%  contributing_superkingdom) {
+  num_prokaryotes <- length(which(contributing_superkingdom %in% c("Bacteria", "Archaea")))
+  
+  if ((num_prokaryotes / length(contributing_superkingdom)) > 0.1) {
     modules_to_keep <- c(modules_to_keep, module)
   } else {
     modules_to_rm <- c(modules_to_rm, module)
