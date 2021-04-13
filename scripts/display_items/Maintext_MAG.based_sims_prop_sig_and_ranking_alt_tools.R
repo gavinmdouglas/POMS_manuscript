@@ -136,7 +136,7 @@ MAG.based_alt_tool_comparisons <- plot_grid(MAG.based_all_prop_sig_boxplots,
                                             MAG.based_all_rank_boxplots,
                                             nrow = 1, ncol = 2, labels = c('a', 'b'), rel_widths = c(2.5, 1))
 
-ggsave(filename = "~/github_repos/POMS_manuscript/figures/Supp_MAG.based_sims_prop_sig_and_ranking_alt_tools.pdf",
+ggsave(filename = "~/github_repos/POMS_manuscript/figures/Maintext_MAG.based_sims_prop_sig_and_ranking_alt_tools.pdf",
        plot = MAG.based_alt_tool_comparisons,
        device = "pdf",
        width = 6,
@@ -144,7 +144,7 @@ ggsave(filename = "~/github_repos/POMS_manuscript/figures/Supp_MAG.based_sims_pr
        dpi = 600)
        
        
-ggsave(filename = "~/github_repos/POMS_manuscript/figures/Supp_MAG.based_sims_prop_sig_and_ranking_alt_tools.png",
+ggsave(filename = "~/github_repos/POMS_manuscript/figures/Maintext_MAG.based_sims_prop_sig_and_ranking_alt_tools.png",
        plot = MAG.based_alt_tool_comparisons,
        device = "png",
        width = 6,
