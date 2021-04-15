@@ -93,13 +93,12 @@ rankings <- data.frame(dataset = c(rep("nu=0.50", nrow(nu0.50_sim_func_summary) 
                                    MAG.based_sim_func_summary$POMS_rank_0.25))
 
 rankings$dataset <- factor(rankings$dataset, levels = c("nu=0.50", "nu=0.65", "nu=0.80", "nu=0.95", "MAG-based"))
-rankings$Method <- factor(rankings$Method , levels = c("Wilcoxon test", "POMS"))
 
 rankings_boxplots <- ggplot(rankings, aes(x = dataset, y = rank, fill = Method)) +
                                               geom_boxplot() +
                                               ylab("Focal gene rank") +
                                               xlab("Abundance table sim. approach") +
-                                              scale_fill_manual(name = "Method", values = c("springgreen4", "steelblue4")) +
+                                              scale_fill_manual(name = "Method", values = c("steelblue4", "springgreen4")) +
                                               theme_bw() +
                                               theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
                                                     legend.position = c(0.157, 0.7),
