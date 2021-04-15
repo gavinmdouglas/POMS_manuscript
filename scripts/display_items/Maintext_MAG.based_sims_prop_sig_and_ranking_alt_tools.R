@@ -1,9 +1,7 @@
 rm(list = ls(all.names = TRUE))
 
 library(cowplot)
-library(ggExtra)
 library(ggplot2)
-library(ggpubr)
 library(ggbeeswarm)
 
 setwd("~/github_repos/POMS_manuscript/data/intermediates/MAG.based_simulations/")
@@ -133,7 +131,7 @@ MAG.based_all_prop_sig_boxplots <- ggplot(MAG.based_all_prop_sig, aes(x = Tool, 
                                           facet_grid( ~ Simulation) +
                                           theme_bw() +
                                           ylim(0, 1) +
-                                          ylab("Proportion sig. gene families") +
+                                          ylab("Proportion sig. gene families\n(lower is better)") +
                                           xlab("") +
                                           scale_fill_manual(values = qual_col) +
                                           theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
