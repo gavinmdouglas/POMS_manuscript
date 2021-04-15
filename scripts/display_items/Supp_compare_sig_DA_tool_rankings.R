@@ -75,7 +75,7 @@ for (dataset in names(Almeida_POMS_out)) {
 Almeida_sig_func_DA_rankings_all[which(Almeida_sig_func_DA_rankings_all$tool == "aldex2"), "tool"] <- "ALDEx2"
 Almeida_sig_func_DA_rankings_all[which(Almeida_sig_func_DA_rankings_all$tool == "deseq2"), "tool"] <- "DESeq2"
 Almeida_sig_func_DA_rankings_all[which(Almeida_sig_func_DA_rankings_all$tool == "limma.voom"), "tool"] <- "limma-voom"
-Almeida_sig_func_DA_rankings_all[which(Almeida_sig_func_DA_rankings_all$tool == "wilcoxon.musicc"), "tool"] <- "Wilcoxon (MUSiCC)"
+Almeida_sig_func_DA_rankings_all[which(Almeida_sig_func_DA_rankings_all$tool == "wilcoxon.musicc"), "tool"] <- "Wilcoxon (MUSiCC-corr.)"
 Almeida_sig_func_DA_rankings_all[which(Almeida_sig_func_DA_rankings_all$tool == "wilcoxon.relab"), "tool"] <- "Wilcoxon (relab.)"
 
 
@@ -184,7 +184,7 @@ TARA_sig_func_ranks_ko_panel <- ggplot(TARA_sig_func_spearman_rankings_ko, aes(x
         legend.background = element_rect(colour = "light grey"),
         plot.title = element_text(hjust = 0.5))
 
-plot_grid(Almeida_ko_panel, Almeida_pathways_panel, Almeida_modules_panel, ncol = 2, ncrow = 2)
+plot_grid(Almeida_ko_panel, Almeida_pathways_panel, Almeida_modules_panel, ncol = 2, nrow = 2)
 
 
 # sig_abun_vs_enrich_plot <- ,
