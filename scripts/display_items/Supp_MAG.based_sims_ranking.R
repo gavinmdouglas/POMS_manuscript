@@ -42,7 +42,7 @@ MAG.based_POMS_vs_wilcoxon.musicc_ranking_marginal_combined <- plot_grid(MAG_sim
                                                                          MAG_sim_func.based_ranking_POMS_vs_num.MAG_marginal,
                                                                           nrow = 1, ncol = 2, labels = c('a', 'b'))
 
-ggsave(filename = "~/github_repos/POMS_manuscript/figures/Maintext_MAG.based_sims_ranking.pdf",
+ggsave(filename = "~/github_repos/POMS_manuscript/figures/Supp_MAG.based_sims_ranking.pdf",
        plot = MAG.based_POMS_vs_wilcoxon.musicc_ranking_marginal_combined,
        device = "pdf",
        width = 8,
@@ -50,7 +50,7 @@ ggsave(filename = "~/github_repos/POMS_manuscript/figures/Maintext_MAG.based_sim
        dpi = 600)
 
 
-ggsave(filename = "~/github_repos/POMS_manuscript/figures/Maintext_MAG.based_sims_ranking.png",
+ggsave(filename = "~/github_repos/POMS_manuscript/figures/Supp_MAG.based_sims_ranking.png",
        plot = MAG.based_POMS_vs_wilcoxon.musicc_ranking_marginal_combined,
        device = "png",
        width = 8,

@@ -53,6 +53,6 @@ ERP003612_K01993_example_combined <- plot_grid(ERP003612_out_K01993_tree,
                                                ERP003612_out_K01993_multinomial_plot,
                                                nrow = 1, labels = c('a', 'b'))
 
-ggsave(filename = "../display_items/Maintext_obesity1_K01993_example_RAW.pdf",
+ggsave(filename = "../display_items/Supp_obesity1_K01993_example_RAW.pdf",
        plot = ERP003612_K01993_example_combined,
        width = 10, height = 5, dpi = 600, device = "pdf")

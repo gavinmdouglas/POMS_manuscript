@@ -5,8 +5,28 @@ library(ggplot2)
 
 setwd("/home/gavin/github_repos/POMS_manuscript/data/results")
 
+POMS_out <- list()
+
+POMS_out[["Obesity 1"]] <- readRDS("Almeida_2019_POMS_output/ERP002061_POMS_out.rds")
+POMS_out[["Obesity 2"]] <- readRDS("Almeida_2019_POMS_output/ERP003612_POMS_out.rds")
+POMS_out[["Colorectal cancer"]] <- readRDS("Almeida_2019_POMS_output/ERP012177_POMS_out.rds")
+POMS_out[["Mean salinity"]] <- readRDS("TARA_POMS_out.rds")[["Mean_Salinity"]]
+POMS_out[["PO4"]] <- readRDS("TARA_POMS_out.rds")[["PO4"]]
+
+tmp <- readRDS("TARA_POMS_out.rds")
+
+for (dataset in names(POMS_out)) {
+  
+  
+  
+}
+
 almeida_POMS_out_ERP002061 <- readRDS("Almeida_2019_POMS_output/ERP002061_POMS_out.rds")
 almeida_POMS_out_ERP003612 <- readRDS("Almeida_2019_POMS_output/ERP003612_POMS_out.rds")
+almeida_POMS_out_ERP003612 <- readRDS("Almeida_2019_POMS_output/ERP012177_POMS_out.rds")
+
+
+
 
 almeida_DA_out <- readRDS(file = "Almeida_2019_DA_tool_output.rds")
 

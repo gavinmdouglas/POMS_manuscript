@@ -42,7 +42,7 @@ MAG.based_POMS_vs_wilcoxon.musicc_sig_prop_marginal_combined <- plot_grid(MAG.ba
                                                                           MAG.based_sim_func_POMS_vs_wilcoxon.musicc_sig_prop_marginal,
                                                                           nrow = 1, ncol = 2, labels = c('a', 'b'))
 
-ggsave(filename = "~/github_repos/POMS_manuscript/figures/Maintext_MAG.based_sims_prop_sig_genes.pdf",
+ggsave(filename = "~/github_repos/POMS_manuscript/figures/Supp_MAG.based_sims_prop_sig_genes.pdf",
        plot = MAG.based_POMS_vs_wilcoxon.musicc_sig_prop_marginal_combined,
        device = "pdf",
        width = 8,
@@ -50,7 +50,7 @@ ggsave(filename = "~/github_repos/POMS_manuscript/figures/Maintext_MAG.based_sim
        dpi = 600)
        
        
-ggsave(filename = "~/github_repos/POMS_manuscript/figures/Maintext_MAG.based_sims_prop_sig_genes.png",
+ggsave(filename = "~/github_repos/POMS_manuscript/figures/Supp_MAG.based_sims_prop_sig_genes.png",
        plot = MAG.based_POMS_vs_wilcoxon.musicc_sig_prop_marginal_combined,
        device = "png",
        width = 8,
