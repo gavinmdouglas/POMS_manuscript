@@ -109,7 +109,7 @@ rankings_boxplots <- ggplot(rankings, aes(x = dataset, y = rank, fill = Method))
 genome_prev_and_ranking_plot <- plot_grid(genome_prev_boxplots, rankings_boxplots, nrow = 1, ncol = 2, labels = c('a', 'b'), rel_widths = c(1, 2))
 
 
-ggsave(filename = "~/github_repos/POMS_manuscript/figures/Supp_ref.based_abun_and_ranking_POMS_vs_wilcoxon.pdf",
+ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Supp_ref.based_abun_and_ranking_POMS_vs_wilcoxon.pdf",
        plot = genome_prev_and_ranking_plot,
        device = "pdf",
        width = 8,
@@ -117,7 +117,7 @@ ggsave(filename = "~/github_repos/POMS_manuscript/figures/Supp_ref.based_abun_an
        dpi = 600)
 
 
-ggsave(filename = "~/github_repos/POMS_manuscript/figures/Supp_ref.based_abun_and_ranking_POMS_vs_wilcoxon.png",
+ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Supp_ref.based_abun_and_ranking_POMS_vs_wilcoxon.png",
        plot = genome_prev_and_ranking_plot,
        device = "png",
        width = 8,
