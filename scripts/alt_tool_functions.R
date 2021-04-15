@@ -92,43 +92,45 @@ deseq2_default_two_groups <- function(intable, group1, group2, alpha.set=0.05, d
 }
 
 
-limma_voom_two_group_TMM <- function(table, group1, group2) {
+limma_voom_two_group_TMM <- function(intable, group1, group2) {
   
-  group1_subset <- group1[which(group1 %in% colnames(table))]
-  group2_subset <- group2[which(group2 %in% colnames(table))]
+  group1_subset <- group1[which(group1 %in% colnames(intable))]
+  group2_subset <- group2[which(group2 %in% colnames(intable))]
+  
+  intable <- intable[, c(group1_subset, group2_subset)]
   
   # Create metadata df.
-  metadata_tab <- data.frame(matrix(NA, nrow=(length(group1_subset) + length(group2_subset)), ncol=1))
+  metadata_tab <- data.frame(matrix(NA, nrow = (length(group1_subset) + length(group2_subset)), ncol = 1))
   rownames(metadata_tab) <- c(group1_subset, group2_subset)
   colnames(metadata_tab) <- c("group")
   metadata_tab[group1_subset, "group"] <- "group1"
   metadata_tab[group2_subset, "group"] <- "group2"
   metadata_tab$group <- as.factor(metadata_tab$group)
   
-  counts <- floor(as.matrix(table))
+  counts <- floor(as.matrix(intable))
   
   dge <- DGEList(counts = counts)
   
   ### Check if upper quartile method works for selecting reference
-  upper_quartile_norm_test <- calcNormFactors(dge, method="upperquartile")
+  upper_quartile_norm_test <- calcNormFactors(dge, method = "upperquartile")
   
   summary_upper_quartile <- summary(upper_quartile_norm_test$samples$norm.factors)[3]
-  if(is.na(summary_upper_quartile)){
+  if (is.na(summary_upper_quartile)){
     message("Upper Quartile reference selection failed will use find sample with largest sqrt(read_depth) to use as reference")
     Ref_col <- which.max(colSums(sqrt(counts)))
     dge_norm <- calcNormFactors(dge, method = "TMM", refColumn = Ref_col)
-  }else{
-    dge_norm <- calcNormFactors(dge, method="TMM")
+  } else {
+    dge_norm <- calcNormFactors(dge, method = "TMM")
   }
   
   model_matrix <- model.matrix(as.formula("~ group"), metadata_tab)
   
-  voom_out <- voom(dge_norm, model_matrix, plot=FALSE)
+  voom_out <- voom(dge_norm, model_matrix, plot = FALSE)
   
   voom_out_fit <- lmFit(voom_out, model_matrix)
   voom_out_fit_eBayes <- eBayes(voom_out_fit)
   
-  return(topTable(voom_out_fit_eBayes, coef = 2, n = nrow(dge_norm), sort.by="none"))
+  return(topTable(voom_out_fit_eBayes, coef = 2, number = nrow(dge_norm), sort.by = "none"))
   
 }
 
@@ -170,7 +172,7 @@ run_alt.tools <- function(func_abun_table, group1_samples, group2_samples, USCGs
   }
   
   if ("limma.voom" %in% tools_to_run) {
-    DA_out[["limma.voom"]] <- limma_voom_two_group_TMM(table = func_abun_table,
+    DA_out[["limma.voom"]] <- limma_voom_two_group_TMM(intable = func_abun_table,
                                                        group1 = group1_samples,
                                                        group2 = group2_samples)
     

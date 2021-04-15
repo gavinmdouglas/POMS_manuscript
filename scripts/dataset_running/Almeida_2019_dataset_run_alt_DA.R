@@ -9,10 +9,19 @@ devtools::load_all(path = "/home/gavin/github_repos/POMS/")
 almeida_DA_out <- list()
 
 # Read in input files.
-almeida_func <- read.table(file = "functional_analyses/kegg_summary.csv.gz",
-                           sep = ",", stringsAsFactors = FALSE, quote = "", comment.char = "", header = TRUE, check.names = FALSE, row.names = 1)
+almeida_func <- list()
 
-almeida_func <- data.frame(t(almeida_func), check.names = FALSE)
+almeida_func[["ko"]] <- read.table(file = "functional_analyses/kegg_summary.csv.gz",
+                                    sep = ",", stringsAsFactors = FALSE, quote = "", comment.char = "", header = TRUE, check.names = FALSE, row.names = 1)
+almeida_func[["ko"]] <- data.frame(t(almeida_func[["ko"]]), check.names = FALSE)
+
+almeida_func[["pathways"]] <- read.table(file = "functional_analyses/modified/kegg_pathways/path_abun_unstrat.tsv.gz",
+                                          sep = "\t", stringsAsFactors = FALSE, quote = "", comment.char = "", header = TRUE, check.names = FALSE, row.names = 1)
+almeida_func[["pathways"]] <- data.frame(t(almeida_func[["pathways"]]), check.names = FALSE)
+
+almeida_func[["modules"]] <- read.table(file = "functional_analyses/modified/kegg_modules/path_abun_unstrat.tsv.gz",
+                                         sep = "\t", stringsAsFactors = FALSE, quote = "", comment.char = "", header = TRUE, check.names = FALSE, row.names = 1)
+almeida_func[["modules"]] <- data.frame(t(almeida_func[["modules"]]), check.names = FALSE)
 
 almeida_tree <- read.tree(file = "phylogenies/raxml_hgr-umgs_phylogeny.nwk")
 
@@ -30,102 +39,133 @@ musicc_uscgs <- read.table("/home/gavin/github_repos/POMS_manuscript/data/key_in
 
 # ERP002061
 ERP002061_almeida_sample_info <- almeida_sample_info[which(almeida_sample_info$Study == "ERP002061"), ]
-
 ERP002061_almeida_abun <- subset_abun_table(in_abun = almeida_abun, col2keep = ERP002061_almeida_sample_info$Run)
-
-
 ERP002061_almeida_sample_info <- ERP002061_almeida_sample_info[which(ERP002061_almeida_sample_info$Run %in% colnames(ERP002061_almeida_abun)), ]
 ERP002061_group1_samples <- ERP002061_almeida_sample_info[which(ERP002061_almeida_sample_info$Health.state == "Diseased"), "Run"]
 ERP002061_group2_samples <- ERP002061_almeida_sample_info[which(ERP002061_almeida_sample_info$Health.state == "Healthy"), "Run"]
 
-ERP002061_almeida_func <- almeida_func[rownames(ERP002061_almeida_abun), ]
+almeida_DA_out[["ERP002061"]] <- list()
 
-ERP002061_almeida_func_abun <- calc_func_abun(in_abun = ERP002061_almeida_abun, in_func = ERP002061_almeida_func, ncores = 40)
+for (func_type in names(almeida_func)) {
+  
+  ERP002061_almeida_func <- almeida_func[[func_type]][rownames(ERP002061_almeida_abun), ]
 
-# Subset to samples
-ERP002061_group1_samples_subset <- ERP002061_group1_samples[which(ERP002061_group1_samples %in% colnames(ERP002061_almeida_func_abun))]
-ERP002061_group2_samples_subset <- ERP002061_group2_samples[which(ERP002061_group2_samples %in% colnames(ERP002061_almeida_func_abun))]
-ERP002061_almeida_func_abun <- ERP002061_almeida_func_abun[, c(ERP002061_group1_samples_subset, ERP002061_group2_samples_subset)]
+  ERP002061_almeida_func_abun <- calc_func_abun(in_abun = ERP002061_almeida_abun,
+                                                in_func = ERP002061_almeida_func, ncores = 40)
 
-# Remove any rows or cols that are all missing after flooring data.
-ERP002061_almeida_func_abun_floor <- floor(ERP002061_almeida_func_abun)
-near_empty_rows <- which(rowSums(ERP002061_almeida_func_abun_floor) == 0)
-near_empty_cols <- which(colSums(ERP002061_almeida_func_abun_floor) == 0)
-if (length(near_empty_rows) > 0) { ERP002061_almeida_func_abun <- ERP002061_almeida_func_abun[-near_empty_rows, ] }
-if (length(near_empty_cols) > 0) { ERP002061_almeida_func_abun <- ERP002061_almeida_func_abun[, -near_empty_cols] }
+  # Subset to samples
+  ERP002061_group1_samples_subset <- ERP002061_group1_samples[which(ERP002061_group1_samples %in% colnames(ERP002061_almeida_func_abun))]
+  ERP002061_group2_samples_subset <- ERP002061_group2_samples[which(ERP002061_group2_samples %in% colnames(ERP002061_almeida_func_abun))]
+  ERP002061_almeida_func_abun <- ERP002061_almeida_func_abun[, c(ERP002061_group1_samples_subset, ERP002061_group2_samples_subset)]
+  
+  # Remove features found in fewer than 15% of samples.
+  if (length(which(rowSums(ERP002061_almeida_func_abun > 0) < 0.15 * ncol(ERP002061_almeida_func_abun))) > 0) {
+    ERP002061_almeida_func_abun <- ERP002061_almeida_func_abun[-which(rowSums(ERP002061_almeida_func_abun > 0) < 0.15 * ncol(ERP002061_almeida_func_abun)), ]
+  }
+  
+  if (func_type == "ko") { 
 
-almeida_DA_out[["ERP002061"]] <- run_alt.tools(func_abun_table = ERP002061_almeida_func_abun,
-                                               group1_samples = ERP002061_group1_samples_subset,
-                                               group2_samples = ERP002061_group2_samples_subset,
-                                               USCGs = musicc_uscgs,
-                                               tools_to_run = c("aldex2", "deseq2", "limma.voom", "wilcoxon.relab", "wilcoxon.musicc"))
+    almeida_DA_out[["ERP002061"]][[func_type]] <- run_alt.tools(func_abun_table = ERP002061_almeida_func_abun,
+                                                                group1_samples = ERP002061_group1_samples_subset,
+                                                                group2_samples = ERP002061_group2_samples_subset,
+                                                                USCGs = musicc_uscgs,
+                                                                tools_to_run = c("aldex2", "deseq2", "limma.voom", "wilcoxon.relab", "wilcoxon.musicc"))
+  } else {
+
+    almeida_DA_out[["ERP002061"]][[func_type]] <- run_alt.tools(func_abun_table = ERP002061_almeida_func_abun,
+                                                                group1_samples = ERP002061_group1_samples_subset,
+                                                                group2_samples = ERP002061_group2_samples_subset,
+                                                                tools_to_run = c("aldex2", "deseq2", "limma.voom", "wilcoxon.relab"))
+  }
+
+}
 
 
 # ERP012177
 ERP012177_almeida_sample_info <- almeida_sample_info[which(almeida_sample_info$Study == "ERP012177"), ]
-
 ERP012177_almeida_abun <- subset_abun_table(in_abun = almeida_abun, col2keep = ERP012177_almeida_sample_info$Run)
-
-
 ERP012177_almeida_sample_info <- ERP012177_almeida_sample_info[which(ERP012177_almeida_sample_info$Run %in% colnames(ERP012177_almeida_abun)), ]
 ERP012177_group1_samples <- ERP012177_almeida_sample_info[which(ERP012177_almeida_sample_info$Health.state == "Diseased"), "Run"]
 ERP012177_group2_samples <- ERP012177_almeida_sample_info[which(ERP012177_almeida_sample_info$Health.state == "Healthy"), "Run"]
 
-ERP012177_almeida_func <- almeida_func[rownames(ERP012177_almeida_abun), ]
+almeida_DA_out[["ERP012177"]] <- list()
 
-ERP012177_almeida_func_abun <- calc_func_abun(in_abun = ERP012177_almeida_abun, in_func = ERP012177_almeida_func, ncores = 40)
-
-# Subset to samples
-ERP012177_group1_samples_subset <- ERP012177_group1_samples[which(ERP012177_group1_samples %in% colnames(ERP012177_almeida_func_abun))]
-ERP012177_group2_samples_subset <- ERP012177_group2_samples[which(ERP012177_group2_samples %in% colnames(ERP012177_almeida_func_abun))]
-ERP012177_almeida_func_abun <- ERP012177_almeida_func_abun[, c(ERP012177_group1_samples_subset, ERP012177_group2_samples_subset)]
-
-# Remove any rows or cols that are all missing after flooring data.
-ERP012177_almeida_func_abun_floor <- floor(ERP012177_almeida_func_abun)
-near_empty_rows <- which(rowSums(ERP012177_almeida_func_abun_floor) == 0)
-near_empty_cols <- which(colSums(ERP012177_almeida_func_abun_floor) == 0)
-if (length(near_empty_rows) > 0) { ERP012177_almeida_func_abun <- ERP012177_almeida_func_abun[-near_empty_rows, ] }
-if (length(near_empty_cols) > 0) { ERP012177_almeida_func_abun <- ERP012177_almeida_func_abun[, -near_empty_cols] }
-
-almeida_DA_out[["ERP012177"]] <- run_alt.tools(func_abun_table = ERP012177_almeida_func_abun,
-                                               group1_samples = ERP012177_group1_samples_subset,
-                                               group2_samples = ERP012177_group2_samples_subset,
-                                               USCGs = musicc_uscgs,
-                                               tools_to_run = c("aldex2", "deseq2", "limma.voom", "wilcoxon.relab", "wilcoxon.musicc"))
-
+for (func_type in names(almeida_func)) {
+  
+  ERP012177_almeida_func <- almeida_func[[func_type]][rownames(ERP012177_almeida_abun), ]
+  
+  ERP012177_almeida_func_abun <- calc_func_abun(in_abun = ERP012177_almeida_abun,
+                                                in_func = ERP012177_almeida_func, ncores = 40)
+  
+  # Subset to samples
+  ERP012177_group1_samples_subset <- ERP012177_group1_samples[which(ERP012177_group1_samples %in% colnames(ERP012177_almeida_func_abun))]
+  ERP012177_group2_samples_subset <- ERP012177_group2_samples[which(ERP012177_group2_samples %in% colnames(ERP012177_almeida_func_abun))]
+  ERP012177_almeida_func_abun <- ERP012177_almeida_func_abun[, c(ERP012177_group1_samples_subset, ERP012177_group2_samples_subset)]
+  
+  # Remove features found in fewer than 15% of samples.
+  if (length(which(rowSums(ERP012177_almeida_func_abun > 0) < 0.15 * ncol(ERP012177_almeida_func_abun))) > 0) {
+    ERP012177_almeida_func_abun <- ERP012177_almeida_func_abun[-which(rowSums(ERP012177_almeida_func_abun > 0) < 0.15 * ncol(ERP012177_almeida_func_abun)), ]
+  }
+  
+  if (func_type == "ko") { 
+    
+    almeida_DA_out[["ERP012177"]][[func_type]] <- run_alt.tools(func_abun_table = ERP012177_almeida_func_abun,
+                                                                group1_samples = ERP012177_group1_samples_subset,
+                                                                group2_samples = ERP012177_group2_samples_subset,
+                                                                USCGs = musicc_uscgs,
+                                                                tools_to_run = c("aldex2", "deseq2", "limma.voom", "wilcoxon.relab", "wilcoxon.musicc"))
+  } else {
+    
+    almeida_DA_out[["ERP012177"]][[func_type]] <- run_alt.tools(func_abun_table = ERP012177_almeida_func_abun,
+                                                                group1_samples = ERP012177_group1_samples_subset,
+                                                                group2_samples = ERP012177_group2_samples_subset,
+                                                                tools_to_run = c("aldex2", "deseq2", "limma.voom", "wilcoxon.relab"))
+  }
+  
+}
 
 # ERP003612
 ERP003612_almeida_sample_info <- almeida_sample_info[which(almeida_sample_info$Study == "ERP003612"), ]
-
 ERP003612_almeida_abun <- subset_abun_table(in_abun = almeida_abun, col2keep = ERP003612_almeida_sample_info$Run)
-
-
 ERP003612_almeida_sample_info <- ERP003612_almeida_sample_info[which(ERP003612_almeida_sample_info$Run %in% colnames(ERP003612_almeida_abun)), ]
 ERP003612_group1_samples <- ERP003612_almeida_sample_info[which(ERP003612_almeida_sample_info$Health.state == "Diseased"), "Run"]
 ERP003612_group2_samples <- ERP003612_almeida_sample_info[which(ERP003612_almeida_sample_info$Health.state == "Healthy"), "Run"]
 
-ERP003612_almeida_func <- almeida_func[rownames(ERP003612_almeida_abun), ]
+almeida_DA_out[["ERP003612"]] <- list()
 
-ERP003612_almeida_func_abun <- calc_func_abun(in_abun = ERP003612_almeida_abun, in_func = ERP003612_almeida_func, ncores = 40)
-
-# Subset to samples
-ERP003612_group1_samples_subset <- ERP003612_group1_samples[which(ERP003612_group1_samples %in% colnames(ERP003612_almeida_func_abun))]
-ERP003612_group2_samples_subset <- ERP003612_group2_samples[which(ERP003612_group2_samples %in% colnames(ERP003612_almeida_func_abun))]
-ERP003612_almeida_func_abun <- ERP003612_almeida_func_abun[, c(ERP003612_group1_samples_subset, ERP003612_group2_samples_subset)]
-
-# Remove any rows or cols that are all missing after flooring data.
-ERP003612_almeida_func_abun_floor <- floor(ERP003612_almeida_func_abun)
-near_empty_rows <- which(rowSums(ERP003612_almeida_func_abun_floor) == 0)
-near_empty_cols <- which(colSums(ERP003612_almeida_func_abun_floor) == 0)
-if (length(near_empty_rows) > 0) { ERP003612_almeida_func_abun <- ERP003612_almeida_func_abun[-near_empty_rows, ] }
-if (length(near_empty_cols) > 0) { ERP003612_almeida_func_abun <- ERP003612_almeida_func_abun[, -near_empty_cols] }
-
-almeida_DA_out[["ERP003612"]] <- run_alt.tools(func_abun_table = ERP003612_almeida_func_abun,
-                                               group1_samples = ERP003612_group1_samples_subset,
-                                               group2_samples = ERP003612_group2_samples_subset,
-                                               USCGs = musicc_uscgs,
-                                               tools_to_run = c("aldex2", "deseq2", "limma.voom", "wilcoxon.relab", "wilcoxon.musicc"))
-
+for (func_type in names(almeida_func)) {
+  
+  ERP003612_almeida_func <- almeida_func[[func_type]][rownames(ERP003612_almeida_abun), ]
+  
+  ERP003612_almeida_func_abun <- calc_func_abun(in_abun = ERP003612_almeida_abun,
+                                                in_func = ERP003612_almeida_func, ncores = 40)
+  
+  # Subset to samples
+  ERP003612_group1_samples_subset <- ERP003612_group1_samples[which(ERP003612_group1_samples %in% colnames(ERP003612_almeida_func_abun))]
+  ERP003612_group2_samples_subset <- ERP003612_group2_samples[which(ERP003612_group2_samples %in% colnames(ERP003612_almeida_func_abun))]
+  ERP003612_almeida_func_abun <- ERP003612_almeida_func_abun[, c(ERP003612_group1_samples_subset, ERP003612_group2_samples_subset)]
+  
+  # Remove features found in fewer than 15% of samples.
+  if (length(which(rowSums(ERP003612_almeida_func_abun > 0) < 0.15 * ncol(ERP003612_almeida_func_abun))) > 0) {
+    ERP003612_almeida_func_abun <- ERP003612_almeida_func_abun[-which(rowSums(ERP003612_almeida_func_abun > 0) < 0.15 * ncol(ERP003612_almeida_func_abun)), ]
+  }
+  
+  if (func_type == "ko") { 
+    
+    almeida_DA_out[["ERP003612"]][[func_type]] <- run_alt.tools(func_abun_table = ERP003612_almeida_func_abun,
+                                                                group1_samples = ERP003612_group1_samples_subset,
+                                                                group2_samples = ERP003612_group2_samples_subset,
+                                                                USCGs = musicc_uscgs,
+                                                                tools_to_run = c("aldex2", "deseq2", "limma.voom", "wilcoxon.relab", "wilcoxon.musicc"))
+  } else {
+    
+    almeida_DA_out[["ERP003612"]][[func_type]] <- run_alt.tools(func_abun_table = ERP003612_almeida_func_abun,
+                                                                group1_samples = ERP003612_group1_samples_subset,
+                                                                group2_samples = ERP003612_group2_samples_subset,
+                                                                tools_to_run = c("aldex2", "deseq2", "limma.voom", "wilcoxon.relab"))
+  }
+  
+}
 
 # Write out all DA output results for these three datasets
 saveRDS(object = almeida_DA_out, file = "/home/gavin/github_repos/POMS_manuscript/data/results/Almeida_2019_DA_tool_output.rds")
