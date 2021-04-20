@@ -95,33 +95,31 @@ param_altered_plot <- plot_grid(wilcoxon.musicc_sig_prop_panel, wilcoxon.musicc_
                                 nrow = 2, ncol = 2)
 
 
-ggsave(filename = "~/github_repos/POMS_manuscript/figures/Supp_MAG.based_sims_param_altered_heatmaps.pdf",
+ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Supp_MAG.based_sims_param_altered_heatmaps.pdf",
        plot = param_altered_plot,
        device = "pdf",
-       width = 6,
-       height = 6,
+       width = 14,
+       height = 8,
        dpi = 600)
 
 
-ggsave(filename = "~/github_repos/POMS_manuscript/figures/Supp_MAG.based_sims_param_altered_heatmaps.png",
+ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Supp_MAG.based_sims_param_altered_heatmaps.png",
        plot = param_altered_plot,
        device = "png",
-       width = 6,
-       height = 6,
+       width = 14,
+       height = 8,
        dpi = 300)
 
-
-ggsave(filename = "~/github_repos/POMS_manuscript/figures/Supp_MAG.based_sims_param_altered_heatmaps.pdf",
-       plot = param_altered_plot,
+ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Supp_MAG.based_sims_param_altered_num_sig_nodes.pdf",
+       plot = num_sig_nodes_panel,
        device = "pdf",
-       width = 6,
-       height = 6,
+       width = 7,
+       height = 4,
        dpi = 600)
 
-
-ggsave(filename = "~/github_repos/POMS_manuscript/figures/Supp_MAG.based_sims_param_altered_num_sig_nodes.png",
+ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Supp_MAG.based_sims_param_altered_num_sig_nodes.png",
        plot = num_sig_nodes_panel,
        device = "png",
-       width = 6,
-       height = 6,
+       width = 7,
+       height = 4,
        dpi = 300)
