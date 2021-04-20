@@ -68,7 +68,7 @@ simulation_summaries <- function(POMS_sims,func_table, alt_tool_sims=NULL, focal
   
   num_tested_functions <- ncol(func_table)
   
-  if (length(alt_tool_sims) != length(POMS_sims)) {
+  if ((!skip_alt_tools) && (length(alt_tool_sims) != length(POMS_sims))) {
     stop("Different number of sim reps between POMS and alt tools lists.") 
   }
   
