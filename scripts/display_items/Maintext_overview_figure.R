@@ -171,14 +171,14 @@ example_balances_boxplots <- ggplot(ex_balances, aes(x = group, y = balances)) +
                                           theme(legend.position = "none")
 
 
-ggsave(filename = "../../../display_items/Main_overview_panel_A_RAW.pdf",
+ggsave(filename = "../../../display_items/Maintext_overview_panel_A_RAW.pdf",
        plot = example_enrichment_ggtree_heatmap,
        width = 6, height = 8, dpi = 600, device = "pdf")
 
-ggsave(filename = "../../../display_items/Main_overview_panel_B_RAW.pdf",
+ggsave(filename = "../../../display_items/Maintext_overview_panel_B_RAW.pdf",
        plot = example_weak_ggtree_heatmap,
        width = 6, height = 8, dpi = 600, device = "pdf")
 
-ggsave(filename = "../../../display_items/Main_overview_panel_C_RAW.pdf",
+ggsave(filename = "../../../display_items/Maintext_overview_panel_C_RAW.pdf",
        plot = example_balances_boxplots,
        width = 4, height = 3, dpi = 600, device = "pdf")
