@@ -15,8 +15,14 @@ summary_df_clean <- summary_df[, c("rep", "MAGs", "pseudocount", "abun_increase"
 summary_df_clean_mean <- aggregate(. ~ MAGs * pseudocount * abun_increase,
                                    data = summary_df_clean, FUN = mean, na.rm = TRUE, na.action = NULL)
 
+summary_df_clean_mean <- summary_df_clean_mean[order(summary_df_clean_mean$pseudocount, summary_df_clean_mean$abun_increase, decreasing = TRUE), ]
+
+
 summary_df_clean_mean$sel_set <- paste("pseudo", as.character(summary_df_clean_mean$pseudocount), "; ",
                                        "abun*", as.character(summary_df_clean_mean$abun_increase), sep = "")
+
+summary_df_clean_mean$sel_set <- factor(summary_df_clean_mean$sel_set,
+                                        levels = rev(summary_df_clean_mean$sel_set[-which(duplicated(summary_df_clean_mean$sel_set))]))
 
 summary_df_clean_mean$MAG_num_char <- as.character(summary_df_clean_mean$MAGs)
 summary_df_clean_mean$MAG_num_char <- factor(summary_df_clean_mean$MAG_num_char,
@@ -26,8 +32,13 @@ summary_df_clean_mean$MAG_num_char <- factor(summary_df_clean_mean$MAG_num_char,
 summary_df_clean_median <- aggregate(. ~ MAGs * pseudocount * abun_increase,
                                    data = summary_df_clean, FUN = median, na.rm = TRUE, na.action = NULL)
 
+summary_df_clean_median <- summary_df_clean_median[order(summary_df_clean_median$pseudocount, summary_df_clean_median$abun_increase, decreasing = TRUE), ]
+
 summary_df_clean_median$sel_set <- paste("pseudo", as.character(summary_df_clean_median$pseudocount), "; ",
                                          "abun*", as.character(summary_df_clean_median$abun_increase), sep = "")
+
+summary_df_clean_median$sel_set <- factor(summary_df_clean_median$sel_set,
+                                        levels = rev(summary_df_clean_median$sel_set[-which(duplicated(summary_df_clean_median$sel_set))]))
 
 summary_df_clean_median$MAG_num_char <- as.character(summary_df_clean_median$MAGs)
 summary_df_clean_median$MAG_num_char <- factor(summary_df_clean_median$MAG_num_char,
@@ -84,7 +95,7 @@ wilcoxon.musicc_rank_panel <- ggplot(data = summary_df_clean_median, aes(y = sel
                                     xlab("") +
                                     theme_bw() +
                                     scale_fill_gradient(name = "Median focal\ngene rank",
-                                                        low = "dodgerblue", high = "dodgerblue4", limits = c(0, 806)) +
+                                                        low = "dodgerblue", high = "dodgerblue4", limits = c(0, 1260)) +
                                     ggtitle("Wilcoxon test") +
                                     theme(plot.title = element_text(hjust = 0.5, vjust = -1))
 
@@ -99,7 +110,7 @@ ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Supp_MAG.based_s
        plot = param_altered_plot,
        device = "pdf",
        width = 14,
-       height = 8,
+       height = 10,
        dpi = 600)
 
 
@@ -107,19 +118,19 @@ ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Supp_MAG.based_s
        plot = param_altered_plot,
        device = "png",
        width = 14,
-       height = 8,
+       height = 10,
        dpi = 300)
 
 ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Supp_MAG.based_sims_param_altered_num_sig_nodes.pdf",
        plot = num_sig_nodes_panel,
        device = "pdf",
        width = 7,
-       height = 4,
+       height = 6,
        dpi = 600)
 
 ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Supp_MAG.based_sims_param_altered_num_sig_nodes.png",
        plot = num_sig_nodes_panel,
        device = "png",
        width = 7,
-       height = 4,
+       height = 6,
        dpi = 300)

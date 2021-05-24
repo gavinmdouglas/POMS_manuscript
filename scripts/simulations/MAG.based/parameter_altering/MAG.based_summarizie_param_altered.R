@@ -10,6 +10,7 @@ setwd("~/github_repos/POMS_manuscript/data/intermediates/MAG.based_simulations/p
 source("~/github_repos/POMS_manuscript/scripts/POMS_manuscript_functions.R")
 
 
+# Create dummy df for results based on single replicate.
 test_POMS_rds <- list(output = readRDS("POMS_out/POMS_func_out_rep10_MAGs1000_pseudo0_increase1.05.rds"))
 test_POMS_rds$func <- test_POMS_rds$output$func
 test_POMS_rds_list <- list(test_POMS_rds)
@@ -22,17 +23,15 @@ summary_df <- simulation_summaries(POMS_sims = test_POMS_rds_list,
                                    func_table = ex_func,
                                    num_cores = 20)
 summary_df[, c("rep", "MAGs", "pseudocount", "abun_increase")] <- NA
-summary_df <- summary_df[-1, ]         
+summary_df <- summary_df[-1, ]
         
 parameter_settings <- list()
 
 MAG_nums <- c(1595, 1250, 1000, 750, 500, 250, 100, 50)
 
-pseudocount_settings <- c(0, 1)
+pseudocount_settings <- c(0, 0.1, 0.3, 0.5, 0.7, 0.9, 1)
 
 abun_increase_settings <- c(1.5, 1.3, 1.1, 1.05)
-
-POMS_output[[option_count]]$func <- POMS_output[[option_count]]$output$func
 
 
 for (rep_i in 1:25) {
