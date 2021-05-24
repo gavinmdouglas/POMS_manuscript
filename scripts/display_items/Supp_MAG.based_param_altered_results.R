@@ -73,7 +73,7 @@ POMS_rank_panel <- ggplot(data = summary_df_clean_median, aes(y = sel_set, x = M
                            xlab("Number of MAGs") +
                            theme_bw() +
                            scale_fill_gradient(name = "Median focal\ngene rank",
-                                               low = "dodgerblue", high = "dodgerblue4", limits = c(0, 806)) +
+                                               low = "dodgerblue", high = "dodgerblue4", limits = c(0, 1260)) +
                            ggtitle("POMS") +
                            theme(plot.title = element_text(hjust = 0.5, vjust = -1))
 
@@ -100,10 +100,10 @@ wilcoxon.musicc_rank_panel <- ggplot(data = summary_df_clean_median, aes(y = sel
                                     theme(plot.title = element_text(hjust = 0.5, vjust = -1))
 
 
-param_altered_plot <- plot_grid(wilcoxon.musicc_sig_prop_panel, wilcoxon.musicc_rank_panel,
+ranking_param_altered_plot <- plot_grid(wilcoxon.musicc_sig_prop_panel, wilcoxon.musicc_rank_panel,
                                 POMS_sig_prop_panel, POMS_rank_panel,
-                                labels = c('a', 'b', 'c', 'd'),
-                                nrow = 2, ncol = 2)
+                                labels = c('a', 'b'),
+                                nrow = 2, ncol = 1)
 
 
 ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Supp_MAG.based_sims_param_altered_heatmaps.pdf",
