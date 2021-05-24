@@ -100,26 +100,49 @@ wilcoxon.musicc_rank_panel <- ggplot(data = summary_df_clean_median, aes(y = sel
                                     theme(plot.title = element_text(hjust = 0.5, vjust = -1))
 
 
-ranking_param_altered_plot <- plot_grid(wilcoxon.musicc_sig_prop_panel, wilcoxon.musicc_rank_panel,
-                                POMS_sig_prop_panel, POMS_rank_panel,
-                                labels = c('a', 'b'),
-                                nrow = 2, ncol = 1)
+ranking_param_altered_plot <- plot_grid(wilcoxon.musicc_rank_panel,
+                                        POMS_rank_panel,
+                                        labels = c('a', 'b'),
+                                        nrow = 2, ncol = 1)
 
 
-ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Supp_MAG.based_sims_param_altered_heatmaps.pdf",
-       plot = param_altered_plot,
+sig_prop_param_altered_plot <- plot_grid(wilcoxon.musicc_sig_prop_panel,
+                                         POMS_sig_prop_panel,
+                                         labels = c('a', 'b'),
+                                         nrow = 2, ncol = 1)
+
+
+ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Supp_MAG.based_sims_ranking_param_altered_heatmaps.pdf",
+       plot = ranking_param_altered_plot,
        device = "pdf",
-       width = 14,
+       width = 7,
        height = 10,
        dpi = 600)
 
 
-ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Supp_MAG.based_sims_param_altered_heatmaps.png",
-       plot = param_altered_plot,
+ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Supp_MAG.based_sims_ranking_param_altered_heatmaps.png",
+       plot = ranking_param_altered_plot,
        device = "png",
-       width = 14,
+       width = 7,
        height = 10,
        dpi = 300)
+
+
+ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Supp_MAG.based_sims_sig_prop_param_altered_heatmaps.pdf",
+       plot = sig_prop_param_altered_plot,
+       device = "pdf",
+       width = 7,
+       height = 10,
+       dpi = 600)
+
+
+ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Supp_MAG.based_sims_sig_prop_param_altered_heatmaps.png",
+       plot = sig_prop_param_altered_plot,
+       device = "png",
+       width = 7,
+       height = 10,
+       dpi = 300)
+
 
 ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Supp_MAG.based_sims_param_altered_num_sig_nodes.pdf",
        plot = num_sig_nodes_panel,
