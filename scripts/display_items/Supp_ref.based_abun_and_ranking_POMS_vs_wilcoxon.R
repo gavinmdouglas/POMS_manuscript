@@ -77,20 +77,20 @@ rankings <- data.frame(dataset = c(rep("nu=0.50", nrow(nu0.50_sim_func_summary) 
                                  rep("Wilcoxon test", nrow(MAG.based_sim_func_summary)),
                                  rep("POMS", nrow(MAG.based_sim_func_summary))),
                           
-                          rank = c(nu0.50_sim_func_summary$wilcoxon.musicc_rank_0.001,
-                                   nu0.50_sim_func_summary$POMS_rank_0.25,
+                          rank = c(nu0.50_sim_func_summary$wilcoxon.musicc_rank_0.05,
+                                   nu0.50_sim_func_summary$POMS_rank_0.05,
                                    
-                                   nu0.65_sim_func_summary$wilcoxon.musicc_rank_0.001,
-                                   nu0.65_sim_func_summary$POMS_rank_0.25,
+                                   nu0.65_sim_func_summary$wilcoxon.musicc_rank_0.05,
+                                   nu0.65_sim_func_summary$POMS_rank_0.05,
                                    
-                                   nu0.80_sim_func_summary$wilcoxon.musicc_rank_0.001,
-                                   nu0.80_sim_func_summary$POMS_rank_0.25,
+                                   nu0.80_sim_func_summary$wilcoxon.musicc_rank_0.05,
+                                   nu0.80_sim_func_summary$POMS_rank_0.05,
                                    
-                                   nu0.95_sim_func_summary$wilcoxon.musicc_rank_0.001,
-                                   nu0.95_sim_func_summary$POMS_rank_0.25,
+                                   nu0.95_sim_func_summary$wilcoxon.musicc_rank_0.05,
+                                   nu0.95_sim_func_summary$POMS_rank_0.05,
                                    
-                                   MAG.based_sim_func_summary$wilcoxon.musicc_rank_0.001,
-                                   MAG.based_sim_func_summary$POMS_rank_0.25))
+                                   MAG.based_sim_func_summary$wilcoxon.musicc_rank_0.05,
+                                   MAG.based_sim_func_summary$POMS_rank_0.05))
 
 rankings$dataset <- factor(rankings$dataset, levels = c("nu=0.50", "nu=0.65", "nu=0.80", "nu=0.95", "MAG-based"))
 

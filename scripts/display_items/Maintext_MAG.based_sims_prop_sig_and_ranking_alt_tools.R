@@ -34,17 +34,17 @@ MAG.based_all_rank <- data.frame(Tool = c(rep("POMS", 1000),
                                           
                                           rep("DESeq2", 10)),
                                  
-                                 rank = c(func_rand_summary_POMS_wilcoxon.musicc$POMS_rank_0.25,
+                                 rank = c(func_rand_summary_POMS_wilcoxon.musicc$POMS_rank_0.05,
                                           
-                                          func_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_rank_0.001,
+                                          func_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_rank_0.05,
                                           
-                                          func_rand_summary_POMS_wilcoxon.relab_limma_voom$wilcoxon.relab_rank_0.001,
+                                          func_rand_summary_POMS_wilcoxon.relab_limma_voom$wilcoxon.relab_rank_0.05,
                                           
-                                          func_rand_summary_POMS_wilcoxon.relab_limma_voom$limma.voom_rank_0.001,
+                                          func_rand_summary_POMS_wilcoxon.relab_limma_voom$limma.voom_rank_0.05,
                                           
-                                          func_rand_summary_POMS_aldex2_deseq2$aldex2_rank_0.001,
+                                          func_rand_summary_POMS_aldex2_deseq2$aldex2_rank_0.05,
                                           
-                                          func_rand_summary_POMS_aldex2_deseq2$deseq2_rank_0.001))
+                                          func_rand_summary_POMS_aldex2_deseq2$deseq2_rank_0.05))
 
 
 MAG.based_all_rank$Tool <- factor(MAG.based_all_rank$Tool, 
@@ -98,23 +98,23 @@ MAG.based_all_prop_sig <- data.frame(Tool = c(rep("POMS", 2000),
                                               rep("Random taxa", 10),
                                               rep("Focal gene", 10)),
                                               
-                                     prop = c(taxa_rand_summary_POMS_wilcoxon.musicc$POMS_sig_0.25,
-                                              func_rand_summary_POMS_wilcoxon.musicc$POMS_sig_0.25,
+                                     prop = c(taxa_rand_summary_POMS_wilcoxon.musicc$POMS_sig_0.05,
+                                              func_rand_summary_POMS_wilcoxon.musicc$POMS_sig_0.05,
                                               
-                                              taxa_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_sig_0.001,
-                                              func_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_sig_0.001,
+                                              taxa_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_sig_0.05,
+                                              func_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_sig_0.05,
                                               
-                                              taxa_rand_summary_POMS_wilcoxon.relab_limma_voom$wilcoxon.relab_sig_0.001,
-                                              func_rand_summary_POMS_wilcoxon.relab_limma_voom$wilcoxon.relab_sig_0.001,
+                                              taxa_rand_summary_POMS_wilcoxon.relab_limma_voom$wilcoxon.relab_sig_0.05,
+                                              func_rand_summary_POMS_wilcoxon.relab_limma_voom$wilcoxon.relab_sig_0.05,
                                               
-                                              taxa_rand_summary_POMS_wilcoxon.relab_limma_voom$limma.voom_sig_0.001,
-                                              func_rand_summary_POMS_wilcoxon.relab_limma_voom$limma.voom_sig_0.001,
+                                              taxa_rand_summary_POMS_wilcoxon.relab_limma_voom$limma.voom_sig_0.05,
+                                              func_rand_summary_POMS_wilcoxon.relab_limma_voom$limma.voom_sig_0.05,
                                               
-                                              taxa_rand_summary_POMS_aldex2_deseq2$aldex2_sig_0.001,
-                                              func_rand_summary_POMS_aldex2_deseq2$aldex2_sig_0.001,
+                                              taxa_rand_summary_POMS_aldex2_deseq2$aldex2_sig_0.05,
+                                              func_rand_summary_POMS_aldex2_deseq2$aldex2_sig_0.05,
                                               
-                                              taxa_rand_summary_POMS_aldex2_deseq2$deseq2_sig_0.001,
-                                              func_rand_summary_POMS_aldex2_deseq2$deseq2_sig_0.001)
+                                              taxa_rand_summary_POMS_aldex2_deseq2$deseq2_sig_0.05,
+                                              func_rand_summary_POMS_aldex2_deseq2$deseq2_sig_0.05)
                                               
                                     )
 
