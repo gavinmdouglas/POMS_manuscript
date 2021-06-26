@@ -2,6 +2,7 @@ rm(list = ls(all.names = TRUE))
 
 library(cowplot)
 library(ggplot2)
+library(ggbeeswarm)
 
 setwd("/home/gavin/github_repos/POMS_manuscript/data/results")
 
@@ -82,10 +83,11 @@ Almeida_sig_func_DA_rankings_all[which(Almeida_sig_func_DA_rankings_all$tool == 
 
 Almeida_sig_func_DA_rankings_ko <- Almeida_sig_func_DA_rankings_all[which(Almeida_sig_func_DA_rankings_all$func_type == "ko"), ]
 Almeida_ko_panel <- ggplot(Almeida_sig_func_DA_rankings_ko, aes(x = tool, y = abs_rank)) +
-                            geom_boxplot() +
+                            geom_boxplot(outlier.colour = NA, fill = "grey90") +
+                            geom_beeswarm(cex = 3) +
                             facet_grid(. ~ dataset) +
                             theme_bw() +
-                            ggtitle("KEGG orthologs") +
+                            ggtitle("Human case-control: KEGG orthologs") +
                             xlab("") +
                             ylab("Rank") +
                             theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
@@ -97,34 +99,36 @@ Almeida_ko_panel <- ggplot(Almeida_sig_func_DA_rankings_ko, aes(x = tool, y = ab
                             
 Almeida_sig_func_DA_rankings_pathways <- Almeida_sig_func_DA_rankings_all[which(Almeida_sig_func_DA_rankings_all$func_type == "pathways"), ]
 Almeida_pathways_panel <- ggplot(Almeida_sig_func_DA_rankings_pathways, aes(x = tool, y = abs_rank)) +
-  geom_boxplot() +
-  facet_grid(. ~ dataset) +
-  theme_bw() +
-  ggtitle("KEGG pathways") +
-  xlab("") +
-  ylab("Rank") +
-  ylim(c(0, 60)) +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
-        legend.position = c(0.45, 0.7),
-        legend.key = element_rect(fill = "white", colour = "white"),
-        legend.box.background = element_rect(colour = "black"),
-        legend.background = element_rect(colour = "light grey"),
-        plot.title = element_text(hjust = 0.5))
+                                geom_boxplot(outlier.colour = NA, fill = "grey90") +
+                                geom_beeswarm(cex = 3) +
+                                facet_grid(. ~ dataset) +
+                                theme_bw() +
+                                ggtitle("Human case-control: KEGG pathways") +
+                                xlab("") +
+                                ylab("Rank") +
+                                ylim(c(0, 60)) +
+                                theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+                                      legend.position = c(0.45, 0.7),
+                                      legend.key = element_rect(fill = "white", colour = "white"),
+                                      legend.box.background = element_rect(colour = "black"),
+                                      legend.background = element_rect(colour = "light grey"),
+                                      plot.title = element_text(hjust = 0.5))
 
 Almeida_sig_func_DA_rankings_modules <- Almeida_sig_func_DA_rankings_all[which(Almeida_sig_func_DA_rankings_all$func_type == "modules"), ]
 Almeida_modules_panel <- ggplot(Almeida_sig_func_DA_rankings_modules, aes(x = tool, y = abs_rank)) +
-  geom_boxplot() +
-  facet_grid(. ~ dataset) +
-  theme_bw() +
-  ggtitle("KEGG modules") +
-  xlab("") +
-  ylab("Rank") +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
-        legend.position = c(0.45, 0.7),
-        legend.key = element_rect(fill = "white", colour = "white"),
-        legend.box.background = element_rect(colour = "black"),
-        legend.background = element_rect(colour = "light grey"),
-        plot.title = element_text(hjust = 0.5))
+                                geom_boxplot(outlier.colour = NA, fill = "grey90") +
+                                geom_beeswarm(cex = 3) +
+                                facet_grid(. ~ dataset) +
+                                theme_bw() +
+                                ggtitle("Human case-control: KEGG modules") +
+                                xlab("") +
+                                ylab("Rank") +
+                                theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+                                      legend.position = c(0.45, 0.7),
+                                      legend.key = element_rect(fill = "white", colour = "white"),
+                                      legend.box.background = element_rect(colour = "black"),
+                                      legend.background = element_rect(colour = "light grey"),
+                                      plot.title = element_text(hjust = 0.5))
 
 TARA_sig_func_spearman_rankings_all <- data.frame(dataset = NA, func = NA, tool = NA, abs_rank = NA, percentile_rank = NA)
 TARA_sig_func_spearman_rankings_all <- TARA_sig_func_spearman_rankings_all[-1, ]
@@ -169,33 +173,37 @@ for (dataset in names(TARA_POMS_out)) {
 }
 
 
-TARA_sig_func_spearman_rankings_ko <- TARA_sig_func_spearman_rankings_all[which(TARA_sig_func_spearman_rankings_all$func_type == "ko"), ]
+TARA_sig_func_spearman_rankings_all[which(TARA_sig_func_spearman_rankings_all$dataset == "PO4"), "dataset"] <- "Phosphate"
+TARA_sig_func_spearman_rankings_all[which(TARA_sig_func_spearman_rankings_all$func_type == "ko"), "func_type"] <- "KEGG orthologs"
+TARA_sig_func_spearman_rankings_all[which(TARA_sig_func_spearman_rankings_all$func_type == "module"), "func_type"] <- "KEGG modules"
+TARA_sig_func_spearman_rankings_all[which(TARA_sig_func_spearman_rankings_all$func_type == "pathway"), "func_type"] <- "KEGG pathways"
 
-TARA_sig_func_ranks_ko_panel <- ggplot(TARA_sig_func_spearman_rankings_ko, aes(x = dataset, y = abs_rank)) +
-  geom_boxplot() +
-  theme_bw() +
-  ggtitle("TARA oceans KEGG orthologs") +
-  xlab("") +
-  ylab("Rank") +
-  facet_grid(. ~ func_type, scales = "free_y") +
-  theme(legend.position = c(0.45, 0.7),
-        legend.key = element_rect(fill = "white", colour = "white"),
-        legend.box.background = element_rect(colour = "black"),
-        legend.background = element_rect(colour = "light grey"),
-        plot.title = element_text(hjust = 0.5))
+TARA_sig_func_spearman_rankings_panel <- ggplot(TARA_sig_func_spearman_rankings_all, aes(x = dataset, y = abs_rank)) +
+                                            geom_beeswarm(cex = 3) +
+                                            theme_bw() +
+                                            ggtitle("TARA oceans: All categories\n(based on Spearman correlations)") +
+                                            xlab("") +
+                                            ylab("Rank") +
+                                            facet_wrap(. ~ func_type, scales = "free_y") +
+                                            theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+                                                  legend.position = c(0.45, 0.7),
+                                                  legend.key = element_rect(fill = "white", colour = "white"),
+                                                  legend.box.background = element_rect(colour = "black"),
+                                                  legend.background = element_rect(colour = "light grey"),
+                                                  plot.title = element_text(hjust = 0.5))
 
-plot_grid(Almeida_ko_panel, Almeida_pathways_panel, Almeida_modules_panel, ncol = 2, nrow = 2)
 
 
-# sig_abun_vs_enrich_plot <- ,
-#                                      rel_widths = c(0.42, 0.42, 0.16))
-# 
-# ggsave(filename = "../../display_items/Supp_obesity_compare_enrichment_vs_relabun.pdf",
-#        plot = sig_abun_vs_enrich_plot,
-#        width = 8.5, height = 3.5, device = "pdf", dpi = 600)
-# 
-# 
-# ggsave(filename = "../../display_items/Supp_obesity_compare_enrichment_vs_relabun.png",
-#        plot = sig_abun_vs_enrich_plot,
-#        width = 8.5, height = 3.5, device = "png", dpi = 300)
-# 
+
+sig_abun_vs_enrich_plot <- plot_grid(TARA_sig_func_spearman_rankings_panel, Almeida_ko_panel, Almeida_modules_panel, Almeida_pathways_panel,
+                                    ncol = 2, nrow = 2, labels = c('a', 'b', 'c', 'd'))
+
+ggsave(filename = "../../display_items/Supp_DA_tool_ranks.pdf",
+       plot = sig_abun_vs_enrich_plot,
+       width = 8.5, height = 7, device = "pdf", dpi = 600)
+
+
+ggsave(filename = "../../display_items/Supp_DA_tool_ranks.png",
+       plot = sig_abun_vs_enrich_plot,
+       width = 8.5, height = 7, device = "png", dpi = 300)
+
