@@ -126,13 +126,10 @@ ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Supp_ref.based_a
 
 
 # Summary stats
-###NOTE: THE BELOW NAMES HAVE BEEN CHANGED, BUT THE VALUES HAVE NOT
-# wilcox.test(ref_sim_func.based_ranking$`mu=0.1, nu=0.5`$wilcoxon_rel_ranks, ref_sim_func.based_ranking$`mu=0.1, nu=0.5`$POMS_rel_ranks)
-# V = 3793, p-value = 1.312e-05
-# 
-# wilcox.test(ref_sim_func.based_ranking$`mu=0.1, nu=0.9`$wilcoxon_rel_ranks, ref_sim_func.based_ranking$`mu=0.1, nu=0.9`$POMS_rel_ranks)
-# V = 2067, p-value = 0.1156
-# 
-# wilcox.test(ref_sim_func.based_ranking$`mu=0.1, nu=0.99`$wilcoxon_rel_ranks, ref_sim_func.based_ranking$`mu=0.1, nu=0.99`$POMS_rel_ranks)
-# 
-# wilcox.test(ref_sim_func.based_ranking$`mu=0.01, nu=0.99`$wilcoxon_rel_ranks, ref_sim_func.based_ranking$`mu=0.01, nu=0.99`$POMS_rel_ranks)
+
+wilcox.test(nu0.50_sim_func_summary$POMS_rank_0.05, nu0.50_sim_func_summary$wilcoxon.musicc_rank_0.05)
+wilcox.test(nu0.65_sim_func_summary$POMS_rank_0.05, nu0.65_sim_func_summary$wilcoxon.musicc_rank_0.05)
+wilcox.test(nu0.80_sim_func_summary$POMS_rank_0.05, nu0.80_sim_func_summary$wilcoxon.musicc_rank_0.05)
+wilcox.test(nu0.95_sim_func_summary$POMS_rank_0.05, nu0.95_sim_func_summary$wilcoxon.musicc_rank_0.05)
+
+cor.test(nu0.95_sim_func_summary$wilcoxon.musicc_rank_0.05, nu0.95_sim_func_summary$num_focal_pos_mags)

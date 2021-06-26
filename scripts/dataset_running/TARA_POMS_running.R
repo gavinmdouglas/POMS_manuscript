@@ -48,7 +48,9 @@ TARA_node_balances <- compute_tree_node_balances(phylogeny = TARA_tree,
 
 TARA_POMS_out <- list()
 
-var2compare <- c("Chlorophyll.Sensor.s", "Mean_Temperature", "Mean_Salinity", "Mean_Oxygen", "Mean_Nitrates", "NO2", "PO4", "NO2NO3", "SI")
+var2compare <- c("Chlorophyll.Sensor.s", "Mean_Temperature", 
+                 "Mean_Salinity", "Mean_Oxygen", "Mean_Nitrates",
+                 "NO2", "PO4", "NO2NO3", "SI")
 
 for (sample_var in var2compare) {
 
@@ -187,3 +189,6 @@ for (sample_var in names(TARA_POMS_out)) {
 }
 
 saveRDS(object = TARA_POMS_out, file = "../../results/TARA_POMS_out.rds")
+
+
+TARA_POMS_out <- readRDS("../../results/TARA_POMS_out.rds")

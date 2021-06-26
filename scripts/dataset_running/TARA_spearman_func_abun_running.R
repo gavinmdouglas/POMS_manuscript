@@ -95,3 +95,17 @@ for (sample_var in names(TARA_spearman_out)) {
 
 saveRDS(object = TARA_spearman_out, file = "../../results/TARA_spearman_out.rds")
 
+
+# Info for main-text:
+rm(list = ls(all.names = TRUE))
+setwd("/home/gavin/github_repos/POMS_manuscript/data/key_inputs/TARA/")
+
+TARA_spearman_out <- readRDS("../../results/TARA_spearman_out.rds")
+TARA_spearman_out_modules <- TARA_spearman_out$PO4$module[which(TARA_spearman_out$PO4$module$p_corr < 0.25), ]
+TARA_spearman_out_modules <- TARA_spearman_out_modules[order(TARA_spearman_out_modules$p_corr), ]
+
+TARA_spearman_out_pathways <- TARA_spearman_out$PO4$pathway[which(TARA_spearman_out$PO4$pathway$p_corr < 0.25), ]
+TARA_spearman_out_pathways <- TARA_spearman_out_pathways[order(TARA_spearman_out_pathways$p_corr), ]
+
+TARA_spearman_out_kos <- TARA_spearman_out$PO4$ko[which(TARA_spearman_out$PO4$ko$p_corr < 0.25), ]
+TARA_spearman_out_kos <- TARA_spearman_out_kos[order(TARA_spearman_out_kos$p_corr), ]

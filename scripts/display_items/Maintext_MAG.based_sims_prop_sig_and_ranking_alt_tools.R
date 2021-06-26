@@ -155,3 +155,50 @@ ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Maintext_MAG.bas
        width = 10,
        height = 5,
        dpi = 300)
+
+
+# Rank results for main text:
+median(func_rand_summary_POMS_wilcoxon.musicc$POMS_rank_0.05, na.rm = TRUE)
+mean(func_rand_summary_POMS_wilcoxon.musicc$POMS_rank_0.05, na.rm = TRUE)
+sd(func_rand_summary_POMS_wilcoxon.musicc$POMS_rank_0.05, na.rm = TRUE)
+
+
+median(func_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_rank_0.05, na.rm = TRUE)
+mean(func_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_rank_0.05, na.rm = TRUE)
+sd(func_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_rank_0.05, na.rm = TRUE)
+
+median(func_rand_summary_POMS_wilcoxon.relab_limma_voom$wilcoxon.relab_rank_0.05, na.rm = TRUE)
+mean(func_rand_summary_POMS_wilcoxon.relab_limma_voom$wilcoxon.relab_rank_0.05, na.rm = TRUE)
+sd(func_rand_summary_POMS_wilcoxon.relab_limma_voom$wilcoxon.relab_rank_0.05, na.rm = TRUE)
+
+wilcox.test(func_rand_summary_POMS_wilcoxon.musicc$POMS_rank_0.05,
+            func_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_rank_0.05)
+
+
+wilcox.test(taxa_rand_summary_POMS_wilcoxon.musicc$POMS_sig_0.25,
+            func_rand_summary_POMS_wilcoxon.musicc$POMS_sig_0.25)
+
+
+# Prop. sig results for main text:
+mean(taxa_rand_summary_POMS_wilcoxon.musicc$POMS_sig_0.05, na.rm = TRUE)
+sd(taxa_rand_summary_POMS_wilcoxon.musicc$POMS_sig_0.05, na.rm = TRUE)
+
+mean(taxa_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_sig_0.05, na.rm = TRUE)
+sd(taxa_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_sig_0.05, na.rm = TRUE)
+
+
+
+mean(func_rand_summary_POMS_wilcoxon.musicc$POMS_sig_0.05, na.rm = TRUE)
+sd(func_rand_summary_POMS_wilcoxon.musicc$POMS_sig_0.05, na.rm = TRUE)
+
+mean(func_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_sig_0.05, na.rm = TRUE)
+sd(func_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_sig_0.05, na.rm = TRUE)
+
+
+# Percent increases:
+100 * ((mean(taxa_rand_summary_POMS_wilcoxon.musicc$POMS_sig_0.05, na.rm = TRUE) / mean(func_rand_summary_POMS_wilcoxon.musicc$POMS_sig_0.05, na.rm = TRUE)) / mean(taxa_rand_summary_POMS_wilcoxon.musicc$POMS_sig_0.05, na.rm = TRUE))
+
+100 * ((mean(taxa_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_sig_0.05, na.rm = TRUE) / mean(func_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_sig_0.05, na.rm = TRUE)) / mean(taxa_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_sig_0.05, na.rm = TRUE))
+
+
+

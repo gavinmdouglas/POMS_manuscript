@@ -59,6 +59,14 @@ ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Supp_MAG.based_s
 
 
 # Summary statistics
+median(func_rand_summary_POMS_wilcoxon.musicc[which(func_rand_summary_POMS_wilcoxon.musicc$POMS_rank_0.05 <= 10), "num_focal_pos_mags"])
+median(func_rand_summary_POMS_wilcoxon.musicc[which(func_rand_summary_POMS_wilcoxon.musicc$POMS_rank_0.05 > 10), "num_focal_pos_mags"])
+
+median(func_rand_summary_POMS_wilcoxon.musicc[which(func_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_rank_0.05 <= 10), "num_focal_pos_mags"])
+median(func_rand_summary_POMS_wilcoxon.musicc[which(func_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_rank_0.05 > 10), "num_focal_pos_mags"])
+
+
+
 median(func_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_rank_0.05, na.rm = TRUE)
 mean(func_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_rank_0.05, na.rm = TRUE)
 sd(func_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_rel_rank_0.05, na.rm = TRUE)
