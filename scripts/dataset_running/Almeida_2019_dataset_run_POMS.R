@@ -51,8 +51,8 @@ if (length(which(colSums(ERP002061_almeida_ko > 0) > 0.85 * nrow(ERP002061_almei
   ERP002061_almeida_ko_subset <- ERP002061_almeida_ko 
 }
 
-if (length(which(colSums(ERP002061_almeida_ko > 0) < 0.15 * nrow(ERP002061_almeida_ko))) > 0) {
-  ERP002061_almeida_ko_subset <- ERP002061_almeida_ko[, -which(colSums(ERP002061_almeida_ko > 0) < 0.15 * nrow(ERP002061_almeida_ko))]
+if (length(which(colSums(ERP002061_almeida_ko_subset > 0) < 0.15 * nrow(ERP002061_almeida_ko_subset))) > 0) {
+  ERP002061_almeida_ko_subset <- ERP002061_almeida_ko_subset[, -which(colSums(ERP002061_almeida_ko_subset > 0) < 0.15 * nrow(ERP002061_almeida_ko_subset))]
 }
 
 ERP002061_POMS_out[["ko"]] <- POMS_pipeline(abun = ERP002061_almeida_abun,
@@ -81,8 +81,8 @@ if (length(which(colSums(ERP002061_almeida_pathways > 0) > 0.85 * nrow(ERP002061
   ERP002061_almeida_pathways_subset <- ERP002061_almeida_pathways 
 }
 
-if (length(which(colSums(ERP002061_almeida_pathways > 0) < 0.15 * nrow(ERP002061_almeida_pathways))) > 0) {
-  ERP002061_almeida_pathways_subset <- ERP002061_almeida_pathways[, -which(colSums(ERP002061_almeida_pathways > 0) < 0.15 * nrow(ERP002061_almeida_pathways))]
+if (length(which(colSums(ERP002061_almeida_pathways_subset > 0) < 0.15 * nrow(ERP002061_almeida_pathways_subset))) > 0) {
+  ERP002061_almeida_pathways_subset <- ERP002061_almeida_pathways_subset[, -which(colSums(ERP002061_almeida_pathways_subset > 0) < 0.15 * nrow(ERP002061_almeida_pathways_subset))]
 }
 
 ERP002061_POMS_out[["pathways"]] <- POMS_pipeline(abun = ERP002061_almeida_abun,
@@ -111,8 +111,8 @@ if (length(which(colSums(ERP002061_almeida_modules > 0) > 0.85 * nrow(ERP002061_
   ERP002061_almeida_modules_subset <- ERP002061_almeida_modules 
 }
 
-if (length(which(colSums(ERP002061_almeida_modules > 0) < 0.15 * nrow(ERP002061_almeida_modules))) > 0) {
-  ERP002061_almeida_modules_subset <- ERP002061_almeida_modules[, -which(colSums(ERP002061_almeida_modules > 0) < 0.15 * nrow(ERP002061_almeida_modules))]
+if (length(which(colSums(ERP002061_almeida_modules_subset > 0) < 0.15 * nrow(ERP002061_almeida_modules_subset))) > 0) {
+  ERP002061_almeida_modules_subset <- ERP002061_almeida_modules_subset[, -which(colSums(ERP002061_almeida_modules_subset > 0) < 0.15 * nrow(ERP002061_almeida_modules_subset))]
 }
 
 ERP002061_POMS_out[["modules"]] <- POMS_pipeline(abun = ERP002061_almeida_abun,
@@ -135,7 +135,7 @@ ERP002061_POMS_out[["modules"]] <- POMS_pipeline(abun = ERP002061_almeida_abun,
                                                 func_descrip_infile = "/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/2021_04_12_KEGG_module_descrip.tsv.gz")
 
 
-# CRC
+# CRC - ERP012177
 ERP012177_almeida_sample_info <- almeida_sample_info[which(almeida_sample_info$Study == "ERP012177"), ]
 
 
@@ -157,8 +157,8 @@ if (length(which(colSums(ERP012177_almeida_ko > 0) > 0.85 * nrow(ERP012177_almei
   ERP012177_almeida_ko_subset <- ERP012177_almeida_ko 
 }
 
-if (length(which(colSums(ERP012177_almeida_ko > 0) < 0.15 * nrow(ERP012177_almeida_ko))) > 0) {
-  ERP012177_almeida_ko_subset <- ERP012177_almeida_ko[, -which(colSums(ERP012177_almeida_ko > 0) < 0.15 * nrow(ERP012177_almeida_ko))]
+if (length(which(colSums(ERP012177_almeida_ko_subset > 0) < 0.15 * nrow(ERP012177_almeida_ko_subset))) > 0) {
+  ERP012177_almeida_ko_subset <- ERP012177_almeida_ko_subset[, -which(colSums(ERP012177_almeida_ko_subset > 0) < 0.15 * nrow(ERP012177_almeida_ko_subset))]
 }
 
 ERP012177_POMS_out[["ko"]] <- POMS_pipeline(abun = ERP012177_almeida_abun,
@@ -187,8 +187,8 @@ if (length(which(colSums(ERP012177_almeida_pathways > 0) > 0.85 * nrow(ERP012177
   ERP012177_almeida_pathways_subset <- ERP012177_almeida_pathways 
 }
 
-if (length(which(colSums(ERP012177_almeida_pathways > 0) < 0.15 * nrow(ERP012177_almeida_pathways))) > 0) {
-  ERP012177_almeida_pathways_subset <- ERP012177_almeida_pathways[, -which(colSums(ERP012177_almeida_pathways > 0) < 0.15 * nrow(ERP012177_almeida_pathways))]
+if (length(which(colSums(ERP012177_almeida_pathways_subset > 0) < 0.15 * nrow(ERP012177_almeida_pathways_subset))) > 0) {
+  ERP012177_almeida_pathways_subset <- ERP012177_almeida_pathways_subset[, -which(colSums(ERP012177_almeida_pathways_subset > 0) < 0.15 * nrow(ERP012177_almeida_pathways_subset))]
 }
 
 ERP012177_POMS_out[["pathways"]] <- POMS_pipeline(abun = ERP012177_almeida_abun,
@@ -217,8 +217,8 @@ if (length(which(colSums(ERP012177_almeida_modules > 0) > 0.85 * nrow(ERP012177_
   ERP012177_almeida_modules_subset <- ERP012177_almeida_modules 
 }
 
-if (length(which(colSums(ERP012177_almeida_modules > 0) < 0.15 * nrow(ERP012177_almeida_modules))) > 0) {
-  ERP012177_almeida_modules_subset <- ERP012177_almeida_modules[, -which(colSums(ERP012177_almeida_modules > 0) < 0.15 * nrow(ERP012177_almeida_modules))]
+if (length(which(colSums(ERP012177_almeida_modules_subset > 0) < 0.15 * nrow(ERP012177_almeida_modules_subset))) > 0) {
+  ERP012177_almeida_modules_subset <- ERP012177_almeida_modules_subset[, -which(colSums(ERP012177_almeida_modules_subset > 0) < 0.15 * nrow(ERP012177_almeida_modules_subset))]
 }
 
 ERP012177_POMS_out[["modules"]] <- POMS_pipeline(abun = ERP012177_almeida_abun,
@@ -262,8 +262,8 @@ if (length(which(colSums(ERP003612_almeida_ko > 0) > 0.85 * nrow(ERP003612_almei
   ERP003612_almeida_ko_subset <- ERP003612_almeida_ko 
 }
 
-if (length(which(colSums(ERP003612_almeida_ko > 0) < 0.15 * nrow(ERP003612_almeida_ko))) > 0) {
-  ERP003612_almeida_ko_subset <- ERP003612_almeida_ko[, -which(colSums(ERP003612_almeida_ko > 0) < 0.15 * nrow(ERP003612_almeida_ko))]
+if (length(which(colSums(ERP003612_almeida_ko_subset > 0) < 0.15 * nrow(ERP003612_almeida_ko_subset))) > 0) {
+  ERP003612_almeida_ko_subset <- ERP003612_almeida_ko_subset[, -which(colSums(ERP003612_almeida_ko_subset > 0) < 0.15 * nrow(ERP003612_almeida_ko_subset))]
 }
 
 ERP003612_POMS_out[["ko"]] <- POMS_pipeline(abun = ERP003612_almeida_abun,
@@ -292,8 +292,8 @@ if (length(which(colSums(ERP003612_almeida_pathways > 0) > 0.85 * nrow(ERP003612
   ERP003612_almeida_pathways_subset <- ERP003612_almeida_pathways 
 }
 
-if (length(which(colSums(ERP003612_almeida_pathways > 0) < 0.15 * nrow(ERP003612_almeida_pathways))) > 0) {
-  ERP003612_almeida_pathways_subset <- ERP003612_almeida_pathways[, -which(colSums(ERP003612_almeida_pathways > 0) < 0.15 * nrow(ERP003612_almeida_pathways))]
+if (length(which(colSums(ERP003612_almeida_pathways_subset > 0) < 0.15 * nrow(ERP003612_almeida_pathways_subset))) > 0) {
+  ERP003612_almeida_pathways_subset <- ERP003612_almeida_pathways_subset[, -which(colSums(ERP003612_almeida_pathways_subset > 0) < 0.15 * nrow(ERP003612_almeida_pathways_subset))]
 }
 
 ERP003612_POMS_out[["pathways"]] <- POMS_pipeline(abun = ERP003612_almeida_abun,
@@ -322,8 +322,8 @@ if (length(which(colSums(ERP003612_almeida_modules > 0) > 0.85 * nrow(ERP003612_
   ERP003612_almeida_modules_subset <- ERP003612_almeida_modules 
 }
 
-if (length(which(colSums(ERP003612_almeida_modules > 0) < 0.15 * nrow(ERP003612_almeida_modules))) > 0) {
-  ERP003612_almeida_modules_subset <- ERP003612_almeida_modules[, -which(colSums(ERP003612_almeida_modules > 0) < 0.15 * nrow(ERP003612_almeida_modules))]
+if (length(which(colSums(ERP003612_almeida_modules_subset > 0) < 0.15 * nrow(ERP003612_almeida_modules_subset))) > 0) {
+  ERP003612_almeida_modules_subset <- ERP003612_almeida_modules_subset[, -which(colSums(ERP003612_almeida_modules_subset > 0) < 0.15 * nrow(ERP003612_almeida_modules_subset))]
 }
 
 ERP003612_POMS_out[["modules"]] <- POMS_pipeline(abun = ERP003612_almeida_abun,
@@ -348,7 +348,7 @@ ERP003612_POMS_out[["modules"]] <- POMS_pipeline(abun = ERP003612_almeida_abun,
 
 for (func_type in c("ko", "pathways", "modules")) {
   print(func_type)
-  print(ERP002061_POMS_out[[func_type]]$df[which(ERP002061_POMS_out[[func_type]]$df$multinomial_corr < 0.25), ])
+  print(ERP012177_POMS_out[[func_type]]$df[which(ERP012177_POMS_out[[func_type]]$df$multinomial_corr < 0.25), ])
 }
 
 saveRDS(object = ERP002061_POMS_out, file = "/home/gavin/github_repos/POMS_manuscript/data/results/Almeida_2019_POMS_output/ERP002061_POMS_out.rds")

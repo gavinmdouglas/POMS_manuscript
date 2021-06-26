@@ -50,7 +50,7 @@ combined_obesity_sig_df <- rbind(ERP002061_out_pathways_sig_df, ERP003612_out_pa
                                  ERP002061_out_modules_sig_df, ERP003612_out_modules_sig_df)
 
 write.table(x = combined_obesity_sig_df,
-            file = "/home/gavin/github_repos/POMS_manuscript/display_items/Maintext_obesity_sig_higher_levels_RAW.tsv",
+            file = "/home/gavin/github_repos/POMS_manuscript/display_items/Supp_obesity_sig_higher_levels_RAW.tsv",
             sep = "\t",
             quote = FALSE,
             col.names = TRUE,
