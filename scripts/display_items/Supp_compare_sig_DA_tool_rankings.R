@@ -99,7 +99,7 @@ Almeida_ko_panel <- ggplot(Almeida_sig_func_DA_rankings_ko, aes(x = tool, y = ab
                             
 Almeida_sig_func_DA_rankings_pathways <- Almeida_sig_func_DA_rankings_all[which(Almeida_sig_func_DA_rankings_all$func_type == "pathways"), ]
 Almeida_pathways_panel <- ggplot(Almeida_sig_func_DA_rankings_pathways, aes(x = tool, y = abs_rank)) +
-                                geom_boxplot(outlier.colour = NA, fill = "grey90") +
+                                #geom_boxplot(outlier.colour = NA, fill = "grey90") +
                                 geom_beeswarm(cex = 3) +
                                 facet_grid(. ~ dataset) +
                                 theme_bw() +
