@@ -79,7 +79,7 @@ bottom_panels <- plot_grid(NULL, MAG.based_POMS_vs_wilcoxon.musicc_top10_numMAG_
 MAG.based_rankings_and_boxplots <- plot_grid(MAG.based_POMS_vs_wilcoxon.musicc_ranking_marginal_combined, bottom_panels, nrow = 2)
 
 ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Supp_MAG.based_sims_ranking.pdf",
-       plot = MAG.based_POMS_vs_wilcoxon.musicc_ranking_marginal_combined,
+       plot = MAG.based_rankings_and_boxplots,
        device = "pdf",
        width = 8,
        height = 6,
@@ -87,7 +87,7 @@ ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Supp_MAG.based_s
 
 
 ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Supp_MAG.based_sims_ranking.png",
-       plot = MAG.based_POMS_vs_wilcoxon.musicc_ranking_marginal_combined,
+       plot = MAG.based_rankings_and_boxplots,
        device = "png",
        width = 8,
        height = 6,
