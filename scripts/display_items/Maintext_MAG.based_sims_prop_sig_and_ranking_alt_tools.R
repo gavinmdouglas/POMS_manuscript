@@ -60,7 +60,7 @@ MAG.based_all_rank_boxplots <- ggplot(MAG.based_all_rank, aes(x = Tool, y = rank
                                         geom_quasirandom(color = "grey") +
                                         geom_boxplot(outlier.shape = NA, alpha = 0.5, lwd = 1) +
                                         theme_bw() +
-                                        ylab("Focal gene ranking\n(lower is better)") +
+                                        ylab("Focal gene ranking\n(closer to one is better)") +
                                         xlab("") +
                                         scale_fill_manual(values = qual_col) +
                                         theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
