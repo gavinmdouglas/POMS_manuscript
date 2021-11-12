@@ -6,13 +6,9 @@ library(ggbeeswarm)
 
 setwd("~/github_repos/POMS_manuscript/data/intermediates/MAG.based_simulations/")
 
-taxa_rand_summary_POMS_wilcoxon.musicc <- readRDS(file = "simulation_summaries/taxa_rand_summary_POMS_wilcoxon.musicc.rds")
-taxa_rand_summary_POMS_wilcoxon.relab_limma_voom <- readRDS(file = "simulation_summaries/taxa_rand_summary_POMS_wilcoxon.relab_limma_voom.rds")
-taxa_rand_summary_POMS_aldex2_deseq2 <- readRDS(file = "simulation_summaries/taxa_rand_summary_POMS_aldex2_deseq2.rds")
+taxa_rand_summary <- readRDS(file = "simulation_summaries/taxa_rand_summary.rds")
 
-func_rand_summary_POMS_wilcoxon.musicc <- readRDS(file = "simulation_summaries/func_rand_summary_POMS_wilcoxon.musicc.rds")
-func_rand_summary_POMS_wilcoxon.relab_limma_voom <- readRDS(file = "simulation_summaries/func_rand_summary_POMS_wilcoxon.relab_limma_voom.rds")
-func_rand_summary_POMS_aldex2_deseq2 <- readRDS(file = "simulation_summaries/func_rand_summary_POMS_aldex2_deseq2.rds")
+func_rand_summary <- readRDS(file = "simulation_summaries/func_rand_summary.rds")
 
 qual_col <- c("#1f78b4",
               "firebrick1",
@@ -30,21 +26,21 @@ MAG.based_all_rank <- data.frame(Tool = c(rep("POMS", 1000),
                                           
                                           rep("limma-voom", 1000),
                                           
-                                          rep("ALDEx2", 10),
+                                          rep("ALDEx2", 1000),
                                           
-                                          rep("DESeq2", 10)),
+                                          rep("DESeq2", 1000)),
                                  
-                                 rank = c(func_rand_summary_POMS_wilcoxon.musicc$POMS_rank_0.05,
+                                 rank = c(func_rand_summary$POMS_rank_0.05,
                                           
-                                          func_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_rank_0.05,
+                                          func_rand_summary$wilcoxon.musicc_rank_0.05,
                                           
-                                          func_rand_summary_POMS_wilcoxon.relab_limma_voom$wilcoxon.relab_rank_0.05,
+                                          func_rand_summary$wilcoxon.relab_rank_0.05,
                                           
-                                          func_rand_summary_POMS_wilcoxon.relab_limma_voom$limma.voom_rank_0.05,
+                                          func_rand_summary$limma.voom_rank_0.05,
                                           
-                                          func_rand_summary_POMS_aldex2_deseq2$aldex2_rank_0.05,
+                                          func_rand_summary$aldex2_rank_0.05,
                                           
-                                          func_rand_summary_POMS_aldex2_deseq2$deseq2_rank_0.05))
+                                          func_rand_summary$deseq2_rank_0.05))
 
 
 MAG.based_all_rank$Tool <- factor(MAG.based_all_rank$Tool, 
@@ -60,7 +56,7 @@ MAG.based_all_rank_boxplots <- ggplot(MAG.based_all_rank, aes(x = Tool, y = rank
                                         geom_quasirandom(color = "grey") +
                                         geom_boxplot(outlier.shape = NA, alpha = 0.5, lwd = 1) +
                                         theme_bw() +
-                                        ylab("Focal gene ranking\n(closer to one is better)") +
+                                        ylab("Focal gene ranking\n(lower is better)") +
                                         xlab("") +
                                         scale_fill_manual(values = qual_col) +
                                         theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
@@ -75,9 +71,9 @@ MAG.based_all_prop_sig <- data.frame(Tool = c(rep("POMS", 2000),
                                               
                                               rep("limma-voom", 2000),
                                               
-                                              rep("ALDEx2", 20),
+                                              rep("ALDEx2", 2000),
                                               
-                                              rep("DESeq2", 20)),
+                                              rep("DESeq2", 2000)),
                                      
                                      Simulation = 
                                               c(rep("Random taxa", 1000),
@@ -92,29 +88,29 @@ MAG.based_all_prop_sig <- data.frame(Tool = c(rep("POMS", 2000),
                                               rep("Random taxa", 1000),
                                               rep("Focal gene", 1000),
                                               
-                                              rep("Random taxa", 10),
-                                              rep("Focal gene", 10),
+                                              rep("Random taxa", 1000),
+                                              rep("Focal gene", 1000),
                                               
-                                              rep("Random taxa", 10),
-                                              rep("Focal gene", 10)),
+                                              rep("Random taxa", 1000),
+                                              rep("Focal gene", 1000)),
                                               
-                                     prop = c(taxa_rand_summary_POMS_wilcoxon.musicc$POMS_sig_0.05,
-                                              func_rand_summary_POMS_wilcoxon.musicc$POMS_sig_0.05,
+                                     prop = c(taxa_rand_summary$POMS_sig_0.05,
+                                              func_rand_summary$POMS_sig_0.05,
                                               
-                                              taxa_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_sig_0.05,
-                                              func_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_sig_0.05,
+                                              taxa_rand_summary$wilcoxon.musicc_sig_0.05,
+                                              func_rand_summary$wilcoxon.musicc_sig_0.05,
                                               
-                                              taxa_rand_summary_POMS_wilcoxon.relab_limma_voom$wilcoxon.relab_sig_0.05,
-                                              func_rand_summary_POMS_wilcoxon.relab_limma_voom$wilcoxon.relab_sig_0.05,
+                                              taxa_rand_summary$wilcoxon.relab_sig_0.05,
+                                              func_rand_summary$wilcoxon.relab_sig_0.05,
                                               
-                                              taxa_rand_summary_POMS_wilcoxon.relab_limma_voom$limma.voom_sig_0.05,
-                                              func_rand_summary_POMS_wilcoxon.relab_limma_voom$limma.voom_sig_0.05,
+                                              taxa_rand_summary$limma.voom_sig_0.05,
+                                              func_rand_summary$limma.voom_sig_0.05,
                                               
-                                              taxa_rand_summary_POMS_aldex2_deseq2$aldex2_sig_0.05,
-                                              func_rand_summary_POMS_aldex2_deseq2$aldex2_sig_0.05,
+                                              taxa_rand_summary$aldex2_sig_0.05,
+                                              func_rand_summary$aldex2_sig_0.05,
                                               
-                                              taxa_rand_summary_POMS_aldex2_deseq2$deseq2_sig_0.05,
-                                              func_rand_summary_POMS_aldex2_deseq2$deseq2_sig_0.05)
+                                              taxa_rand_summary$deseq2_sig_0.05,
+                                              func_rand_summary$deseq2_sig_0.05)
                                               
                                     )
 
