@@ -348,7 +348,7 @@ ERP003612_POMS_out[["modules"]] <- POMS_pipeline(abun = ERP003612_almeida_abun,
 
 for (func_type in c("ko", "pathways", "modules")) {
   print(func_type)
-  print(ERP002061_POMS_out[[func_type]]$df[which(ERP002061_POMS_out[[func_type]]$df$multinomial_corr < 0.25), ])
+  print(rownames(ERP012177_POMS_out[[func_type]]$df[which(ERP012177_POMS_out[[func_type]]$df$multinomial_corr < 0.2), ]))
 }
 
 saveRDS(object = ERP002061_POMS_out, file = "/home/gavin/github_repos/POMS_manuscript/data/results/Almeida_2019_POMS_output/ERP002061_POMS_out.rds")

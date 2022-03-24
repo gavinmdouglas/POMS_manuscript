@@ -154,25 +154,26 @@ ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Maintext_MAG.bas
 
 
 # Rank results for main text:
-median(func_rand_summary_POMS_wilcoxon.musicc$POMS_rank_0.05, na.rm = TRUE)
-mean(func_rand_summary_POMS_wilcoxon.musicc$POMS_rank_0.05, na.rm = TRUE)
-sd(func_rand_summary_POMS_wilcoxon.musicc$POMS_rank_0.05, na.rm = TRUE)
+median(func_rand_summary$POMS_rank_0.05, na.rm = TRUE)
+mean(func_rand_summary$POMS_rank_0.05, na.rm = TRUE)
+sd(func_rand_summary$POMS_rank_0.05, na.rm = TRUE)
+
+median(func_rand_summary$deseq2_rank_0.05, na.rm = TRUE)
+mean(func_rand_summary$deseq2_rank_0.05, na.rm = TRUE)
+sd(func_rand_summary$deseq2_rank_0.05, na.rm = TRUE)
+
+median(func_rand_summary$wilcoxon.musicc_rank_0.05, na.rm = TRUE)
+mean(func_rand_summary$wilcoxon.musicc_rank_0.05, na.rm = TRUE)
+sd(func_rand_summary$wilcoxon.musicc_rank_0.05, na.rm = TRUE)
 
 
-median(func_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_rank_0.05, na.rm = TRUE)
-mean(func_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_rank_0.05, na.rm = TRUE)
-sd(func_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_rank_0.05, na.rm = TRUE)
 
-median(func_rand_summary_POMS_wilcoxon.relab_limma_voom$wilcoxon.relab_rank_0.05, na.rm = TRUE)
-mean(func_rand_summary_POMS_wilcoxon.relab_limma_voom$wilcoxon.relab_rank_0.05, na.rm = TRUE)
-sd(func_rand_summary_POMS_wilcoxon.relab_limma_voom$wilcoxon.relab_rank_0.05, na.rm = TRUE)
-
-wilcox.test(func_rand_summary_POMS_wilcoxon.musicc$POMS_rank_0.05,
-            func_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_rank_0.05)
+wilcox.test(func_rand_summary$POMS_rank_0.05,
+            func_rand_summary$deseq2_rank_0.05)
 
 
-wilcox.test(taxa_rand_summary_POMS_wilcoxon.musicc$POMS_sig_0.25,
-            func_rand_summary_POMS_wilcoxon.musicc$POMS_sig_0.25)
+wilcox.test(func_rand_summary$POMS_rank_0.05,
+            func_rand_summary$wilcoxon.musicc_rank_0.05)
 
 
 # Prop. sig results for main text:
