@@ -33,7 +33,7 @@ almeida_sample_info <- read.table("MGS_samples_info_SuppTable1.txt.gz",
 ERP002061_almeida_sample_info <- almeida_sample_info[which(almeida_sample_info$Study == "ERP002061"), ]
 
 
-ERP002061_almeida_abun <- subset_abun_table(in_abun = almeida_abun, col2keep = ERP002061_almeida_sample_info$Run)
+ERP002061_almeida_abun <- subset_by_col_and_filt(in_tab = almeida_abun, col2keep = ERP002061_almeida_sample_info$Run)
 
 ERP002061_almeida_sample_info <- ERP002061_almeida_sample_info[which(ERP002061_almeida_sample_info$Run %in% colnames(ERP002061_almeida_abun)), ]
 ERP002061_group1_samples <- ERP002061_almeida_sample_info[which(ERP002061_almeida_sample_info$Health.state == "Diseased"), "Run"]
@@ -57,18 +57,18 @@ if (length(which(colSums(ERP002061_almeida_ko_subset > 0) < 0.15 * nrow(ERP00206
 
 ERP002061_POMS_out[["ko"]] <- POMS_pipeline(abun = ERP002061_almeida_abun,
                                             func = ERP002061_almeida_ko,
-                                            phylogeny = almeida_tree,
+                                            tree = almeida_tree,
                                             group1_samples = ERP002061_group1_samples,
                                             group2_samples = ERP002061_group2_samples,
                                             ncores = 10,
-                                            balance_p_cutoff = 0.05,
-                                            balance_correction = "none",
-                                            function_p_cutoff = 0.05,
-                                            function_correction = "none",
+                                            BSN_p_cutoff = 0.05,
+                                            BSN_correction = "none",
+                                            FSN_p_cutoff = 0.05,
+                                            FSN_correction = "none",
                                             min_num_tips = 10,
                                             min_func_instances = 1,
                                             min_func_prop = 0.001,
-                                            run_multinomial_test = TRUE,
+                                            jaccard_cutoff = 0.9,
                                             multinomial_correction = "BH",
                                             detailed_output = TRUE,
                                             verbose = TRUE,
@@ -87,18 +87,18 @@ if (length(which(colSums(ERP002061_almeida_pathways_subset > 0) < 0.15 * nrow(ER
 
 ERP002061_POMS_out[["pathways"]] <- POMS_pipeline(abun = ERP002061_almeida_abun,
                                                  func = ERP002061_almeida_pathways_subset,
-                                                 phylogeny = almeida_tree,
+                                                 tree = almeida_tree,
                                                  group1_samples = ERP002061_group1_samples,
                                                  group2_samples = ERP002061_group2_samples,
                                                  ncores = 10,
-                                                 balance_p_cutoff = 0.05,
-                                                 balance_correction = "none",
-                                                 function_p_cutoff = 0.05,
-                                                 function_correction = "none",
+                                                 BSN_p_cutoff = 0.05,
+                                                 BSN_correction = "none",
+                                                 FSN_p_cutoff = 0.05,
+                                                 FSN_correction = "none",
                                                  min_num_tips = 10,
                                                  min_func_instances = 1,
                                                  min_func_prop = 0.001,
-                                                 run_multinomial_test = TRUE,
+                                                 jaccard_cutoff = 0.9,
                                                  multinomial_correction = "BH",
                                                  detailed_output = TRUE,
                                                  verbose = TRUE,
@@ -117,18 +117,18 @@ if (length(which(colSums(ERP002061_almeida_modules_subset > 0) < 0.15 * nrow(ERP
 
 ERP002061_POMS_out[["modules"]] <- POMS_pipeline(abun = ERP002061_almeida_abun,
                                                 func = ERP002061_almeida_modules_subset,
-                                                phylogeny = almeida_tree,
+                                                tree = almeida_tree,
                                                 group1_samples = ERP002061_group1_samples,
                                                 group2_samples = ERP002061_group2_samples,
                                                 ncores = 10,
-                                                balance_p_cutoff = 0.05,
-                                                balance_correction = "none",
-                                                function_p_cutoff = 0.05,
-                                                function_correction = "none",
+                                                BSN_p_cutoff = 0.05,
+                                                BSN_correction = "none",
+                                                FSN_p_cutoff = 0.05,
+                                                FSN_correction = "none",
                                                 min_num_tips = 10,
                                                 min_func_instances = 1,
                                                 min_func_prop = 0.001,
-                                                run_multinomial_test = TRUE,
+                                                jaccard_cutoff = 0.9,
                                                 multinomial_correction = "BH",
                                                 detailed_output = TRUE,
                                                 verbose = TRUE,
@@ -139,7 +139,7 @@ ERP002061_POMS_out[["modules"]] <- POMS_pipeline(abun = ERP002061_almeida_abun,
 ERP012177_almeida_sample_info <- almeida_sample_info[which(almeida_sample_info$Study == "ERP012177"), ]
 
 
-ERP012177_almeida_abun <- subset_abun_table(in_abun = almeida_abun, col2keep = ERP012177_almeida_sample_info$Run)
+ERP012177_almeida_abun <- subset_by_col_and_filt(in_tab = almeida_abun, col2keep = ERP012177_almeida_sample_info$Run)
 
 ERP012177_almeida_sample_info <- ERP012177_almeida_sample_info[which(ERP012177_almeida_sample_info$Run %in% colnames(ERP012177_almeida_abun)), ]
 ERP012177_group1_samples <- ERP012177_almeida_sample_info[which(ERP012177_almeida_sample_info$Health.state == "Diseased"), "Run"]
@@ -163,18 +163,18 @@ if (length(which(colSums(ERP012177_almeida_ko_subset > 0) < 0.15 * nrow(ERP01217
 
 ERP012177_POMS_out[["ko"]] <- POMS_pipeline(abun = ERP012177_almeida_abun,
                                             func = ERP012177_almeida_ko,
-                                            phylogeny = almeida_tree,
+                                            tree = almeida_tree,
                                             group1_samples = ERP012177_group1_samples,
                                             group2_samples = ERP012177_group2_samples,
                                             ncores = 10,
-                                            balance_p_cutoff = 0.05,
-                                            balance_correction = "none",
-                                            function_p_cutoff = 0.05,
-                                            function_correction = "none",
+                                            BSN_p_cutoff = 0.05,
+                                            BSN_correction = "none",
+                                            FSN_p_cutoff = 0.05,
+                                            FSN_correction = "none",
                                             min_num_tips = 10,
                                             min_func_instances = 1,
                                             min_func_prop = 0.001,
-                                            run_multinomial_test = TRUE,
+                                            jaccard_cutoff = 0.9,
                                             multinomial_correction = "BH",
                                             detailed_output = TRUE,
                                             verbose = TRUE,
@@ -193,18 +193,18 @@ if (length(which(colSums(ERP012177_almeida_pathways_subset > 0) < 0.15 * nrow(ER
 
 ERP012177_POMS_out[["pathways"]] <- POMS_pipeline(abun = ERP012177_almeida_abun,
                                                   func = ERP012177_almeida_pathways_subset,
-                                                  phylogeny = almeida_tree,
+                                                  tree = almeida_tree,
                                                   group1_samples = ERP012177_group1_samples,
                                                   group2_samples = ERP012177_group2_samples,
                                                   ncores = 10,
-                                                  balance_p_cutoff = 0.05,
-                                                  balance_correction = "none",
-                                                  function_p_cutoff = 0.05,
-                                                  function_correction = "none",
+                                                  BSN_p_cutoff = 0.05,
+                                                  BSN_correction = "none",
+                                                  FSN_p_cutoff = 0.05,
+                                                  FSN_correction = "none",
                                                   min_num_tips = 10,
                                                   min_func_instances = 1,
                                                   min_func_prop = 0.001,
-                                                  run_multinomial_test = TRUE,
+                                                  jaccard_cutoff = 0.9,
                                                   multinomial_correction = "BH",
                                                   detailed_output = TRUE,
                                                   verbose = TRUE,
@@ -223,18 +223,18 @@ if (length(which(colSums(ERP012177_almeida_modules_subset > 0) < 0.15 * nrow(ERP
 
 ERP012177_POMS_out[["modules"]] <- POMS_pipeline(abun = ERP012177_almeida_abun,
                                                  func = ERP012177_almeida_modules_subset,
-                                                 phylogeny = almeida_tree,
+                                                 tree = almeida_tree,
                                                  group1_samples = ERP012177_group1_samples,
                                                  group2_samples = ERP012177_group2_samples,
                                                  ncores = 10,
-                                                 balance_p_cutoff = 0.05,
-                                                 balance_correction = "none",
-                                                 function_p_cutoff = 0.05,
-                                                 function_correction = "none",
+                                                 BSN_p_cutoff = 0.05,
+                                                 BSN_correction = "none",
+                                                 FSN_p_cutoff = 0.05,
+                                                 FSN_correction = "none",
                                                  min_num_tips = 10,
                                                  min_func_instances = 1,
                                                  min_func_prop = 0.001,
-                                                 run_multinomial_test = TRUE,
+                                                 jaccard_cutoff = 0.9,
                                                  multinomial_correction = "BH",
                                                  detailed_output = TRUE,
                                                  verbose = TRUE,
@@ -244,7 +244,7 @@ ERP012177_POMS_out[["modules"]] <- POMS_pipeline(abun = ERP012177_almeida_abun,
 ERP003612_almeida_sample_info <- almeida_sample_info[which(almeida_sample_info$Study == "ERP003612"), ]
 
 
-ERP003612_almeida_abun <- subset_abun_table(in_abun = almeida_abun, col2keep = ERP003612_almeida_sample_info$Run)
+ERP003612_almeida_abun <- subset_by_col_and_filt(in_tab = almeida_abun, col2keep = ERP003612_almeida_sample_info$Run)
 
 ERP003612_almeida_sample_info <- ERP003612_almeida_sample_info[which(ERP003612_almeida_sample_info$Run %in% colnames(ERP003612_almeida_abun)), ]
 ERP003612_group1_samples <- ERP003612_almeida_sample_info[which(ERP003612_almeida_sample_info$Health.state == "Diseased"), "Run"]
@@ -268,18 +268,18 @@ if (length(which(colSums(ERP003612_almeida_ko_subset > 0) < 0.15 * nrow(ERP00361
 
 ERP003612_POMS_out[["ko"]] <- POMS_pipeline(abun = ERP003612_almeida_abun,
                                             func = ERP003612_almeida_ko,
-                                            phylogeny = almeida_tree,
+                                            tree = almeida_tree,
                                             group1_samples = ERP003612_group1_samples,
                                             group2_samples = ERP003612_group2_samples,
                                             ncores = 10,
-                                            balance_p_cutoff = 0.05,
-                                            balance_correction = "none",
-                                            function_p_cutoff = 0.05,
-                                            function_correction = "none",
+                                            BSN_p_cutoff = 0.05,
+                                            BSN_correction = "none",
+                                            FSN_p_cutoff = 0.05,
+                                            FSN_correction = "none",
                                             min_num_tips = 10,
                                             min_func_instances = 1,
                                             min_func_prop = 0.001,
-                                            run_multinomial_test = TRUE,
+                                            jaccard_cutoff = 0.9,
                                             multinomial_correction = "BH",
                                             detailed_output = TRUE,
                                             verbose = TRUE,
@@ -298,18 +298,18 @@ if (length(which(colSums(ERP003612_almeida_pathways_subset > 0) < 0.15 * nrow(ER
 
 ERP003612_POMS_out[["pathways"]] <- POMS_pipeline(abun = ERP003612_almeida_abun,
                                                   func = ERP003612_almeida_pathways_subset,
-                                                  phylogeny = almeida_tree,
+                                                  tree = almeida_tree,
                                                   group1_samples = ERP003612_group1_samples,
                                                   group2_samples = ERP003612_group2_samples,
                                                   ncores = 10,
-                                                  balance_p_cutoff = 0.05,
-                                                  balance_correction = "none",
-                                                  function_p_cutoff = 0.05,
-                                                  function_correction = "none",
+                                                  BSN_p_cutoff = 0.05,
+                                                  BSN_correction = "none",
+                                                  FSN_p_cutoff = 0.05,
+                                                  FSN_correction = "none",
                                                   min_num_tips = 10,
                                                   min_func_instances = 1,
                                                   min_func_prop = 0.001,
-                                                  run_multinomial_test = TRUE,
+                                                  jaccard_cutoff = 0.9,
                                                   multinomial_correction = "BH",
                                                   detailed_output = TRUE,
                                                   verbose = TRUE,
@@ -328,18 +328,18 @@ if (length(which(colSums(ERP003612_almeida_modules_subset > 0) < 0.15 * nrow(ERP
 
 ERP003612_POMS_out[["modules"]] <- POMS_pipeline(abun = ERP003612_almeida_abun,
                                                  func = ERP003612_almeida_modules_subset,
-                                                 phylogeny = almeida_tree,
+                                                 tree = almeida_tree,
                                                  group1_samples = ERP003612_group1_samples,
                                                  group2_samples = ERP003612_group2_samples,
                                                  ncores = 10,
-                                                 balance_p_cutoff = 0.05,
-                                                 balance_correction = "none",
-                                                 function_p_cutoff = 0.05,
-                                                 function_correction = "none",
+                                                 BSN_p_cutoff = 0.05,
+                                                 BSN_correction = "none",
+                                                 FSN_p_cutoff = 0.05,
+                                                 FSN_correction = "none",
                                                  min_num_tips = 10,
                                                  min_func_instances = 100,
                                                  min_func_prop = 0.001,
-                                                 run_multinomial_test = TRUE,
+                                                 jaccard_cutoff = 0.9,
                                                  multinomial_correction = "BH",
                                                  detailed_output = TRUE,
                                                  verbose = TRUE,
@@ -347,8 +347,17 @@ ERP003612_POMS_out[["modules"]] <- POMS_pipeline(abun = ERP003612_almeida_abun,
 
 
 for (func_type in c("ko", "pathways", "modules")) {
+  print("ERP002061")
   print(func_type)
-  print(rownames(ERP012177_POMS_out[[func_type]]$df[which(ERP012177_POMS_out[[func_type]]$df$multinomial_corr < 0.2), ]))
+  print(rownames(ERP002061_POMS_out[[func_type]]$results[which(ERP002061_POMS_out[[func_type]]$results$multinomial_corr < 0.1), ]))
+  
+  print("ERP012177")
+  print(func_type)
+  print(rownames(ERP012177_POMS_out[[func_type]]$results[which(ERP012177_POMS_out[[func_type]]$results$multinomial_corr < 0.3), ]))
+  
+  print("ERP003612")
+  print(func_type)
+  print(rownames(ERP003612_POMS_out[[func_type]]$results[which(ERP003612_POMS_out[[func_type]]$results$multinomial_corr < 0.3), ]))
 }
 
 saveRDS(object = ERP002061_POMS_out, file = "/home/gavin/github_repos/POMS_manuscript/data/results/Almeida_2019_POMS_output/ERP002061_POMS_out.rds")

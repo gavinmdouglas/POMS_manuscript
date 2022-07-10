@@ -4,6 +4,8 @@ rm(list = ls(all.names = TRUE))
 setwd("~/github_repos/POMS_manuscript/data/intermediates/MAG.based_simulations/")
 
 devtools::load_all(path = "/home/gavin/github_repos/POMS/")
+source("../../../scripts/POMS_manuscript_functions.R")
+source("../../../scripts/alt_tool_functions.R")
 
 library(parallel)
 

@@ -1,6 +1,24 @@
 library(ape)
 library(parallel)
 
+subset_abun_table <- function(in_abun, col2keep) {
+
+  in_abun <- in_abun[, which(colnames(in_abun) %in% col2keep)]
+
+  missing_rows <- which(rowSums(in_abun) == 0)
+  missing_samples <- which(colSums(in_abun) == 0)
+
+  if(length(missing_rows) > 0) {
+    in_abun <- in_abun[-missing_rows, ]
+  }
+
+  if(length(missing_samples) > 0) {
+    in_abun <- in_abun[, -missing_samples]
+  }
+
+  return(in_abun)
+}
+
 threeWayVennWrapper <- function(set1, set2, set3,
                                 labels=c("cat1", "cat2", "cat3"),
                                 colours=c("#009E73", "#E69F00", "#56B4E9")) {

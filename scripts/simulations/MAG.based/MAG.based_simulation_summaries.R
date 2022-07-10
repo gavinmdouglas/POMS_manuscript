@@ -9,7 +9,7 @@ source("~/github_repos/POMS_manuscript/scripts/POMS_manuscript_functions.R")
 
 func_subset <- readRDS("MAG.based_prepped_func.rds")
 
-unperturbed_POMS_output <- readRDS(file = "MAG.based_POMS_sim_unperturbed_1000reps.rds")
+unperturbed_POMS_output <- readRDS(file = "POMS_out/MAG.based_POMS_sim_unperturbed_1000reps.rds")
 unperturbed_alt.tools_output <- readRDS(file = "MAG.based_wilcoxon.musicc_wilcoxon.relab_limma.voom_unperturbed_1000reps.rds")
 
 for (rep_i in 1:1000) {
@@ -19,7 +19,7 @@ for (rep_i in 1:1000) {
 }
 
 
-taxa_rand_output <- readRDS(file = "MAG.based_POMS_sim_rand_taxa_1000reps.rds")
+taxa_rand_output <- readRDS(file = "POMS_out/MAG.based_POMS_sim_rand_taxa_1000reps.rds")
 taxa_rand_wilcoxon.musicc <- readRDS(file = "MAG.based_wilcoxon.musicc_sim_rand_taxa_1000reps.rds")
 taxa_rand_wilcoxon.relab_limma_voom <- readRDS(file = "MAG.based_wilcoxon.relab_limma.voom_sim_rand_taxa_1000reps.rds")
 
@@ -43,7 +43,7 @@ for (rep_i in 1:1000) {
 
 
 
-func_rand_output <- readRDS(file = "MAG.based_POMS_sim_rand_func_1000reps.rds")
+func_rand_output <- readRDS(file = "POMS_out/MAG.based_POMS_sim_rand_func_1000reps.rds")
 func_rand_wilcoxon.musicc <- readRDS(file = "MAG.based_wilcoxon.musicc_sim_rand_func_1000reps.rds")
 func_rand_wilcoxon.relab_limma_voom <- readRDS(file = "MAG.based_wilcoxon.relab_limma.voom_sim_rand_func_1000reps.rds")
 
@@ -66,6 +66,13 @@ for (rep_i in 1:1000) {
 }
 
 
+clade.based_rand_output <- readRDS(file = "POMS_out/MAG.based_POMS_sim_rand_clade.based_693reps.rds")
+
+
+unperturbed_num_sig <- sapply(unperturbed_POMS_output, function(x) { length(which(x$output$results$multinomial_corr < 0.05)) })
+taxa_num_sig <- sapply(taxa_rand_output, function(x) { length(which(x$output$results$multinomial_corr < 0.05)) })
+func_num_sig <- sapply(func_rand_output, function(x) { length(which(x$output$results$multinomial_corr < 0.05)) })
+clade.based_num_sig <- sapply(clade.based_rand_output, function(x) { length(which(x$output$results$multinomial_corr < 0.05)) })
 
 unperturbed_summary_vs_alt.tools <- simulation_summaries(POMS_sims = unperturbed_POMS_output,
                                                          alt_tool_sims = unperturbed_alt.tools_output,
