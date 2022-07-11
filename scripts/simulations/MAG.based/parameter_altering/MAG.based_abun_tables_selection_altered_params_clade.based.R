@@ -124,7 +124,7 @@ for (rep_i in 1:25) {
                             abun_increase = abun_increase_set,
                             selected_group = "group1")
          
-         outfile <- paste("parameter_altered_files/sim_info/clade.based_sim_info_",
+         outfile <- paste("parameter_altered_files/sim_info/clade.based/clade.based_sim_info_",
                           "rep", as.character(rep_i),
                           "_MAGs", as.character(MAG_num),
                           "_pseudo", as.character(pseudocount_set),

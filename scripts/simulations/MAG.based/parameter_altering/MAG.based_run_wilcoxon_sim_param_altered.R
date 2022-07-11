@@ -20,7 +20,7 @@ parameter_settings <- list()
 
 MAG_nums <- c(1595, 1250, 1000, 750, 500, 250, 100, 50)
 
-pseudocount_settings <- c(0, 1)
+pseudocount_settings <- c(0, 0.1, 0.3, 0.5, 0.7, 0.9, 1)
 
 abun_increase_settings <- c(1.5, 1.3, 1.1, 1.05)
 

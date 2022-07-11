@@ -11,7 +11,7 @@ parameter_settings <- list()
 
 MAG_nums <- c(1595, 1250, 1000, 750, 500, 250, 100, 50)
 
-pseudocount_settings <- c(0, 1)
+pseudocount_settings <- c(0, 0.1, 0.3, 0.5, 0.7, 0.9, 1)
 
 abun_increase_settings <- c(1.5, 1.3, 1.1, 1.05)
 
@@ -30,8 +30,6 @@ for (rep_i in 1:25) {
     
     for (pseudocount_set in pseudocount_settings) {
       for (abun_increase_set in abun_increase_settings) {
-        
-        
         
         parameter_settings[[option_count]] <- list()
         parameter_settings[[option_count]][["rep_i"]] <- rep_i
@@ -55,7 +53,7 @@ rm(abun_increase_set)
 rm(MAG_rep_func)
 rm(MAG_rep_tree)
 
-null_out <- mclapply(X = parameter_settings, FUN = function(x) {
+func.based_sim_null_out <- mclapply(X = parameter_settings, FUN = function(x) {
 
                      rep_i <- x$rep_i
                      MAG_num <- x$MAG_num
@@ -64,35 +62,33 @@ null_out <- mclapply(X = parameter_settings, FUN = function(x) {
                      MAG_rep_func <- x$MAG_rep_func
                      MAG_rep_tree <- x$MAG_rep_tree
 
-                     func_sim_info <- readRDS(paste("sim_info/func_sim_info_",
+                     func.based_sim_info <- readRDS(paste("sim_info/func.based/func_sim_info_",
                                                     "rep", as.character(rep_i),
                                                     "_MAGs", as.character(MAG_num),
                                                     "_pseudo", as.character(pseudocount_set),
                                                     "_increase", as.character(abun_increase_set),
                                                     ".rds", sep = ""))
                      
-                     output <- POMS_pipeline(abun = func_sim_info$taxa_perturb_abun,
+                     output <- POMS_pipeline(abun = func.based_sim_info$taxa_perturb_abun,
                                              func = MAG_rep_func,
-                                             phylogeny = MAG_rep_tree,
-                                             group1_samples = func_sim_info$group1,
-                                             group2_samples = func_sim_info$group2,
+                                             tree = MAG_rep_tree,
+                                             group1_samples = func.based_sim_info$group1,
+                                             group2_samples = func.based_sim_info$group2,
                                              ncores = 1,
-                                             balance_p_cutoff = 0.05,
-                                             balance_correction = "none",
-                                             function_p_cutoff = 0.05,
-                                             function_correction = "none",
-                                             min_func_instances = 0,
-                                             min_func_prop = 0,
-                                             run_multinomial_test = TRUE,
+                                             BSN_p_cutoff = 0.05,
+                                             BSN_correction = "none",
+                                             FSN_p_cutoff = 0.05,
+                                             FSN_correction = "none",
+                                             min_func_instances = 5,
+                                             min_func_prop = 0.001,
                                              multinomial_correction = "BH",
-                                             calc_node_dist = FALSE,
                                              detailed_output = FALSE,
                                              verbose = FALSE)
                      
-                     output$func = func_sim_info$func
+                     output$func = func.based_sim_info$func
                      
                      saveRDS(object = output,
-                             file = paste("POMS_out/POMS_func_out_",
+                             file = paste("POMS_out/func.based/POMS_func_out_",
                                           "rep", as.character(rep_i),
                                           "_MAGs", as.character(MAG_num),
                                           "_pseudo", as.character(pseudocount_set),
@@ -103,3 +99,97 @@ null_out <- mclapply(X = parameter_settings, FUN = function(x) {
     
                    }, mc.cores = 20)
 
+
+taxa.based_sim_null_out <- mclapply(X = parameter_settings, FUN = function(x) {
+  
+          rep_i <- x$rep_i
+          MAG_num <- x$MAG_num
+          pseudocount_set <- x$pseudocount_set
+          abun_increase_set <- x$abun_increase_set
+          MAG_rep_func <- x$MAG_rep_func
+          MAG_rep_tree <- x$MAG_rep_tree
+          
+          taxa.based_sim_info <- readRDS(paste("sim_info/taxa.based/taxa.based_sim_info_",
+                                               "rep", as.character(rep_i),
+                                               "_MAGs", as.character(MAG_num),
+                                               "_pseudo", as.character(pseudocount_set),
+                                               "_increase", as.character(abun_increase_set),
+                                               ".rds", sep = ""))
+          
+          output <- POMS_pipeline(abun = taxa.based_sim_info$taxa_perturb_abun,
+                                  func = MAG_rep_func,
+                                  tree = MAG_rep_tree,
+                                  group1_samples = taxa.based_sim_info$group1,
+                                  group2_samples = taxa.based_sim_info$group2,
+                                  ncores = 1,
+                                  BSN_p_cutoff = 0.05,
+                                  BSN_correction = "none",
+                                  FSN_p_cutoff = 0.05,
+                                  FSN_correction = "none",
+                                  min_func_instances = 5,
+                                  min_func_prop = 0.001,
+                                  multinomial_correction = "BH",
+                                  detailed_output = FALSE,
+                                  verbose = FALSE)
+          
+          output$func = taxa.based_sim_info$func
+          
+          saveRDS(object = output,
+                  file = paste("POMS_out/taxa.based/POMS_func_out_",
+                               "rep", as.character(rep_i),
+                               "_MAGs", as.character(MAG_num),
+                               "_pseudo", as.character(pseudocount_set),
+                               "_increase", as.character(abun_increase_set),
+                               ".rds", sep = ""))
+          
+          return("Success")
+  
+}, mc.cores = 20)
+
+
+
+
+clade.based_sim_null_out <- mclapply(X = parameter_settings, FUN = function(x) {
+  
+  rep_i <- x$rep_i
+  MAG_num <- x$MAG_num
+  pseudocount_set <- x$pseudocount_set
+  abun_increase_set <- x$abun_increase_set
+  MAG_rep_func <- x$MAG_rep_func
+  
+  clade.based_sim_info <- readRDS(paste("sim_info/clade.based/clade.based_sim_info_",
+                                       "rep", as.character(rep_i),
+                                       "_MAGs", as.character(MAG_num),
+                                       "_pseudo", as.character(pseudocount_set),
+                                       "_increase", as.character(abun_increase_set),
+                                       ".rds", sep = ""))
+  
+  output <- POMS_pipeline(abun = clade.based_sim_info$taxa_perturb_abun,
+                          func = MAG_rep_func,
+                          tree = clade.based_sim_info$subset_tree,
+                          group1_samples = clade.based_sim_info$group1,
+                          group2_samples = clade.based_sim_info$group2,
+                          ncores = 1,
+                          BSN_p_cutoff = 0.05,
+                          BSN_correction = "none",
+                          FSN_p_cutoff = 0.05,
+                          FSN_correction = "none",
+                          min_func_instances = 5,
+                          min_func_prop = 0.001,
+                          multinomial_correction = "BH",
+                          detailed_output = FALSE,
+                          verbose = FALSE)
+  
+  output$func = clade.based_sim_info$func
+  
+  saveRDS(object = output,
+          file = paste("POMS_out/clade.based/POMS_func_out_",
+                       "rep", as.character(rep_i),
+                       "_MAGs", as.character(MAG_num),
+                       "_pseudo", as.character(pseudocount_set),
+                       "_increase", as.character(abun_increase_set),
+                       ".rds", sep = ""))
+  
+  return("Success")
+  
+}, mc.cores = 20)

@@ -1,7 +1,5 @@
 rm(list = ls(all.names = TRUE))
 
-# Code for running MUSiCC-normalized Wilcoxon tests only.
-
 setwd("~/github_repos/POMS_manuscript/data/intermediates/MAG.based_simulations/parameter_altered_files/")
 
 source("~/github_repos/POMS_manuscript/scripts/alt_tool_functions.R")
@@ -20,7 +18,7 @@ parameter_settings <- list()
 
 MAG_nums <- c(1595, 1250, 1000, 750, 500, 250, 100, 50)
 
-pseudocount_settings <- c(0.1, 0.3, 0.5, 0.7, 0.9)
+pseudocount_settings <- c(0, 0.1, 0.3, 0.5, 0.7, 0.9, 1)
 
 abun_increase_settings <- c(1.5, 1.3, 1.1, 1.05)
 
@@ -65,23 +63,45 @@ for (x in parameter_settings) {
   pseudocount_set <- x$pseudocount_set
   abun_increase_set <- x$abun_increase_set
   
-  func_sim_info <- readRDS(paste("sim_info/func_sim_info_",
+  print(rep_i)
+  
+  taxa.based_sim_info <- readRDS(paste("sim_info/taxa.based/taxa.based_sim_info_",
                                  "rep", as.character(rep_i),
                                  "_MAGs", as.character(MAG_num),
                                  "_pseudo", as.character(pseudocount_set),
                                  "_increase", as.character(abun_increase_set),
                                  ".rds", sep = ""))
   
-  rep_func_abun <- calc_func_abun(in_abun = func_sim_info$taxa_perturb_abun,
-                                  in_func = x$MAG_rep_func,
-                                  ncores = 40)
+  taxa.based_rep_func_abun <- calc_func_abun(in_abun = taxa.based_sim_info$taxa_perturb_abun,
+                                             in_func = x$MAG_rep_func,
+                                             ncores = 10)
   
-  saveRDS(object = rep_func_abun,
-          file = paste("func_abun_tables/func_abun_",
+  saveRDS(object = taxa.based_rep_func_abun,
+          file = paste("func_abun_tables/taxa.based/func_abun_",
                        "rep", as.character(rep_i),
                        "_MAGs", as.character(MAG_num),
                        "_pseudo", as.character(pseudocount_set),
                        "_increase", as.character(abun_increase_set),
                        ".rds", sep = ""))
 
+  
+  clade.based_sim_info <- readRDS(paste("sim_info/clade.based/clade.based_sim_info_",
+                                       "rep", as.character(rep_i),
+                                       "_MAGs", as.character(MAG_num),
+                                       "_pseudo", as.character(pseudocount_set),
+                                       "_increase", as.character(abun_increase_set),
+                                       ".rds", sep = ""))
+  
+  clade.based_rep_func_abun <- calc_func_abun(in_abun = clade.based_sim_info$taxa_perturb_abun,
+                                             in_func = x$MAG_rep_func,
+                                             ncores = 10)
+  
+  saveRDS(object = clade.based_rep_func_abun,
+          file = paste("func_abun_tables/clade.based/func_abun_",
+                       "rep", as.character(rep_i),
+                       "_MAGs", as.character(MAG_num),
+                       "_pseudo", as.character(pseudocount_set),
+                       "_increase", as.character(abun_increase_set),
+                       ".rds", sep = ""))
+  
 }

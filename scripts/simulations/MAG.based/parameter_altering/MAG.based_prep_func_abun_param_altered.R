@@ -20,7 +20,7 @@ parameter_settings <- list()
 
 MAG_nums <- c(1595, 1250, 1000, 750, 500, 250, 100, 50)
 
-pseudocount_settings <- c(0, 1)
+pseudocount_settings <- c(0, 0.1, 0.3, 0.5, 0.7, 0.9, 1)
 
 abun_increase_settings <- c(1.5, 1.3, 1.1, 1.05)
 
@@ -74,10 +74,10 @@ for (x in parameter_settings) {
   
   rep_func_abun <- calc_func_abun(in_abun = func_sim_info$taxa_perturb_abun,
                                   in_func = x$MAG_rep_func,
-                                  ncores = 40)
+                                  ncores = 10)
   
   saveRDS(object = rep_func_abun,
-          file = paste("func_abun_tables/func_abun_",
+          file = paste("func_abun_tables/func.based/func_abun_",
                        "rep", as.character(rep_i),
                        "_MAGs", as.character(MAG_num),
                        "_pseudo", as.character(pseudocount_set),

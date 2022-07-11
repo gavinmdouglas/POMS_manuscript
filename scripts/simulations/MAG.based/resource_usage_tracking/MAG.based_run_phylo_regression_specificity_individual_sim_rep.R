@@ -52,6 +52,6 @@ specificity_regress_out <- genome_content_phylo_regress(y = taxa_specificity,
                                                         ncores = 1,
                                                         model_type = "BM")
 
-htop$BH <- p.adjust(specificity_regress_out$p, "BH")
+specificity_regress_out$BH <- p.adjust(specificity_regress_out$p, "BH")
 
 saveRDS(object = specificity_regress_out, file = args$out_rds)
