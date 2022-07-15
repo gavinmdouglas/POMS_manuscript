@@ -9,15 +9,18 @@ library(parallel)
 
 parameter_settings <- list()
 
-MAG_nums <- c(1595, 1250, 1000, 750, 500, 250, 100, 50)
+MAG_nums <- c(1595, 1000, 500, 250, 100)
 
-pseudocount_settings <- c(0, 0.1, 0.3, 0.5, 0.7, 0.9, 1)
+pseudocount_settings <- c(0, 0.3, 0.7, 1)
 
-abun_increase_settings <- c(1.5, 1.3, 1.1, 1.05)
+abun_increase_settings <- c(1.5, 1.25, 1.05)
+
+num_reps <- 10
 
 option_count <- 1
 
-for (rep_i in 1:25) {
+for (rep_i in 1:num_reps) {
+
   for (MAG_num in MAG_nums) {
     
     MAG_rep_func <- readRDS(paste("prepped_func_tables/subset_",
@@ -29,6 +32,7 @@ for (rep_i in 1:25) {
                                   as.character(rep_i), ".rds", sep = ""))
     
     for (pseudocount_set in pseudocount_settings) {
+  
       for (abun_increase_set in abun_increase_settings) {
         
         parameter_settings[[option_count]] <- list()
@@ -62,7 +66,7 @@ func.based_sim_null_out <- mclapply(X = parameter_settings, FUN = function(x) {
                      MAG_rep_func <- x$MAG_rep_func
                      MAG_rep_tree <- x$MAG_rep_tree
 
-                     func.based_sim_info <- readRDS(paste("sim_info/func.based/func_sim_info_",
+                     func.based_sim_info <- readRDS(paste("sim_info/func.based/func.based_sim_info_",
                                                     "rep", as.character(rep_i),
                                                     "_MAGs", as.character(MAG_num),
                                                     "_pseudo", as.character(pseudocount_set),
@@ -88,7 +92,7 @@ func.based_sim_null_out <- mclapply(X = parameter_settings, FUN = function(x) {
                      output$func = func.based_sim_info$func
                      
                      saveRDS(object = output,
-                             file = paste("POMS_out/func.based/POMS_func_out_",
+                             file = paste("POMS_out/func.based/POMS_func.based_out_",
                                           "rep", as.character(rep_i),
                                           "_MAGs", as.character(MAG_num),
                                           "_pseudo", as.character(pseudocount_set),
@@ -164,9 +168,11 @@ clade.based_sim_null_out <- mclapply(X = parameter_settings, FUN = function(x) {
                                        "_increase", as.character(abun_increase_set),
                                        ".rds", sep = ""))
   
+  in_tree <- readRDS(paste("prepped_trees/subset_", as.character(MAG_num), "MAGs_tree_rep", as.character(rep_i), ".rds", sep = ""))
+  
   output <- POMS_pipeline(abun = clade.based_sim_info$taxa_perturb_abun,
                           func = MAG_rep_func,
-                          tree = clade.based_sim_info$subset_tree,
+                          tree = in_tree,
                           group1_samples = clade.based_sim_info$group1,
                           group2_samples = clade.based_sim_info$group2,
                           ncores = 1,

@@ -42,11 +42,11 @@ descrip_tables[["kos"]] <- "/home/gavin/github_repos/POMS_manuscript/data/KEGG_m
 descrip_tables[["pathways"]] <- "/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/2021_04_12_KEGG_pathway_descrip.tsv.gz"
 descrip_tables[["modules"]] <- "/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/2021_04_12_KEGG_module_descrip.tsv.gz"
 
-POMS_out <- list()
+regress_out <- list()
 
 for (study in studies) {
  
-  POMS_out[[study]] <- list()
+  regress_out[[study]] <- list()
   
   sample_info <- almeida_sample_info[which(almeida_sample_info$Study == study), ]
   
@@ -56,44 +56,51 @@ for (study in studies) {
   group1_samples <- sample_info[which(sample_info$Health.state == "Diseased"), "Run"]
   group2_samples <- sample_info[which(sample_info$Health.state == "Healthy"), "Run"]
   
+  prepped_tree <- POMS::prep_tree(phy = almeida_tree, tips2keep = rownames(abun_table))
+  
+  metadata <- data.frame(samp = c(group1_samples,
+                                  group2_samples),
+                         group = c(rep("group1", length(group1_samples)),
+                                   rep("group2", length(group2_samples))))
+  
+  taxa_specificity <- specificity_scores(abun_table = abun_table,
+                                         meta_table = metadata,
+                                         focal_var_level = "group1",
+                                         var_colname = "group",
+                                         sample_colname = "samp",
+                                         silence_citation = TRUE)
+  
+  taxa_specificity <- taxa_specificity$ess[prepped_tree$tip.label]
+  
   for (f in names(func_tables)) {
   
     filt_func_table <-  POMS::filter_rare_table_cols(in_tab = func_tables[[f]][rownames(abun_table), ],
                                                      min_nonzero_count = 5,
                                                      min_nonzero_prop = 0.001)
     
-    POMS_out[[study]][[f]] <- POMS_pipeline(abun = abun_table,
-                                                func = filt_func_table,
-                                                tree = almeida_tree,
-                                                group1_samples = group1_samples,
-                                                group2_samples = group2_samples,
-                                                ncores = 40,
-                                                BSN_p_cutoff = 0.05,
-                                                BSN_correction = "none",
-                                                FSN_p_cutoff = 0.05,
-                                                FSN_correction = "none",
-                                                min_num_tips = 10,
-                                                min_func_instances = 5,
-                                                min_func_prop = 0.001,
-                                                multinomial_correction = "BH",
-                                                detailed_output = TRUE,
-                                                verbose = TRUE,
-                                                func_descrip_infile = descrip_tables[[f]])
+    regress_out[[study]][[f]] <- genome_content_phylo_regress(y = taxa_specificity,
+                                                              func =  filt_func_table,
+                                                              in_tree = prepped_tree,
+                                                              ncores = 20,
+                                                              model_type = "BM")
+    
+    regress_out[[study]][[f]]$BH <- p.adjust(regress_out[[study]][[f]]$p, "BH")
+
   }
 
 }
 
 
-for(study in names(POMS_out)) {
+for(study in names(regress_out)) {
   print("=========")
   print(study)
   print("   ")
   
   for (func_type in names(func_tables)) {
     print(func_type)
-    print(rownames(POMS_out[[study]][[func_type]]$results[which(POMS_out[[study]][[func_type]]$results$multinomial_corr < 0.2), ]))
+    print(length(which(regress_out[[study]][[func_type]]$BH < 0.2)))
     print("     ")
   }
 }
 
-saveRDS(object = POMS_out, file = "/home/gavin/github_repos/POMS_manuscript/data/results/Almeida_2019_POMS_output/combined_output.rds")
+saveRDS(object = regress_out, file = "/home/gavin/github_repos/POMS_manuscript/data/results/Almeida_2019_regress_specificity_output/combined_output.rds")

@@ -6,7 +6,11 @@ source("~/github_repos/POMS_manuscript/scripts/alt_tool_functions.R")
 
 ptm <- proc.time()
 
-func_alt.tools <- mclapply(1:693, function(rep_i) {
+clade.based_alt.tools <- mclapply(1:693, function(rep_i) {
+  
+  out_rds_func <- paste("DA_tool_out/aldex2_deseq2/MAG.based_clade.based_sim_aldex2_rds/rep", as.character(rep_i), ".rds", sep = "")
+  
+  if (file.exists(out_rds_func)) { return("Success") }
   
   prepped_clade.based_sim_info <- readRDS(paste("MAG.based_prepped_clade.based_sim_info_sel1.5/clade.based_sim_info_rep", as.character(rep_i), ".rds", sep = ""))
 
@@ -15,9 +19,8 @@ func_alt.tools <- mclapply(1:693, function(rep_i) {
   alt_tools_out_func <- run_alt.tools(func_abun_table = prepped_func_abun,
                                       group1_samples = prepped_clade.based_sim_info$group1,
                                       group2_samples = prepped_clade.based_sim_info$group2,
-                                      tools_to_run = c("aldex2", "deseq2"))
+                                      tools_to_run = c("aldex2"))
   
-  out_rds_func <- paste("DA_tool_out/aldex2_deseq2/MAG.based_clade.based_sim_aldex2_deseq2_rds/rep", as.character(rep_i), ".rds", sep = "")
   
   saveRDS(object = alt_tools_out_func, file = out_rds_func)
   

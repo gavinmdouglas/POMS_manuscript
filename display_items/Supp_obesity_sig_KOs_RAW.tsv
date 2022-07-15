@@ -1,8 +1,13 @@
-num_nodes_enriched	num_sig_nodes_group1_enrich	num_sig_nodes_group2_enrich	num_nonsig_nodes_enrich	multinomial_p	multinomial_corr	description	func	dataset
-31	17	1	13	7.15291865489752e-05	0.120780072481187	thiD; hydroxymethylpyrimidine/phosphomethylpyrimidine kinase [EC:2.7.1.49 2.7.4.7]	K00941	Obesity 1
-23	13	0	10	0.000149349144303458	0.142964800045484	purC; phosphoribosylaminoimidazole-succinocarboxamide synthase [EC:6.3.2.6]	K01923	Obesity 1
-20	13	1	6	0.000186030969480135	0.142964800045484	purM; phosphoribosylformylglycinamidine cyclo-ligase [EC:6.3.3.1]	K01933	Obesity 1
-32	15	0	17	7.85816997275124e-05	0.120780072481187	K09861; uncharacterized protein	K09861	Obesity 1
-12	10	0	2	9.76150113128033e-05	0.0902613471272388	cydA; cytochrome bd ubiquinol oxidase subunit I [EC:7.1.1.7]	K00425	Obesity 2
-13	11	0	2	1.77717697763313e-05	0.0492988893595429	ABC-2.TX; HlyD family secretion protein	K01993	Obesity 2
-12	10	0	2	9.76150113128033e-05	0.0902613471272388	ispB; octaprenyl-diphosphate synthase [EC:2.5.1.90]	K02523	Obesity 2
+num_FSNs	num_FSNs_group1_enrich	num_FSNs_group2_enrich	num_FSNs_at_nonBSNs	multinomial_p	multinomial_corr	description	func	dataset
+25	15	2	8	0.000377917629217047	0.108118798104186	argC; N-acetyl-gamma-glutamyl-phosphate reductase [EC:1.2.1.38]	K00145	Obesity 1
+22	13	0	9	8.37565640243942e-05	0.0648273734756981	purH; phosphoribosylaminoimidazolecarboxamide formyltransferase / IMP cyclohydrolase [EC:2.1.2.3 3.5.4.10]	K00602	Obesity 1
+22	12	0	10	0.000183107845452376	0.0714405771737435	pyrB, PYR2; aspartate carbamoyltransferase catalytic subunit [EC:2.1.3.2]	K00609	Obesity 1
+32	17	1	14	0.000145046374501606	0.0652087057937932	thiD; hydroxymethylpyrimidine/phosphomethylpyrimidine kinase [EC:2.7.1.49 2.7.4.7]	K00941	Obesity 1
+28	12	0	16	0.000310654795794292	0.0977630642364638	E3.1.11.2, xthA; exodeoxyribonuclease III [EC:3.1.11.2]	K01142	Obesity 1
+22	13	0	9	8.37565640243942e-05	0.0648273734756981	purE; 5-(carboxyamino)imidazole ribonucleotide mutase [EC:5.4.99.18]	K01588	Obesity 1
+25	13	0	12	0.000121270100369423	0.0648273734756981	purC; phosphoribosylaminoimidazole-succinocarboxamide synthase [EC:6.3.2.6]	K01923	Obesity 1
+20	13	0	7	2.78653666189632e-05	0.0438461543749386	purM; phosphoribosylformylglycinamidine cyclo-ligase [EC:6.3.3.1]	K01933	Obesity 1
+20	13	0	7	2.78653666189632e-05	0.0438461543749386	purD; phosphoribosylamine---glycine ligase [EC:6.3.4.13]	K01945	Obesity 1
+22	14	1	7	0.000123598424167203	0.0648273734756981	PFAS, purL; phosphoribosylformylglycinamidine synthase [EC:6.3.5.3]	K01952	Obesity 1
+28	13	0	15	0.000204310516226149	0.0714405771737435	hisF; imidazole glycerol-phosphate synthase subunit HisF [EC:4.3.2.10]	K02500	Obesity 1
+35	16	1	18	0.000505583290087511	0.13258921782545	K09861; uncharacterized protein	K09861	Obesity 1

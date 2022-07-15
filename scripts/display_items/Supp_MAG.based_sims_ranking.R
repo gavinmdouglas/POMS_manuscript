@@ -8,89 +8,159 @@ library(ggpubr)
 
 setwd("~/github_repos/POMS_manuscript/data/intermediates/MAG.based_simulations/")
 
-func_rand_summary_POMS_wilcoxon.musicc <- readRDS(file = "simulation_summaries/func_rand_summary_POMS_wilcoxon.musicc.rds")
+func.based_summary <- readRDS(file = "simulation_summaries/func.based_summary.rds")
 
-MAG_sim_func.based_ranking_wilcoxon_vs_num.MAG <- ggplot(func_rand_summary_POMS_wilcoxon.musicc,
+ranking_POMS_vs_num.MAG <- ggplot(data = func.based_summary,
+                                             aes(y = num_focal_pos_mags,
+                                                 x = POMS_rank_0.05)) +
+                                                        geom_point(colour = "#1f78b4", size = 2) +
+                                                        theme_bw() +
+                                                        xlab("") +
+                                                        ylab("No. MAGs\nencoding\nfocal gene") +
+                                                        theme(plot.title = element_text(hjust = 0.5, vjust = -1),
+                                                              axis.title.y = element_text(angle = 0, vjust = 0.5)) +
+                                                        ggtitle("POMS") +
+                                                        ylim(0, 1600) +
+                                                        xlim(0, 5000)
+
+ranking_POMS_vs_num.MAG_marginal <- ggMarginal(ranking_POMS_vs_num.MAG, type = "histogram", size = 10)
+
+
+ranking_regress_specificity_vs_num.MAG <- ggplot(data = func.based_summary,
+                                                  aes(y = num_focal_pos_mags,
+                                                      x = regress_specificity_rank_0.05)) +
+                        geom_point(colour = "blue", size = 2) +
+                        theme_bw() +
+                        xlab("") +
+                        ylab("") +
+                        theme(plot.title = element_text(hjust = 0.5, vjust = -1),
+                              axis.title.y = element_text(angle = 0, vjust = 0.5)) +
+                        ggtitle("Phylo. regress. (specificity)") +
+                        ylim(0, 1600) +
+                        xlim(0, 5000)
+
+ranking_regress_specificity_vs_num.MAG_marginal <- ggMarginal(ranking_regress_specificity_vs_num.MAG, type = "histogram", size = 10)
+
+
+ranking_regress_sig_taxa_vs_num.MAG <- ggplot(data = func.based_summary,
+                                                 aes(y = num_focal_pos_mags,
+                                                     x = regress_sig_taxa_rank_0.05)) +
+        geom_point(colour = "blue4", size = 2) +
+        theme_bw() +
+        xlab("") +
+        ylab("No. MAGs\nencoding\nfocal gene") +
+        theme(plot.title = element_text(hjust = 0.5, vjust = -1),
+              axis.title.y = element_text(angle = 0, vjust = 0.5)) +
+        ggtitle("Phylo. regress. (sig. taxa)") +
+        ylim(0, 1600) +
+        xlim(0, 5000)
+
+ranking_regress_sig_taxa_vs_num.MAG_marginal <- ggMarginal(ranking_regress_sig_taxa_vs_num.MAG, type = "histogram", size = 10)
+
+
+ranking_aldex2_vs_num.MAG <- ggplot(data = func.based_summary,
+                                              aes(y = num_focal_pos_mags,
+                                                  x = aldex2_rank_0.05)) +
+        geom_point(colour = "firebrick1", size = 2) +
+        theme_bw() +
+        xlab("") +
+        ylab("") +
+        theme(plot.title = element_text(hjust = 0.5, vjust = -1),
+              axis.title.y = element_text(angle = 0, vjust = 0.5)) +
+        ggtitle("ALDEx2") +
+        ylim(0, 1600) +
+        xlim(0, 5000)
+
+ranking_aldex2_vs_num.MAG_marginal <- ggMarginal(ranking_aldex2_vs_num.MAG, type = "histogram", size = 10)
+
+ranking_deseq2_vs_num.MAG <- ggplot(data = func.based_summary,
+                                    aes(y = num_focal_pos_mags,
+                                        x = deseq2_rank_0.05)) +
+        geom_point(colour = "gold2", size = 2) +
+        theme_bw() +
+        xlab("") +
+        ylab("No. MAGs\nencoding\nfocal gene") +
+        theme(plot.title = element_text(hjust = 0.5, vjust = -1),
+              axis.title.y = element_text(angle = 0, vjust = 0.5)) +
+        ggtitle("DESeq2") +
+        ylim(0, 1600) +
+        xlim(0, 5000)
+
+ranking_deseq2_vs_num.MAG_marginal <- ggMarginal(ranking_deseq2_vs_num.MAG, type = "histogram", size = 10)
+
+
+
+ranking_limma.voom_vs_num.MAG <- ggplot(data = func.based_summary,
+                                    aes(y = num_focal_pos_mags,
+                                        x = limma.voom_rank_0.05)) +
+        geom_point(colour = "darkslategray3", size = 2) +
+        theme_bw() +
+        xlab("") +
+        ylab("") +
+        theme(plot.title = element_text(hjust = 0.5, vjust = -1),
+              axis.title.y = element_text(angle = 0, vjust = 0.5)) +
+        ggtitle("limma-voom") +
+        ylim(0, 1600) +
+        xlim(0, 5000)
+
+ranking_limma.voom_vs_num.MAG_marginal <- ggMarginal(ranking_limma.voom_vs_num.MAG, type = "histogram", size = 10)
+
+
+ranking_wilcoxon.musicc_vs_num.MAG <- ggplot(data = func.based_summary,
                                                          aes(y = num_focal_pos_mags,
                                                              x = wilcoxon.musicc_rank_0.05)) +
-                                                         geom_point(colour = "springgreen4", size = 2) +
+                                                         geom_point(colour = "mediumorchid", size = 2) +
                                                          theme_bw() +
                                                          xlab("Focal gene ranking") +
-                                                         ylab("No. MAGs encoding focal gene") +
-                                                         theme(plot.title = element_text(hjust = 0.5, vjust = -1)) +
-                                                         ggtitle("Wilcoxon test") +
+                                                         ylab("No. MAGs\nencoding\nfocal gene") +
+                                                         theme(plot.title = element_text(hjust = 0.5, vjust = -1),
+                                                               axis.title.y = element_text(angle = 0, vjust = 0.5)) +
+                                                         ggtitle("Wilcoxon test (corrected)") +
                                                          ylim(0, 1600) +
-                                                         xlim(0, 4000)
+                                                         xlim(0, 5000)
 
-MAG_sim_func.based_ranking_wilcoxon_vs_num.MAG_marginal <- ggMarginal(MAG_sim_func.based_ranking_wilcoxon_vs_num.MAG, type = "histogram", size = 10)
-
-MAG_sim_func.based_ranking_POMS_vs_num.MAG <- ggplot(func_rand_summary_POMS_wilcoxon.musicc,
-                                                         aes(y = num_focal_pos_mags,
-                                                             x = POMS_rank_0.05)) +
-                                                         geom_point(colour = "steelblue4", size = 2) +
-                                                         theme_bw() +
-                                                         xlab("Focal gene ranking") +
-                                                         ylab("No. MAGs encoding focal gene") +
-                                                         theme(plot.title = element_text(hjust = 0.5, vjust = -1)) +
-                                                         ggtitle("POMS") +
-                                                         ylim(0, 1600) +
-                                                         xlim(0, 4000)
-
-MAG_sim_func.based_ranking_POMS_vs_num.MAG_marginal <- ggMarginal(MAG_sim_func.based_ranking_POMS_vs_num.MAG, type = "histogram", size = 10)
+ranking_wilcoxon.musicc_vs_num.MAG_marginal <- ggMarginal(ranking_wilcoxon.musicc_vs_num.MAG, type = "histogram", size = 10)
 
 
-# Also include a panel showing the distribution of number of MAGs for focal genes within and outside the top 10 significant hits.
-POMS_tmp <- data.frame(Tool = "POMS",
-                       focal_func = func_rand_summary_POMS_wilcoxon.musicc$focal_func,
-                       num_mags = func_rand_summary_POMS_wilcoxon.musicc$num_focal_pos_mags,
-                       rank = func_rand_summary_POMS_wilcoxon.musicc$POMS_rank_0.05)
-POMS_tmp <- POMS_tmp[-which(is.na(POMS_tmp$rank)), ]
+ranking_wilcoxon.relab_vs_num.MAG <- ggplot(data = func.based_summary,
+                                             aes(y = num_focal_pos_mags,
+                                                 x = wilcoxon.relab_rank_0.05)) +
+        geom_point(colour = "palegreen", size = 2) +
+        theme_bw() +
+        xlab("Focal gene ranking") +
+        ylab("") +
+        theme(plot.title = element_text(hjust = 0.5, vjust = -1),
+              axis.title.y = element_text(angle = 0, vjust = 0.5)) +
+        ggtitle("Wilcoxon test (relab.)") +
+        ylim(0, 1600) +
+        xlim(0, 5000)
 
-wilcoxon.musicc_tmp <- data.frame(Tool = "Wilcoxon test",
-                                  focal_func = func_rand_summary_POMS_wilcoxon.musicc$focal_func,
-                                  num_mags = func_rand_summary_POMS_wilcoxon.musicc$num_focal_pos_mags,
-                                  rank = func_rand_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_rank_0.05)
-wilcoxon.musicc_tmp <- wilcoxon.musicc_tmp[-which(is.na(wilcoxon.musicc_tmp$rank)), ]
-
-combined_ranks <- rbind(POMS_tmp, wilcoxon.musicc_tmp)
-combined_ranks$Tool <- factor(as.character(combined_ranks$Tool), levels = c("Wilcoxon test", "POMS"))
-combined_ranks$top10 <- NA
-combined_ranks[which(combined_ranks$rank <= 10), "top10"] <- "Focal gene ranked <= 10th"
-combined_ranks[which(combined_ranks$rank > 10), "top10"] <- "Focal gene ranked > 10th"
-
-MAG.based_POMS_vs_wilcoxon.musicc_top10_numMAG_boxplots <- ggplot(data = combined_ranks, aes(x = Tool, y = num_mags, fill = Tool)) +
-                                                                 geom_boxplot() +
-                                                                 theme_bw() +
-                                                                 scale_fill_manual(values=c("springgreen4", "steelblue4")) +
-                                                                 facet_grid(. ~ top10) +
-                                                                 ylab("No. MAGs encoding focal gene") +
-                                                                 xlab("") +
-                                                                 theme(legend.position = "none")
-                                                           
+ranking_wilcoxon.relab_vs_num.MAG_marginal <- ggMarginal(ranking_wilcoxon.relab_vs_num.MAG, type = "histogram", size = 10)
 
 
-MAG.based_POMS_vs_wilcoxon.musicc_ranking_marginal_combined <- plot_grid(MAG_sim_func.based_ranking_wilcoxon_vs_num.MAG_marginal,
-                                                                         MAG_sim_func.based_ranking_POMS_vs_num.MAG_marginal,
-                                                                          nrow = 1, ncol = 2, labels = c('a', 'b'))
 
-bottom_panels <- plot_grid(NULL, MAG.based_POMS_vs_wilcoxon.musicc_top10_numMAG_boxplots, NULL, nrow = 1, ncol = 3,
-                           rel_widths = c(2.5, 5, 2.5), labels = c('', 'c', ''))
 
-MAG.based_rankings_and_boxplots <- plot_grid(MAG.based_POMS_vs_wilcoxon.musicc_ranking_marginal_combined, bottom_panels, nrow = 2)
+
+ranking_vs_num_MAG_combined <- plot_grid(ranking_POMS_vs_num.MAG, ranking_regress_specificity_vs_num.MAG,
+                                         ranking_regress_sig_taxa_vs_num.MAG, ranking_aldex2_vs_num.MAG, 
+                                         ranking_deseq2_vs_num.MAG, ranking_limma.voom_vs_num.MAG,
+                                         ranking_wilcoxon.musicc_vs_num.MAG, ranking_wilcoxon.relab_vs_num.MAG,
+                                         nrow = 4, ncol = 2, rel_widths = c(1.2, 1), labels = c('', '', '', '', '', '', '', ''))
+
 
 ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Supp_MAG.based_sims_ranking.pdf",
-       plot = MAG.based_rankings_and_boxplots,
+       plot = ranking_vs_num_MAG_combined,
        device = "pdf",
-       width = 8,
-       height = 6,
+       width = 7,
+       height = 8,
        dpi = 600)
 
 
 ggsave(filename = "~/github_repos/POMS_manuscript/display_items/Supp_MAG.based_sims_ranking.png",
-       plot = MAG.based_rankings_and_boxplots,
+       plot = ranking_vs_num_MAG_combined,
        device = "png",
-       width = 8,
-       height = 6,
+       width = 7,
+       height = 8,
        dpi = 300)
 
 

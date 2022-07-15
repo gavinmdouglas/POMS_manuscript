@@ -3,3 +3,5 @@ data/
 **/old/
 **/rough_working/
 scripts/simulations/MAG.based/testing/
+scripts/simulations/MAG.based/aldex2_deseq2_old/
+scripts/simulations/MAG.based/parameter_altering/MAG.based_run_regression_sim_param_altered_TESTING.R

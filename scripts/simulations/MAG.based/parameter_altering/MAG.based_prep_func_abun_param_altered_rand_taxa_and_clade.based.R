@@ -63,45 +63,6 @@ for (x in parameter_settings) {
   pseudocount_set <- x$pseudocount_set
   abun_increase_set <- x$abun_increase_set
   
-  print(rep_i)
-  
-  taxa.based_sim_info <- readRDS(paste("sim_info/taxa.based/taxa.based_sim_info_",
-                                 "rep", as.character(rep_i),
-                                 "_MAGs", as.character(MAG_num),
-                                 "_pseudo", as.character(pseudocount_set),
-                                 "_increase", as.character(abun_increase_set),
-                                 ".rds", sep = ""))
-  
-  taxa.based_rep_func_abun <- calc_func_abun(in_abun = taxa.based_sim_info$taxa_perturb_abun,
-                                             in_func = x$MAG_rep_func,
-                                             ncores = 10)
-  
-  saveRDS(object = taxa.based_rep_func_abun,
-          file = paste("func_abun_tables/taxa.based/func_abun_",
-                       "rep", as.character(rep_i),
-                       "_MAGs", as.character(MAG_num),
-                       "_pseudo", as.character(pseudocount_set),
-                       "_increase", as.character(abun_increase_set),
-                       ".rds", sep = ""))
 
-  
-  clade.based_sim_info <- readRDS(paste("sim_info/clade.based/clade.based_sim_info_",
-                                       "rep", as.character(rep_i),
-                                       "_MAGs", as.character(MAG_num),
-                                       "_pseudo", as.character(pseudocount_set),
-                                       "_increase", as.character(abun_increase_set),
-                                       ".rds", sep = ""))
-  
-  clade.based_rep_func_abun <- calc_func_abun(in_abun = clade.based_sim_info$taxa_perturb_abun,
-                                             in_func = x$MAG_rep_func,
-                                             ncores = 10)
-  
-  saveRDS(object = clade.based_rep_func_abun,
-          file = paste("func_abun_tables/clade.based/func_abun_",
-                       "rep", as.character(rep_i),
-                       "_MAGs", as.character(MAG_num),
-                       "_pseudo", as.character(pseudocount_set),
-                       "_increase", as.character(abun_increase_set),
-                       ".rds", sep = ""))
   
 }

@@ -1,5 +1,3 @@
-# Specifically perform "selection" for "random taxa" replicates.
-
 rm(list = ls(all.names = TRUE))
 
 setwd("~/github_repos/POMS_manuscript/data/intermediates/MAG.based_simulations/")
@@ -7,45 +5,26 @@ setwd("~/github_repos/POMS_manuscript/data/intermediates/MAG.based_simulations/"
 library(ape)
 devtools::load_all(path = "/home/gavin/github_repos/POMS/")
 
-# Old version of subsetting function, from previous version. Using here to be consistent.
-subset_abun_table <- function(in_abun, col2keep) {
-  
-  in_abun <- in_abun[, which(colnames(in_abun) %in% col2keep)]
-  
-  missing_rows <- which(rowSums(in_abun) == 0)
-  missing_samples <- which(colSums(in_abun) == 0)
-  
-  if(length(missing_rows) > 0) {
-    in_abun <- in_abun[-missing_rows, ]
-  }
-  
-  if(length(missing_samples) > 0) {
-    in_abun <- in_abun[, -missing_samples]
-  }
-  
-  return(in_abun)
-}
-
 # Read in pre-determined random sample groupings.
 random_groups <- readRDS("almeida_healthy_random_groups.rds")
 
 almeida_abun <- read.table(file = "../../key_inputs/Almeida2019_dataset/mapping_results/modified/bwa_depth_min25coverage.tsv.gz",
                            header = TRUE, sep = "\t", check.names = FALSE, row.names = 1, quote = "", comment.char = "")
 
-almeida_abun <- subset_abun_table(in_abun = almeida_abun,
-                                  col2keep = c(random_groups$group1[[1]], random_groups$group2[[1]]))
-almeida_tree <- read.tree("../../key_inputs/Almeida2019_dataset/phylogenies/raxml_hgr-umgs_phylogeny.nwk")
+almeida_abun <- POMS::subset_by_col_and_filt(in_tab = almeida_abun,
+                                             col2keep = c(random_groups$group1[[1]], random_groups$group2[[1]]))
 
 set.seed(71632)
 
-# Filter rare functions from table.
-MAG_nums <- c(1595, 1250, 1000, 750, 500, 250, 100, 50)
+MAG_nums <- c(1595, 1000, 500, 250, 100)
 
-pseudocount_settings <- c(0, 0.1, 0.3, 0.5, 0.7, 0.9, 1)
+pseudocount_settings <- c(0, 0.3, 0.7, 1)
 
-abun_increase_settings <- c(1.5, 1.3, 1.1, 1.05)
+abun_increase_settings <- c(1.5, 1.25, 1.05)
 
-for (rep_i in 1:25) {
+num_reps <- 10
+
+for (rep_i in 1:num_reps) {
   
   for (MAG_num in MAG_nums) {
   
@@ -55,7 +34,7 @@ for (rep_i in 1:25) {
                                      as.character(rep_i),
                                      ".rds", sep = ""))
     
-    representative_sim_info <- readRDS(paste("parameter_altered_files/sim_info/func.based/func_sim_info_rep",
+    representative_sim_info <- readRDS(paste("parameter_altered_files/sim_info/func.based/func.based_sim_info_rep",
                                              as.character(rep_i),
                                              "_MAGs",
                                              as.character(MAG_num),
@@ -74,10 +53,7 @@ for (rep_i in 1:25) {
        for (abun_increase_set in abun_increase_settings) {
          
          rep_abun_MAG_subset <- almeida_abun[rownames(MAG_subset_func), ]
-         
-         if (length(which(colSums(rep_abun_MAG_subset) == 0)) > 0) {
-           rep_abun_MAG_subset <- rep_abun_MAG_subset[, -which(colSums(rep_abun_MAG_subset) == 0)]
-         }
+         rep_abun_MAG_subset <- rep_abun_MAG_subset[, which(colSums(rep_abun_MAG_subset) > 0)]
 
          num_to_bump <- floor(length(rand_contributors) * pseudocount_set)
          if (num_to_bump > 0) {

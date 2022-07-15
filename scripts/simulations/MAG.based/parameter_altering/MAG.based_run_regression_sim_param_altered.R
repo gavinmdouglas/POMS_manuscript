@@ -11,17 +11,20 @@ library(parallel)
 
 parameter_settings <- list()
 
-MAG_nums <- c(1595, 1250, 1000, 750, 500, 250, 100, 50)
+MAG_nums <- c(1595, 1000, 500, 250, 100)
 
-pseudocount_settings <- c(0, 0.1, 0.3, 0.5, 0.7, 0.9, 1)
+pseudocount_settings <- c(0, 0.3, 0.7, 1)
 
-abun_increase_settings <- c(1.5, 1.3, 1.1, 1.05)
+abun_increase_settings <- c(1.5, 1.25, 1.05)
+
+num_reps <- 10
 
 option_count <- 1
 
-for (rep_i in 1:25) {
-  for (MAG_num in MAG_nums) {
+for (rep_i in 1:num_reps) {
     
+  for (MAG_num in MAG_nums) {
+  
     MAG_rep_func <- readRDS(paste("prepped_func_tables/subset_",
                                   as.character(MAG_num), "MAGs_func_rep",
                                   as.character(rep_i), ".rds", sep = ""))
@@ -67,7 +70,7 @@ func.based_sim_null_out <- mclapply(X = parameter_settings, FUN = function(x) {
   
   MAG_rep_func <- MAG_rep_func[MAG_rep_tree$tip.label, ]
   
-  func.based_sim_info <- readRDS(paste("sim_info/func.based/func_sim_info_",
+  func.based_sim_info <- readRDS(paste("sim_info/func.based/func.based_sim_info_",
                                        "rep", as.character(rep_i),
                                        "_MAGs", as.character(MAG_num),
                                        "_pseudo", as.character(pseudocount_set),
@@ -97,22 +100,34 @@ func.based_sim_null_out <- mclapply(X = parameter_settings, FUN = function(x) {
                              group = c(rep("group1", length(func.based_sim_info$group1)),
                                        rep("group2", length(func.based_sim_info$group2))))
   
-  taxa_specificity <- specificity_scores(abun_table = func.based_sim_info$taxa_perturb_abun,
-                                         meta_table = rep_metadata,
-                                         focal_var_level = "group1",
-                                         var_colname = "group",
-                                         sample_colname = "samp",
-                                         silence_citation = TRUE)
+  taxa_specificity <- tryCatch(
+    expr = {
+      specificity_scores(abun_table = func.based_sim_info$taxa_perturb_abun,
+                         meta_table = rep_metadata,
+                         focal_var_level = "group1",
+                         var_colname = "group",
+                         sample_colname = "samp",
+                         silence_citation = TRUE)
+    },
+    error = function(e) { 
+      return("Failed")
+    }
+  )
   
-  taxa_specificity <- taxa_specificity$ess[MAG_rep_tree$tip.label]
-  
-  specificity_regress_out <- genome_content_phylo_regress(y = taxa_specificity,
-                                                          func =  MAG_rep_func,
-                                                          in_tree = MAG_rep_tree,
-                                                          ncores = 1,
-                                                          model_type = "BM")
-  
-  specificity_regress_out$BH <- p.adjust(specificity_regress_out$p, "BH")
+  if (taxa_specificity[1] != "Failed") {
+    
+    taxa_specificity <- taxa_specificity$ess[MAG_rep_tree$tip.label]
+    
+    specificity_regress_out <- genome_content_phylo_regress(y = taxa_specificity,
+                                                            func =  MAG_rep_func,
+                                                            in_tree = MAG_rep_tree,
+                                                            ncores = 1,
+                                                            model_type = "BM")
+    
+    specificity_regress_out$BH <- p.adjust(specificity_regress_out$p, "BH")
+  } else {
+    specificity_regress_out <- "Failed"
+  }
   
   output <- list(sig_taxa_regress = sig_taxa_regress_out,
                  specificity_regress = specificity_regress_out)
@@ -172,22 +187,34 @@ taxa.based_sim_null_out <- mclapply(X = parameter_settings, FUN = function(x) {
                              group = c(rep("group1", length(taxa.based_sim_info$group1)),
                                        rep("group2", length(taxa.based_sim_info$group2))))
   
-  taxa_specificity <- specificity_scores(abun_table = taxa.based_sim_info$taxa_perturb_abun,
-                                         meta_table = rep_metadata,
-                                         focal_var_level = "group1",
-                                         var_colname = "group",
-                                         sample_colname = "samp",
-                                         silence_citation = TRUE)
+  taxa_specificity <- tryCatch(
+    expr = {
+      specificity_scores(abun_table = taxa.based_sim_info$taxa_perturb_abun,
+                         meta_table = rep_metadata,
+                         focal_var_level = "group1",
+                         var_colname = "group",
+                         sample_colname = "samp",
+                         silence_citation = TRUE)
+    },
+    error = function(e) { 
+      return("Failed")
+    }
+  )
   
-  taxa_specificity <- taxa_specificity$ess[MAG_rep_tree$tip.label]
-  
-  specificity_regress_out <- genome_content_phylo_regress(y = taxa_specificity,
-                                                          func =  MAG_rep_func,
-                                                          in_tree = MAG_rep_tree,
-                                                          ncores = 1,
-                                                          model_type = "BM")
-  
-  specificity_regress_out$BH <- p.adjust(specificity_regress_out$p, "BH")
+  if (taxa_specificity[1] != "Failed") {
+    
+    taxa_specificity <- taxa_specificity$ess[MAG_rep_tree$tip.label]
+    
+    specificity_regress_out <- genome_content_phylo_regress(y = taxa_specificity,
+                                                            func =  MAG_rep_func,
+                                                            in_tree = MAG_rep_tree,
+                                                            ncores = 1,
+                                                            model_type = "BM")
+    
+    specificity_regress_out$BH <- p.adjust(specificity_regress_out$p, "BH")
+  } else {
+    specificity_regress_out <- "Failed"
+  }
   
   output <- list(sig_taxa_regress = sig_taxa_regress_out,
                  specificity_regress = specificity_regress_out)
@@ -212,8 +239,6 @@ clade.based_sim_null_out <- mclapply(X = parameter_settings, FUN = function(x) {
   abun_increase_set <- x$abun_increase_set
   MAG_rep_func <- x$MAG_rep_func
   
-  MAG_rep_func <- MAG_rep_func[clade.based_sim_info$subset_tree$tip.label, ]
-  
   clade.based_sim_info <- readRDS(paste("sim_info/clade.based/clade.based_sim_info_",
                                        "rep", as.character(rep_i),
                                        "_MAGs", as.character(MAG_num),
@@ -221,19 +246,23 @@ clade.based_sim_null_out <- mclapply(X = parameter_settings, FUN = function(x) {
                                        "_increase", as.character(abun_increase_set),
                                        ".rds", sep = ""))
   
+  in_tree <- readRDS(paste("prepped_trees/subset_", as.character(MAG_num), "MAGs_tree_rep", as.character(rep_i), ".rds", sep = ""))
+  
+  MAG_rep_func <- MAG_rep_func[in_tree$tip.label, ]
+  
   rep_wilcox_output <- wilcoxon_2group_pvalues(intable = clade.based_sim_info$taxa_perturb_abun,
                                                group1_samples = clade.based_sim_info$group1,
                                                group2_samples = clade.based_sim_info$group2,
                                                convert_relab = TRUE)
   
-  rep_wilcox_output <- rep_wilcox_output[clade.based_sim_info$subset_tree$tip.label, ]
+  rep_wilcox_output <- rep_wilcox_output[in_tree$tip.label, ]
   
   sig_taxa <- rep(0, nrow(rep_wilcox_output))
   sig_taxa[which(rep_wilcox_output$wilcox_p < 0.05)] <- 1
   
   sig_taxa_regress_out <- genome_content_phylo_regress(y = sig_taxa,
                                                        func =  MAG_rep_func,
-                                                       in_tree = clade.based_sim_info$subset_tree,
+                                                       in_tree = in_tree,
                                                        ncores = 1,
                                                        model_type = "BM")
   
@@ -244,22 +273,34 @@ clade.based_sim_null_out <- mclapply(X = parameter_settings, FUN = function(x) {
                              group = c(rep("group1", length(clade.based_sim_info$group1)),
                                        rep("group2", length(clade.based_sim_info$group2))))
   
-  taxa_specificity <- specificity_scores(abun_table = clade.based_sim_info$taxa_perturb_abun,
-                                         meta_table = rep_metadata,
-                                         focal_var_level = "group1",
-                                         var_colname = "group",
-                                         sample_colname = "samp",
-                                         silence_citation = TRUE)
+  taxa_specificity <- tryCatch(
+    expr = {
+      specificity_scores(abun_table = clade.based_sim_info$taxa_perturb_abun,
+                         meta_table = rep_metadata,
+                         focal_var_level = "group1",
+                         var_colname = "group",
+                         sample_colname = "samp",
+                         silence_citation = TRUE)
+    },
+    error = function(e) { 
+      return("Failed")
+    }
+  )
   
-  taxa_specificity <- taxa_specificity$ess[clade.based_sim_info$subset_tree$tip.label]
-  
-  specificity_regress_out <- genome_content_phylo_regress(y = taxa_specificity,
-                                                          func =  MAG_rep_func,
-                                                          in_tree = clade.based_sim_info$subset_tree,
-                                                          ncores = 1,
-                                                          model_type = "BM")
-  
-  specificity_regress_out$BH <- p.adjust(specificity_regress_out$p, "BH")
+  if (taxa_specificity[1] != "Failed") {
+    
+    taxa_specificity <- taxa_specificity$ess[in_tree$tip.label]
+    
+    specificity_regress_out <- genome_content_phylo_regress(y = taxa_specificity,
+                                                            func =  MAG_rep_func,
+                                                            in_tree = in_tree,
+                                                            ncores = 1,
+                                                            model_type = "BM")
+    
+    specificity_regress_out$BH <- p.adjust(specificity_regress_out$p, "BH")
+  } else {
+    specificity_regress_out <- "Failed"
+  }
   
   output <- list(sig_taxa_regress = sig_taxa_regress_out,
                  specificity_regress = specificity_regress_out)

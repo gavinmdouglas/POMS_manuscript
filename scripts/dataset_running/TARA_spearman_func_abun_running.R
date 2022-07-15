@@ -7,6 +7,7 @@ setwd("/home/gavin/github_repos/POMS_manuscript/data/key_inputs/TARA/")
 devtools::load_all(path = "/home/gavin/github_repos/POMS/")
 
 source("/home/gavin/github_repos/POMS_manuscript/scripts/alt_tool_functions.R")
+source("/home/gavin/github_repos/POMS_manuscript/scripts/POMS_manuscript_functions.R")
 
 library(ape)
 library(parallel)
@@ -35,12 +36,18 @@ TARA_sample_info <- read.table("Table_S1_sample_info.txt",
 # Generate function abundance tables.
 TARA_func_abun <- list()
 
-TARA_func_abun[["ko"]] <- calc_func_abun(in_abun = TARA_abun, in_func = TARA_ko, ncores = 40)
+# Filter out rare functions from each table.
+TARA_ko <- POMS::filter_rare_table_cols(in_tab = TARA_ko, min_nonzero_count = 5, min_nonzero_prop = 0.001)
+TARA_pathways <- POMS::filter_rare_table_cols(in_tab = TARA_pathways, min_nonzero_count = 5, min_nonzero_prop = 0.001)
+TARA_modules <- POMS::filter_rare_table_cols(in_tab = TARA_modules, min_nonzero_count = 5, min_nonzero_prop = 0.001)
 
-TARA_func_abun[["pathway"]] <- calc_func_abun(in_abun = TARA_abun, in_func = TARA_pathways, ncores = 40)
+TARA_func_abun[["ko"]] <- calc_func_abun_crossprod(in_abun = TARA_abun, in_func = TARA_ko)
+TARA_func_abun[["pathway"]] <- calc_func_abun_crossprod(in_abun = TARA_abun, in_func = TARA_pathways)
+TARA_func_abun[["module"]] <- calc_func_abun_crossprod(in_abun = TARA_abun, in_func = TARA_modules)
 
-TARA_func_abun[["module"]] <- calc_func_abun(in_abun = TARA_abun, in_func = TARA_modules, ncores = 40)
-
+TARA_func_abun[["ko"]] <- TARA_func_abun[["ko"]][which(rowSums(TARA_func_abun[["ko"]]) > 0), ]
+TARA_func_abun[["pathway"]] <- TARA_func_abun[["pathway"]][which(rowSums(TARA_func_abun[["pathway"]]) > 0), ]
+TARA_func_abun[["module"]] <- TARA_func_abun[["module"]][which(rowSums(TARA_func_abun[["module"]]) > 0), ]
 
 TARA_spearman_out <- list()
 
@@ -57,16 +64,13 @@ for (sample_var in var2compare) {
   TARA_spearman_out[[sample_var]] <- list()
 
   TARA_abun_subset <- TARA_abun[, rownames(TARA_sample_info_subset)]
-  if (min(rowSums(TARA_abun_subset)) == 0) { TARA_abun_subset <- TARA_abun_subset[-which(rowSums(TARA_abun_subset) == 0), ]}
-  if (min(colSums(TARA_abun_subset)) == 0) { TARA_abun_subset <- TARA_abun_subset[, -which(colSums(TARA_abun_subset) == 0)]}
+  TARA_abun_subset <- TARA_abun_subset[which(rowSums(TARA_abun_subset) > 0), which(colSums(TARA_abun_subset) > 0)]
 
   for (func in c("ko", "pathway", "module")) {
   
     TARA_func_abun_subset <- TARA_func_abun[[func]][, colnames(TARA_abun_subset)]
-  
-    if (length(which(rowSums(TARA_func_abun_subset > 0) < 0.15 * ncol(TARA_func_abun_subset))) > 0) {
-      TARA_func_abun_subset <- TARA_func_abun_subset[-which(rowSums(TARA_func_abun_subset > 0) < 0.15 * ncol(TARA_func_abun_subset)), ]
-    }
+    
+    TARA_func_abun_subset <- TARA_func_abun_subset[which(rowSums(TARA_func_abun_subset) > 0), ]
     
     sample_var_vec <- as.numeric(TARA_sample_info_subset[, sample_var])
     names(sample_var_vec) <- rownames(TARA_sample_info_subset)
@@ -77,30 +81,30 @@ for (sample_var in var2compare) {
   
 }
 
+### Quick look at results:
+# for (sample_var in names(TARA_spearman_out)) {
+#   print(sample_var)
+#   
+#   for (func_type in names(TARA_spearman_out[[sample_var]])) {
+#     
+#     print(func_type)
+#     print(TARA_spearman_out[[sample_var]][[func_type]][which(TARA_spearman_out[[sample_var]][[func_type]]$p_corr < 0.05), ])
+#     
+#   }
+#   
+#   print("")
+#   print("")
+#   
+# }
 
-for (sample_var in names(TARA_spearman_out)) {
-  print(sample_var)
-  
-  for (func_type in names(TARA_spearman_out[[sample_var]])) {
-    
-    print(func_type)
-    print(TARA_spearman_out[[sample_var]][[func_type]][which(TARA_spearman_out[[sample_var]][[func_type]]$p_corr < 0.05), ])
-    
-  }
-  
-  print("")
-  print("")
-  
-}
-
-saveRDS(object = TARA_spearman_out, file = "../../results/TARA_spearman_out.rds")
+saveRDS(object = TARA_spearman_out, file = "/home/gavin/github_repos/POMS_manuscript/data/results/TARA_spearman_out.rds")
 
 
 # Info for main-text:
 rm(list = ls(all.names = TRUE))
 setwd("/home/gavin/github_repos/POMS_manuscript/data/key_inputs/TARA/")
 
-TARA_spearman_out <- readRDS("../../results/TARA_spearman_out.rds")
+TARA_spearman_out <- readRDS("/home/gavin/github_repos/POMS_manuscript/data/results/TARA_spearman_out.rds")
 TARA_spearman_out_modules <- TARA_spearman_out$PO4$module[which(TARA_spearman_out$PO4$module$p_corr < 0.25), ]
 TARA_spearman_out_modules <- TARA_spearman_out_modules[order(TARA_spearman_out_modules$p_corr), ]
 

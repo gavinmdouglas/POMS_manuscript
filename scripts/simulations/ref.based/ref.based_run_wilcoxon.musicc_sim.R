@@ -37,43 +37,12 @@ for (cutoff in cutoffs) {
     
     return(wilcoxon.musicc_out)
     
-  } , mc.cores = 30)
+  } , mc.cores = 50)
   
   saveRDS(object = func_rand_wilcoxon.musicc_cutoff,
-          file = paste("wilcoxon.musicc_out/ref.based_wilcoxon.musicc_sim_rand_func_500reps_cutoff_", as.character(cutoff), ".rds", sep = ""))
+          file = paste("wilcoxon.musicc_out/ref.based_wilcoxon.musicc_sim_func.based_500reps_cutoff_", as.character(cutoff), ".rds", sep = ""))
   
   print(proc.time() - ptm)
   
 }
 
-
-
-for (cutoff in cutoffs) {
-  
-  ptm <- proc.time()
-  
-  taxa_rand_wilcoxon.musicc_cutoff <- mclapply(X = 1:500, FUN = function(rep_i) {
-    
-    rep_taxa_sim_info <- readRDS(paste("taxa_sim_info_sel1.5/taxa_sim_info_cutoff_", cutoff, "_rep", as.character(rep_i), ".rds", sep = ""))
-    
-    prepped_func_abun <- readRDS(paste("func_abun_tables_taxa_sim_sel1.5/func_abun_tab_cutoff_", cutoff, "_rep", as.character(rep_i), ".rds", sep = ""))
-    
-    wilcoxon.musicc_out <- run_alt.tools(func_abun_table = prepped_func_abun,
-                                         group1_samples = rep_taxa_sim_info$group1,
-                                         group2_samples = rep_taxa_sim_info$group2,
-                                         USCGs = musicc_uscgs,
-                                         tools_to_run = "wilcoxon.musicc")
-    
-    wilcoxon.musicc_out$func <- rep_taxa_sim_info$func
-    
-    return(wilcoxon.musicc_out)
-    
-    
-  } , mc.cores = 30)
-  
-  saveRDS(object = taxa_rand_wilcoxon.musicc_cutoff,
-          file = paste("wilcoxon.musicc_out/ref.based_wilcoxon.musicc_sim_rand_taxa_500reps_cutoff_", as.character(cutoff), ".rds", sep = ""))
-  
-  print(proc.time() - ptm)
-  
-}

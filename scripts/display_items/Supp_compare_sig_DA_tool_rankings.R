@@ -6,10 +6,11 @@ library(ggbeeswarm)
 
 setwd("/home/gavin/github_repos/POMS_manuscript/data/results")
 
-Almeida_POMS_out <- list()
-Almeida_POMS_out[["Obesity 1"]] <- readRDS("Almeida_2019_POMS_output/ERP002061_POMS_out.rds")
-Almeida_POMS_out[["Obesity 2"]] <- readRDS("Almeida_2019_POMS_output/ERP003612_POMS_out.rds")
-Almeida_POMS_out[["Colorectal cancer"]] <- readRDS("Almeida_2019_POMS_output/ERP012177_POMS_out.rds")
+Almeida_POMS_out <- readRDS("Almeida_2019_POMS_output/combined_output.rds")
+
+names(Almeida_POMS_out)[which(names(Almeida_POMS_out) == "ERP002061")] <- "Obesity 1"
+names(Almeida_POMS_out)[which(names(Almeida_POMS_out) == "ERP003612")] <- "Obesity 2"
+names(Almeida_POMS_out)[which(names(Almeida_POMS_out) == "ERP012177")] <- "Colorectal cancer"
 
 TARA_POMS_out <- list()
 TARA_POMS_out[["Mean salinity"]] <- readRDS("TARA_POMS_out.rds")[["Mean_Salinity"]]

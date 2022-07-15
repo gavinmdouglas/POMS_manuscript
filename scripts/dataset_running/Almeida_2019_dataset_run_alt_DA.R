@@ -4,6 +4,8 @@ setwd("/home/gavin/github_repos/POMS_manuscript/data/key_inputs/Almeida2019_data
 
 source("/home/gavin/github_repos/POMS_manuscript/scripts/alt_tool_functions.R")
 
+source("/home/gavin/github_repos/POMS_manuscript/scripts/POMS_manuscript_functions.R")
+
 devtools::load_all(path = "/home/gavin/github_repos/POMS/")
 
 almeida_DA_out <- list()
@@ -39,7 +41,7 @@ musicc_uscgs <- read.table("/home/gavin/github_repos/POMS_manuscript/data/key_in
 
 # ERP002061
 ERP002061_almeida_sample_info <- almeida_sample_info[which(almeida_sample_info$Study == "ERP002061"), ]
-ERP002061_almeida_abun <- subset_abun_table(in_abun = almeida_abun, col2keep = ERP002061_almeida_sample_info$Run)
+ERP002061_almeida_abun <- subset_by_col_and_filt(in_tab = almeida_abun, col2keep = ERP002061_almeida_sample_info$Run)
 ERP002061_almeida_sample_info <- ERP002061_almeida_sample_info[which(ERP002061_almeida_sample_info$Run %in% colnames(ERP002061_almeida_abun)), ]
 ERP002061_group1_samples <- ERP002061_almeida_sample_info[which(ERP002061_almeida_sample_info$Health.state == "Diseased"), "Run"]
 ERP002061_group2_samples <- ERP002061_almeida_sample_info[which(ERP002061_almeida_sample_info$Health.state == "Healthy"), "Run"]
@@ -50,18 +52,18 @@ for (func_type in names(almeida_func)) {
   
   ERP002061_almeida_func <- almeida_func[[func_type]][rownames(ERP002061_almeida_abun), ]
 
-  ERP002061_almeida_func_abun <- calc_func_abun(in_abun = ERP002061_almeida_abun,
-                                                in_func = ERP002061_almeida_func, ncores = 40)
+  ERP002061_almeida_func <- POMS::filter_rare_table_cols(in_tab = ERP002061_almeida_func,
+                                                         min_nonzero_count = 5,
+                                                         min_nonzero_prop = 0.001)
+  
+  ERP002061_almeida_func_abun <- calc_func_abun_crossprod(in_abun = ERP002061_almeida_abun,
+                                                          in_func = ERP002061_almeida_func)
 
   # Subset to samples
   ERP002061_group1_samples_subset <- ERP002061_group1_samples[which(ERP002061_group1_samples %in% colnames(ERP002061_almeida_func_abun))]
   ERP002061_group2_samples_subset <- ERP002061_group2_samples[which(ERP002061_group2_samples %in% colnames(ERP002061_almeida_func_abun))]
   ERP002061_almeida_func_abun <- ERP002061_almeida_func_abun[, c(ERP002061_group1_samples_subset, ERP002061_group2_samples_subset)]
   
-  # Remove features found in fewer than 15% of samples.
-  if (length(which(rowSums(ERP002061_almeida_func_abun > 0) < 0.15 * ncol(ERP002061_almeida_func_abun))) > 0) {
-    ERP002061_almeida_func_abun <- ERP002061_almeida_func_abun[-which(rowSums(ERP002061_almeida_func_abun > 0) < 0.15 * ncol(ERP002061_almeida_func_abun)), ]
-  }
   
   if (func_type == "ko") { 
 
@@ -83,7 +85,7 @@ for (func_type in names(almeida_func)) {
 
 # ERP012177
 ERP012177_almeida_sample_info <- almeida_sample_info[which(almeida_sample_info$Study == "ERP012177"), ]
-ERP012177_almeida_abun <- subset_abun_table(in_abun = almeida_abun, col2keep = ERP012177_almeida_sample_info$Run)
+ERP012177_almeida_abun <- subset_by_col_and_filt(in_tab = almeida_abun, col2keep = ERP012177_almeida_sample_info$Run)
 ERP012177_almeida_sample_info <- ERP012177_almeida_sample_info[which(ERP012177_almeida_sample_info$Run %in% colnames(ERP012177_almeida_abun)), ]
 ERP012177_group1_samples <- ERP012177_almeida_sample_info[which(ERP012177_almeida_sample_info$Health.state == "Diseased"), "Run"]
 ERP012177_group2_samples <- ERP012177_almeida_sample_info[which(ERP012177_almeida_sample_info$Health.state == "Healthy"), "Run"]
@@ -94,18 +96,17 @@ for (func_type in names(almeida_func)) {
   
   ERP012177_almeida_func <- almeida_func[[func_type]][rownames(ERP012177_almeida_abun), ]
   
-  ERP012177_almeida_func_abun <- calc_func_abun(in_abun = ERP012177_almeida_abun,
-                                                in_func = ERP012177_almeida_func, ncores = 40)
+  ERP012177_almeida_func <- POMS::filter_rare_table_cols(in_tab = ERP012177_almeida_func,
+                                                         min_nonzero_count = 5,
+                                                         min_nonzero_prop = 0.001)
+  
+  ERP012177_almeida_func_abun <- calc_func_abun_crossprod(in_abun = ERP012177_almeida_abun,
+                                                          in_func = ERP012177_almeida_func)
   
   # Subset to samples
   ERP012177_group1_samples_subset <- ERP012177_group1_samples[which(ERP012177_group1_samples %in% colnames(ERP012177_almeida_func_abun))]
   ERP012177_group2_samples_subset <- ERP012177_group2_samples[which(ERP012177_group2_samples %in% colnames(ERP012177_almeida_func_abun))]
   ERP012177_almeida_func_abun <- ERP012177_almeida_func_abun[, c(ERP012177_group1_samples_subset, ERP012177_group2_samples_subset)]
-  
-  # Remove features found in fewer than 15% of samples.
-  if (length(which(rowSums(ERP012177_almeida_func_abun > 0) < 0.15 * ncol(ERP012177_almeida_func_abun))) > 0) {
-    ERP012177_almeida_func_abun <- ERP012177_almeida_func_abun[-which(rowSums(ERP012177_almeida_func_abun > 0) < 0.15 * ncol(ERP012177_almeida_func_abun)), ]
-  }
   
   if (func_type == "ko") { 
     
@@ -126,10 +127,12 @@ for (func_type in names(almeida_func)) {
 
 # ERP003612
 ERP003612_almeida_sample_info <- almeida_sample_info[which(almeida_sample_info$Study == "ERP003612"), ]
-ERP003612_almeida_abun <- subset_abun_table(in_abun = almeida_abun, col2keep = ERP003612_almeida_sample_info$Run)
+ERP003612_almeida_abun <- subset_by_col_and_filt(in_tab = almeida_abun, col2keep = ERP003612_almeida_sample_info$Run)
 ERP003612_almeida_sample_info <- ERP003612_almeida_sample_info[which(ERP003612_almeida_sample_info$Run %in% colnames(ERP003612_almeida_abun)), ]
 ERP003612_group1_samples <- ERP003612_almeida_sample_info[which(ERP003612_almeida_sample_info$Health.state == "Diseased"), "Run"]
 ERP003612_group2_samples <- ERP003612_almeida_sample_info[which(ERP003612_almeida_sample_info$Health.state == "Healthy"), "Run"]
+
+
 
 almeida_DA_out[["ERP003612"]] <- list()
 
@@ -137,18 +140,17 @@ for (func_type in names(almeida_func)) {
   
   ERP003612_almeida_func <- almeida_func[[func_type]][rownames(ERP003612_almeida_abun), ]
   
-  ERP003612_almeida_func_abun <- calc_func_abun(in_abun = ERP003612_almeida_abun,
-                                                in_func = ERP003612_almeida_func, ncores = 40)
+  ERP003612_almeida_func <- POMS::filter_rare_table_cols(in_tab = ERP003612_almeida_func,
+                                                         min_nonzero_count = 5,
+                                                         min_nonzero_prop = 0.001)
+  
+  ERP003612_almeida_func_abun <- calc_func_abun_crossprod(in_abun = ERP003612_almeida_abun,
+                                                          in_func = ERP003612_almeida_func)
   
   # Subset to samples
   ERP003612_group1_samples_subset <- ERP003612_group1_samples[which(ERP003612_group1_samples %in% colnames(ERP003612_almeida_func_abun))]
   ERP003612_group2_samples_subset <- ERP003612_group2_samples[which(ERP003612_group2_samples %in% colnames(ERP003612_almeida_func_abun))]
   ERP003612_almeida_func_abun <- ERP003612_almeida_func_abun[, c(ERP003612_group1_samples_subset, ERP003612_group2_samples_subset)]
-  
-  # Remove features found in fewer than 15% of samples.
-  if (length(which(rowSums(ERP003612_almeida_func_abun > 0) < 0.15 * ncol(ERP003612_almeida_func_abun))) > 0) {
-    ERP003612_almeida_func_abun <- ERP003612_almeida_func_abun[-which(rowSums(ERP003612_almeida_func_abun > 0) < 0.15 * ncol(ERP003612_almeida_func_abun)), ]
-  }
   
   if (func_type == "ko") { 
     
