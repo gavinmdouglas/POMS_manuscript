@@ -96,11 +96,6 @@ for (rep_i in 1:693) {
 }
 
 
-POMS_unperturbed_num_sig <- sapply(unperturbed_POMS_output, function(x) { length(which(x$output$results$multinomial_corr < 0.05)) })
-POMS_taxa_num_sig <- sapply(taxa_rand_POMS_output, function(x) { length(which(x$output$results$multinomial_corr < 0.05)) })
-POMS_func_num_sig <- sapply(func_rand_POMS_output, function(x) { length(which(x$output$results$multinomial_corr < 0.05)) })
-POMS_clade.based_num_sig <- sapply(clade.based_rand_POMS_output, function(x) { length(which(x$output$results$multinomial_corr < 0.05)) })
-
 unperturbed_summary <- simulation_summaries(POMS_sims = unperturbed_POMS_output,
                                             regress_sims = unperturbed_regress_output,
                                             alt_tool_sims = unperturbed_alt.tools_output,

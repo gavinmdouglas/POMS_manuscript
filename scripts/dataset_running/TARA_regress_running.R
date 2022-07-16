@@ -1,34 +1,38 @@
-# Run POMS on TARA oceans dataset.
+# Run regress on TARA oceans dataset.
 
 rm(list = ls(all.names = TRUE))
 
-setwd("/home/gavin/github_repos/POMS_manuscript/data/key_inputs/TARA/")
+setwd("/home/gavin/github_repos/regress_manuscript/data/key_inputs/TARA/")
 
 devtools::load_all(path = "/home/gavin/github_repos/POMS/")
 
 library(ape)
 library(parallel)
 
-node_balances_spearman_cor <- function(node_balances, sample_info, sample_var) {
-
+abun_spearman_cor <- function(abun_table, sample_info, sample_var) {
+  
+  abun_table = TARA_abun_subset
+  sample_info <- TARA_sample_info
+  sample_var <- sample_var
+  
   if (length(which(is.na(sample_info[, sample_var]))) > 0) {
     sample_info <- sample_info[-which(is.na(sample_info[, sample_var])), , drop = FALSE]
   }
   
-  node_spearman_cor <- data.frame(matrix(NA, nrow = length(node_balances$balances), ncol = 2))
-  colnames(node_spearman_cor) <- c("rho", "p")
-  rownames(node_spearman_cor) <- names(node_balances$balances)
+  abun_spearman_cor <- data.frame(matrix(NA, nrow = nrow(abun_table), ncol = 2))
+  colnames(abun_spearman_cor) <- c("rho", "p")
+  rownames(abun_spearman_cor) <- rownames(abun_table)
   
-  for (node in names(node_balances$balances)) {
+  for (taxon in rownames(abun_table)) {
     
-    cor_out <- cor.test(node_balances$balances[[node]][rownames(sample_info)],
+    cor_out <- cor.test(as.numeric(abun_table[taxon, rownames(sample_info)]),
                         sample_info[ , sample_var],
                         method = "spearman", exact = FALSE)
     
-    node_spearman_cor[node, ] <- c(cor_out$estimate, cor_out$p.value) 
+    abun_spearman_cor[taxon, ] <- c(cor_out$estimate, cor_out$p.value) 
   }
   
-  return(node_spearman_cor)
+  return(abun_spearman_cor)
 }
 
 # Read in input files.
@@ -47,12 +51,15 @@ TARA_modules <- data.frame(t(TARA_modules), check.names = FALSE)
 
 TARA_tree <- read.tree(file = "GToTree_output/GToTree_output_modified.tre")
 
-
 descrip_tables <- list()
-descrip_tables[["ko"]] <- "/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/2021_04_12_KEGG_ko_descrip.tsv.gz"
-descrip_tables[["pathway"]] <- "/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/2021_04_12_KEGG_pathway_descrip.tsv.gz"
-descrip_tables[["module"]] <- "/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/2021_04_12_KEGG_module_descrip.tsv.gz"
+descrip_tables[["ko"]] <- read.table("/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/2021_04_12_KEGG_ko_descrip.tsv.gz",
+                                     header = FALSE, sep = "\t", stringsAsFactors = FALSE, row.names = 1, quote = "", comment.char = "")
 
+descrip_tables[["pathway"]] <- read.table("/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/2021_04_12_KEGG_pathway_descrip.tsv.gz",
+                                          header = FALSE, sep = "\t", stringsAsFactors = FALSE, row.names = 1, quote = "", comment.char = "")
+
+descrip_tables[["module"]] <- read.table("/home/gavin/github_repos/POMS_manuscript/data/KEGG_mappings/prepped/2021_04_12_KEGG_module_descrip.tsv.gz",
+                                         header = FALSE, sep = "\t", stringsAsFactors = FALSE, row.names = 1, quote = "", comment.char = "")
 
 TARA_ko <- POMS::filter_rare_table_cols(in_tab = TARA_ko, min_nonzero_count = 5, min_nonzero_prop = 0.001)
 TARA_pathways <- POMS::filter_rare_table_cols(in_tab = TARA_pathways, min_nonzero_count = 5, min_nonzero_prop = 0.001)
@@ -70,17 +77,9 @@ TARA_abun <- read.table(file = "NON-REDUNDANT-MAGs-SUMMARY/bins_across_samples/m
 TARA_sample_info <- read.table("Table_S1_sample_info.txt",
                                header = TRUE, sep = "\t", stringsAsFactors = FALSE, quote = "", comment.char = "", row.names = 1)
 
+TARA_tree <- POMS::prep_tree(phy = TARA_tree, tips2keep = TARA_tree$tip.label).
 
-# Identify significant nodes outside of main POMS pipeline, based on Spearman correlations with sample metadata.
-TARA_tree <- POMS::prep_tree(phy = TARA_tree, tips2keep = TARA_tree$tip.label)
-
-TARA_node_balances <- POMS::compute_node_balances(tree = TARA_tree, 
-                                                  abun_table = TARA_abun, 
-                                                  ncores = 40,
-                                                  pseudocount = 1,
-                                                  min_num_tips = 10)
-
-TARA_POMS_out <- list()
+TARA_regress_out <- list()
 
 var2compare <- c("Chlorophyll.Sensor.s", "Mean_Temperature", 
                  "Mean_Salinity", "Mean_Oxygen", "Mean_Nitrates",
@@ -88,40 +87,47 @@ var2compare <- c("Chlorophyll.Sensor.s", "Mean_Temperature",
 
 for (sample_var in var2compare) {
 
-  TARA_POMS_out[[sample_var]] <- list()
+  TARA_regress_out[[sample_var]] <- list()
   
-  TARA_node_cor <- node_balances_spearman_cor(node_balances = TARA_node_balances,
-                                               sample_info = TARA_sample_info,
-                                               sample_var = sample_var)
-
-  var_sig_nodes <- rownames(TARA_node_cor)[which(TARA_node_cor$p < 0.05)]
-
-  var_nodes_dir <- rep(NA, nrow(TARA_node_cor))
-  names(var_nodes_dir) <- rownames(TARA_node_cor)
-  var_nodes_dir[which(TARA_node_cor[, "rho"] >= 0)] <- "group1"
-  var_nodes_dir[which(TARA_node_cor[, "rho"] < 0)] <- "group2"
-
   TARA_abun_subset <- TARA_abun[, rownames(TARA_sample_info[which(!is.na(TARA_sample_info[, sample_var])), ])]
   TARA_abun_subset <- TARA_abun_subset[which(rowSums(TARA_abun_subset) > 0), which(colSums(TARA_abun_subset) > 0)]
+  
+  correlated_taxa <- abun_spearman_cor(abun_table = TARA_abun_subset, sample_info = TARA_sample_info, sample_var = sample_var)
   
   for (func_level in names(TARA_func)) {
     
     TARA_func_table <- TARA_func[[func_level]][rownames(TARA_abun_subset), ]
     TARA_func_table <- TARA_func_table[, which(colSums(TARA_func_table) > 0)]
+
+    TARA_func_table <- POMS::filter_rare_table_cols(in_tab = TARA_func_table, min_nonzero_count = 5, min_nonzero_prop = 0.001)
     
-    TARA_POMS_out[[sample_var]][[func_level]] <- POMS_pipeline(abun = TARA_abun_subset, func = TARA_func_table, tree = TARA_tree, ncores = 10, pseudocount = 1,
-                                                               manual_BSNs = var_sig_nodes, manual_balances = TARA_node_balances$balances, manual_BSN_dir = var_nodes_dir[var_sig_nodes],
-                                                               min_func_instances = 5, min_func_prop = 0.001, func_descrip_infile = descrip_tables[[func_level]])
+    sig_taxa <- rep(0, nrow(correlated_taxa))
+    sig_taxa[which(correlated_taxa$p < 0.05)] <- 1
+    
+    TARA_tree_subset <- POMS::prep_tree(phy = TARA_tree, tips2keep = rownames(TARA_func_table))
+    
+    var_regress_out <- genome_content_phylo_regress(y = sig_taxa,
+                                                    func =  TARA_func_table,
+                                                    in_tree = TARA_tree_subset,
+                                                    ncores = 10,
+                                                    model_type = "BM")
+
+    var_regress_out$BH <- p.adjust(var_regress_out$p, "BH")
+    
+    var_regress_out$Description <- descrip_tables[[func_level]][rownames(var_regress_out), "V2"]
+    
+    TARA_regress_out[[sample_var]][[func_level]] <- var_regress_out
+    
   }
 
 }
 
 
 # Quick dig into the results:
-for (sample_var in names(TARA_POMS_out)) {
-  for (func_type in names(TARA_POMS_out[[sample_var]])) {
+for (sample_var in names(TARA_regress_out)) {
+  for (func_type in names(TARA_regress_out[[sample_var]])) {
    
-    sig_subset <- TARA_POMS_out[[sample_var]][[func_type]]$results[which(TARA_POMS_out[[sample_var]][[func_type]]$results$multinomial_corr < 0.25), ]
+    sig_subset <- TARA_regress_out[[sample_var]][[func_type]][which(TARA_regress_out[[sample_var]][[func_type]]$BH < 0.25), ]
     
     if (nrow(sig_subset) > 0) {
       print(func_type)
@@ -138,4 +144,4 @@ for (sample_var in names(TARA_POMS_out)) {
 
 }
 
-saveRDS(object = TARA_POMS_out, file = "/home/gavin/github_repos/POMS_manuscript/data/results/TARA_POMS_out.rds")
+saveRDS(object = TARA_regress_out, file = "/home/gavin/github_repos/POMS_manuscript/data/results/TARA_regress_out.rds")

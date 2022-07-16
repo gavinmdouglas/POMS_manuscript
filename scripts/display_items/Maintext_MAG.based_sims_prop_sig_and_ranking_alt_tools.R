@@ -291,33 +291,3 @@ sd(func.based_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_sig_0.05, na.rm = TRU
 
 100 * ((mean(taxa.based_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_sig_0.05, na.rm = TRUE) / mean(func.based_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_sig_0.05, na.rm = TRUE)) / mean(taxa.based_summary_POMS_wilcoxon.musicc$wilcoxon.musicc_sig_0.05, na.rm = TRUE))
 
-
-# Considered making this part of the figure, but decided to leave it as supplemental:
-
-# No. MAGs encoding genes that were not significant.
-# MAG.based_POMS_0.05_NA_rank_num_encoding_data <- data.frame(num = func.based_summary[which(is.na(func.based_summary$POMS_rank_0.05)), "num_focal_pos_mags"])
-# 
-# MAG.based_POMS_0.05_NA_rank_num_encoding_data$Category <- "POMS - Focal gene not significant"
-# 
-# MAG.based_POMS_0.05_NA_rank_num_encoding_hist <- ggplot(MAG.based_POMS_0.05_NA_rank_num_encoding_data, aes(x = num)) + 
-#         geom_histogram(binwidth = 25, fill = "steelblue4") + 
-#         xlab("No. MAGs encoding focal gene") +
-#         ylab("No. replicates") +
-#         coord_cartesian(xlim = c(0, 1600), ylim = c(0, 120)) +
-#         theme_bw() +
-#         facet_grid( ~ Category) +
-#         theme(plot.title = element_text(hjust = 0.5)) +
-#         annotate(geom = "text", x = 500, y = 100,
-#                  label = paste("n=", as.character(nrow(MAG.based_POMS_0.05_NA_rank_num_encoding_data)), sep = ""))
-# 
-# NA_mag_num_panel <- plot_grid(MAG.based_POMS_0.05_NA_rank_num_encoding_hist, NULL, nrow = 2, rel_heights = c(0.9, 0.1))
-# 
-# focal_gene_row <- plot_grid(func.based_ranks_boxplots,
-#                             MAG.based_POMS_0.05_NA_rank_num_encoding_hist,
-#                             ncol = 2, rel_widths = c(0.5, 0.54),
-#                             labels = c('a', 'b'))
-# 
-# combined_figure <- plot_grid(focal_gene_row,
-#                              MAG.based_all_prop_sig_boxplots,
-#                              nrow = 2, ncol = 1, labels = c('', 'c'))
-

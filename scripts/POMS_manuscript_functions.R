@@ -301,26 +301,3 @@ alt_sim_rep_summary <- function(alt.tool_sim_rep, focal_func, func_table, sig_cu
   
 }
 
-
-
-node_balances_spearman_cor <- function(node_balances, sample_info, sample_var) {
-  
-  if (length(which(is.na(sample_info[, sample_var]))) > 0) {
-    sample_info <- sample_info[-which(is.na(sample_info[, sample_var])), , drop = FALSE]
-  }
-  
-  node_spearman_cor <- data.frame(matrix(NA, nrow = length(node_balances$balances), ncol = 2))
-  colnames(node_spearman_cor) <- c("rho", "p")
-  rownames(node_spearman_cor) <- names(node_balances$balances)
-  
-  for (node in names(node_balances$balances)) {
-    
-    cor_out <- cor.test(node_balances$balances[[node]][rownames(sample_info)],
-                        sample_info[ , sample_var],
-                        method = "spearman", exact = FALSE)
-    
-    node_spearman_cor[node, ] <- c(cor_out$estimate, cor_out$p.value) 
-  }
-  
-  return(node_spearman_cor)
-}
