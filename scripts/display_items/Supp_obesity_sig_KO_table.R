@@ -30,14 +30,12 @@ ERP003612_out_sig_df$dataset <- "Obesity 2"
 
 combined_obesity_sig_df <- rbind(ERP002061_out_sig_df, ERP003612_out_sig_df)
 
-combined_obesity_sig_df_fdr0.15 <- combined_obesity_sig_df[which(combined_obesity_sig_df$multinomial_corr < 0.15), ]
 
-# Excluded many KOs above this cut-off:
-nrow(combined_obesity_sig_df) - nrow(combined_obesity_sig_df_fdr0.15)
-
-write.table(x = combined_obesity_sig_df_fdr0.15,
+write.table(x = combined_obesity_sig_df,
             file = "/home/gavin/github_repos/POMS_manuscript/display_items/Supp_obesity_sig_KOs_RAW.tsv",
             sep = "\t",
             quote = FALSE,
             col.names = TRUE,
             row.names = FALSE)
+
+

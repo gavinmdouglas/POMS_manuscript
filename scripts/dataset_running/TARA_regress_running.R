@@ -2,7 +2,7 @@
 
 rm(list = ls(all.names = TRUE))
 
-setwd("/home/gavin/github_repos/regress_manuscript/data/key_inputs/TARA/")
+setwd("/home/gavin/github_repos/POMS_manuscript/data/key_inputs/TARA/")
 
 devtools::load_all(path = "/home/gavin/github_repos/POMS/")
 
@@ -77,7 +77,7 @@ TARA_abun <- read.table(file = "NON-REDUNDANT-MAGs-SUMMARY/bins_across_samples/m
 TARA_sample_info <- read.table("Table_S1_sample_info.txt",
                                header = TRUE, sep = "\t", stringsAsFactors = FALSE, quote = "", comment.char = "", row.names = 1)
 
-TARA_tree <- POMS::prep_tree(phy = TARA_tree, tips2keep = TARA_tree$tip.label).
+TARA_tree <- POMS::prep_tree(phy = TARA_tree, tips2keep = TARA_tree$tip.label)
 
 TARA_regress_out <- list()
 

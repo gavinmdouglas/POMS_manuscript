@@ -1,9 +1,21 @@
-num_nodes_enriched	num_sig_nodes_group1_enrich	num_sig_nodes_group2_enrich	num_nonsig_nodes_enrich	multinomial_p	multinomial_corr	description	func	variable	func_type
-15	8	0	7	0.00209709284203053	0.0985633635754347	Limonene and pinene degradation	ko00903	Mean_Salinity	pathway
-6	0	5	1	0.00335710551266998	0.248425807937579	Denitrification, nitrate => nitrogen	M00529	Mean_Salinity	module
-11	7	0	4	0.00132240508634668	0.195715952779309	Isoleucine biosynthesis, pyruvate => 2-oxobutanoate	M00535	Mean_Salinity	module
-11	9	0	2	9.08436075017012e-05	0.0816684031440294	K07137; uncharacterized protein	K07137	PO4	ko
-9	8	0	1	5.47151332848973e-05	0.0816684031440294	FN3KRP; protein-ribulosamine 3-kinase [EC:2.7.1.172]	K15523	PO4	ko
-9	6	0	3	0.00862653826870957	0.202723649314675	Carotenoid biosynthesis	ko00906	PO4	pathway
-13	8	0	5	0.00221804733593075	0.104248224788745	Biofilm formation - Vibrio cholerae	ko05111	PO4	pathway
-12	8	0	4	0.00141830048548418	0.209908471851659	Tyrosine degradation, tyrosine => homogentisate	M00044	PO4	module
+num_FSNs	num_FSNs_group1_enrich	num_FSNs_group2_enrich	num_FSNs_at_nonBSNs	multinomial_p	multinomial_corr	description	func	variable	func_type
+15	8	0	7	0.0027675556844081	0.166053341064486	Limonene and pinene degradation	ko00903	Mean_Salinity	pathway
+6	5	0	1	0.00273331901538333	0.241173603263287	Tyrosine biosynthesis, chorismate => arogenate => tyrosine	M00040	Mean_Salinity	module
+10	6	0	4	0.00356414192014709	0.241173603263287	Isoleucine biosynthesis, pyruvate => 2-oxobutanoate	M00535	Mean_Salinity	module
+10	0	6	4	0.00356414192014709	0.241173603263287	Arginine succinyltransferase pathway, arginine => glutamate	M00879	Mean_Salinity	module
+12	8	0	4	0.000867620406215677	0.201517551664033	hpaE, hpcC; 5-carboxymethyl-2-hydroxymuconic-semialdehyde dehydrogenase [EC:1.2.1.60]	K00151	PO4	ko
+9	7	2	0	0.000111117517375937	0.171167893456084	malQ; 4-alpha-glucanotransferase [EC:2.4.1.25]	K00705	PO4	ko
+7	6	1	0	0.000285089762585083	0.171167893456084	E3.4.21.96; lactocepin [EC:3.4.21.96]	K01361	PO4	ko
+12	8	0	4	0.000867620406215677	0.201517551664033	hutU, UROC1; urocanate hydratase [EC:4.2.1.49]	K01712	PO4	ko
+12	9	0	3	0.00013652101574839	0.171167893456084	hutH, HAL; histidine ammonia-lyase [EC:4.3.1.3]	K01745	PO4	ko
+17	9	0	8	0.00114971304172328	0.238098928717758	mlaF, linL, mkl; phospholipid/cholesterol/gamma-HCH transport system ATP-binding protein	K02065	PO4	ko
+12	8	0	4	0.000867620406215677	0.201517551664033	K06872; uncharacterized protein	K06872	PO4	ko
+11	8	1	2	0.000719913073857731	0.201517551664033	yfhM; alpha-2-macroglobulin	K06894	PO4	ko
+12	8	0	4	0.000867620406215677	0.201517551664033	K06940; uncharacterized protein	K06940	PO4	ko
+12	9	1	2	0.000209620141315005	0.171167893456084	K07137; uncharacterized protein	K07137	PO4	ko
+5	5	0	0	0.000810565863444571	0.201517551664033	zraS, hydH; two-component system, NtrC family, sensor histidine kinase HydH [EC:2.7.13.3]	K07709	PO4	ko
+9	7	0	2	0.00087266094991087	0.201517551664033	K08988; putative membrane protein	K08988	PO4	ko
+9	7	0	2	0.00087266094991087	0.201517551664033	mtfA; MtfA peptidase	K09933	PO4	ko
+6	5	1	0	0.00118970150924929	0.238098928717758	CTR9; RNA polymerase-associated protein CTR9	K15176	PO4	ko
+8	7	0	1	0.000232784987594675	0.171167893456084	FN3KRP; protein-ribulosamine 3-kinase [EC:2.7.1.172]	K15523	PO4	ko
+13	8	0	5	0.00217419098090369	0.130451458854222	Biofilm formation - Vibrio cholerae	ko05111	PO4	pathway
