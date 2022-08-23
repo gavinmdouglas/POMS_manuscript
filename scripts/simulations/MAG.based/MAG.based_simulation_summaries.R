@@ -88,11 +88,10 @@ for (rep_i in 1:693) {
   clade.based_rand_alt.tools_output[[rep_i]]$wilcoxon.relab <- clade.based_rand_wilcoxon.relab_wilcoxon.musicc_limma_voom[[rep_i]]$wilcoxon.relab
   clade.based_rand_alt.tools_output[[rep_i]]$limma.voom <- clade.based_rand_wilcoxon.relab_wilcoxon.musicc_limma_voom[[rep_i]]$limma.voom
   
-  
-  # aldex2_rep_rds_in <- readRDS(paste("DA_tool_out/aldex2_deseq2/MAG.based_clade.based_sim_aldex2_rds/rep", as.character(rep_i), ".rds", sep = ""))
-  # deseq2_rep_rds_in <- readRDS(paste("DA_tool_out/aldex2_deseq2/MAG.based_clade.based_sim_deseq2_rds/rep", as.character(rep_i), ".rds", sep = ""))
-  # clade.based_rand_alt.tools_output[[rep_i]]$aldex2 <- aldex2_rep_rds_in$aldex2
-  # clade.based_rand_alt.tools_output[[rep_i]]$deseq2 <- deseq2_rep_rds_in$deseq2 
+  aldex2_rep_rds_in <- readRDS(paste("DA_tool_out/aldex2_deseq2/MAG.based_clade.based_sim_aldex2_rds/rep", as.character(rep_i), ".rds", sep = ""))
+  deseq2_rep_rds_in <- readRDS(paste("DA_tool_out/aldex2_deseq2/MAG.based_clade.based_sim_deseq2_rds/MAG.based_clade.based_deseq2_", as.character(rep_i), "reps.rds", sep = ""))
+  clade.based_rand_alt.tools_output[[rep_i]]$aldex2 <- aldex2_rep_rds_in$aldex2
+  clade.based_rand_alt.tools_output[[rep_i]]$deseq2 <- deseq2_rep_rds_in$deseq2 
 }
 
 

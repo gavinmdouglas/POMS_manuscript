@@ -61,7 +61,7 @@ func.based_ranks_boxplots <- ggplot(func.based_ranks, aes(x = Tool, y = Rank, fi
                                         geom_boxplot(outlier.shape = NA, alpha = 0.5, lwd = 0.5) +
                                         theme_bw() +
                                         facet_grid( ~ Simulation) +
-                                        ylab("Focal gene ranking\n(lower is better)") +
+                                        ylab("Focal gene ranking\n(closer to 1 is better)") +
                                         xlab("") +
                                         scale_fill_manual(values = qual_col) +
                                         theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
@@ -166,18 +166,19 @@ MAG.based_all_prop_sig <- data.frame(Tool = c(rep("POMS", 2693),
                                               func.based_summary$limma.voom_sig_0.05,
                                               
                                               taxa.based_summary$aldex2_sig_0.05,
-                                              rep(NA, 693), #clade.based_summary$aldex2_sig_0.05,
+                                              clade.based_summary$aldex2_0.05,
                                               func.based_summary$aldex2_sig_0.05,
                                               
                                               taxa.based_summary$deseq2_sig_0.05,
-                                              rep(NA, 693), #clade.based_summary$deseq2_sig_0.05,
+                                              clade.based_summary$deseq2_0.05,
                                               func.based_summary$deseq2_sig_0.05)
                                               
                                     )
 
 
-MAG.based_all_prop_sig$Simulation <- factor(MAG.based_all_prop_sig$Simulation, 
-                                            levels = c("Random taxa", "Clade-based", "Focal gene"))
+MAG.based_all_prop_sig$Simulation <- factor(MAG.based_all_prop_sig$Simulation,
+                                            levels = c("Focal gene", "Random taxa", "Clade-based"))
+
 
 MAG.based_all_prop_sig$Tool <- factor(MAG.based_all_prop_sig$Tool, 
                                             levels = c("POMS",
