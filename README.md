@@ -1,12 +1,7 @@
 # POMS_manuscript
 
-Code and key datafiles used for Douglas et al. (_In Prep_).
+Code used for this pre-print:
 
-(Note that this repo is currently being cleaned up).
-
-## Key datafiles
-
-* `key_datafiles/MAG.based_samples_used.txt.gz` - Set of sample ids used from Almeida et al. dataset corresponding to those used for the MAG-based simulations.
-
+[Gavin M. Douglas, Molly G. Hayes, Morgan G. I. Langille, Elhanan Borenstein. 2022. Integrating phylogenetic and functional data in microbiome studies. bioRxiv. DOI:10.1101/2022.02.21.480893](https://www.biorxiv.org/content/10.1101/2022.02.21.480893v1)
 
 
