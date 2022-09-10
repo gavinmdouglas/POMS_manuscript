@@ -105,11 +105,23 @@ rm(list = ls(all.names = TRUE))
 setwd("/home/gavin/github_repos/POMS_manuscript/data/key_inputs/TARA/")
 
 TARA_spearman_out <- readRDS("/home/gavin/github_repos/POMS_manuscript/data/results/TARA_spearman_out.rds")
-TARA_spearman_out_modules <- TARA_spearman_out$PO4$module[which(TARA_spearman_out$PO4$module$p_corr < 0.25), ]
-TARA_spearman_out_modules <- TARA_spearman_out_modules[order(TARA_spearman_out_modules$p_corr), ]
 
-TARA_spearman_out_pathways <- TARA_spearman_out$PO4$pathway[which(TARA_spearman_out$PO4$pathway$p_corr < 0.25), ]
-TARA_spearman_out_pathways <- TARA_spearman_out_pathways[order(TARA_spearman_out_pathways$p_corr), ]
+length(which(TARA_spearman_out$Mean_Salinity$ko$p_corr < 0.25))
+length(which(TARA_spearman_out$PO4$ko$p_corr < 0.25))
 
-TARA_spearman_out_kos <- TARA_spearman_out$PO4$ko[which(TARA_spearman_out$PO4$ko$p_corr < 0.25), ]
-TARA_spearman_out_kos <- TARA_spearman_out_kos[order(TARA_spearman_out_kos$p_corr), ]
+combined_TARA_sig_df <- read.table(file = "/home/gavin/github_repos/POMS_manuscript/display_items/Maintext_TARA_sig_func_RAW.tsv",
+                                   sep = "\t", header = TRUE, stringsAsFactors = FALSE)
+
+POMS_salinity_pathway <- combined_TARA_sig_df[which(combined_TARA_sig_df$func_type == "pathway" & combined_TARA_sig_df$variable == "Mean_Salinity"), "func"]
+POMS_salinity_module <- combined_TARA_sig_df[which(combined_TARA_sig_df$func_type == "module" & combined_TARA_sig_df$variable == "Mean_Salinity"), "func"]
+
+POMS_phosphate_pathway <- combined_TARA_sig_df[which(combined_TARA_sig_df$func_type == "pathway" & combined_TARA_sig_df$variable == "PO4"), "func"]
+POMS_phosphate_ko <- combined_TARA_sig_df[which(combined_TARA_sig_df$func_type == "ko" & combined_TARA_sig_df$variable == "PO4"), "func"]
+
+length(which(TARA_spearman_out$Mean_Salinity$pathway[POMS_salinity_pathway, "p_corr"] < 0.25))
+length(which(TARA_spearman_out$Mean_Salinity$module[POMS_salinity_module, "p_corr"] < 0.25))
+
+length(which(TARA_spearman_out$PO4$pathway[POMS_phosphate_pathway, "p_corr"] < 0.25))
+
+length(which(TARA_spearman_out$PO4$ko[POMS_phosphate_ko, "p_corr"] < 0.25))
+
