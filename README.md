@@ -1,7 +1,6 @@
 # POMS_manuscript
 
-Code used for this pre-print:
+Code used for this paper:
 
-[Gavin M. Douglas, Molly G. Hayes, Morgan G. I. Langille, Elhanan Borenstein. 2022. Integrating phylogenetic and functional data in microbiome studies. bioRxiv. DOI:10.1101/2022.02.21.480893](https://www.biorxiv.org/content/10.1101/2022.02.21.480893v1)
-
+[Gavin M. Douglas, Molly G. Hayes, Morgan G. I. Langille, Elhanan Borenstein. 2022. Integrating phylogenetic and functional data in microbiome studies. Bioinformatics 38 (22):5055-5063.](https://academic.oup.com/bioinformatics/article/38/22/5055/6731923)
 
