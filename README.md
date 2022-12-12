@@ -1,6 +1,6 @@
 # POMS_manuscript
 
-Code used for this paper:
+**Code used for this paper:**
 
 [Gavin M. Douglas, Molly G. Hayes, Morgan G. I. Langille, Elhanan Borenstein. 2022. Integrating phylogenetic and functional data in microbiome studies. Bioinformatics 38 (22):5055-5063.](https://academic.oup.com/bioinformatics/article/38/22/5055/6731923)
 
@@ -24,3 +24,4 @@ Code used for this paper:
 
   * _alt_tool_functions.R_ - Functions used for running standard differential abundance tools.
   
+**Note that the key datafiles for this project are available on [FigShare](https://figshare.com/collections/POMS_manuscript_datafiles/6162060/2).**
